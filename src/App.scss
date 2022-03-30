@@ -1,0 +1,10 @@
+.App {
+  display: flex;
+}
+.App .container {
+  flex-grow: 1;
+
+  .route-wrapper {
+    padding: 0 60px;
+  }
+}
