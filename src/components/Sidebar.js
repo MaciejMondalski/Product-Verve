@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Navlink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // images
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
@@ -15,16 +15,16 @@ function Sidebar() {
         <nav className='links'>
           <ul>
             <li>
-              <Navlink to='/'>
+              <NavLink end to='/'>
                 <img src={DashboardIcon} alt='dashboard icon' />
                 <span>Dashboard</span>
-              </Navlink>
+              </NavLink>
             </li>
             <li>
-              <Navlink to='/'>
+              <NavLink to='/'>
                 <img src={AddIcon} alt='add project icon' />
                 <span>New Project</span>
-              </Navlink>
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -33,6 +33,58 @@ function Sidebar() {
   );
 }
 
-const StyledSidebar = styled.div``;
+const StyledSidebar = styled.div`
+  width: 300px;
+  min-width: 300px;
+  background: var(--primary-color);
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  color: #fff;
+
+  .sidebar-content {
+    position: fixed;
+    width: inherit;
+  }
+  .user {
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+    padding: 40px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .links {
+    margin-top: 80px;
+    margin-left: 20px;
+
+    li {
+      margin-top: 10px;
+    }
+
+    a {
+      display: flex;
+      padding: 10px;
+      text-decoration: none;
+      width: 100%;
+      color: #fff;
+      box-sizing: border-box;
+
+      .active {
+        color: #555;
+        background: var(--bg-color);
+        border-radius: 20px 0 0 20px;
+
+        img {
+          filter: invert(40%);
+        }
+      }
+    }
+
+    img {
+      margin-right: 10px;
+      filter: invert(100%);
+    }
+  }
+`;
 
 export default Sidebar;
