@@ -7,7 +7,6 @@ import Temple from '../assets/temple.svg';
 function Navbar() {
   return (
     <StyledStickyNavbar>
-      <div className='ghost-nav'>fdsfs</div>
       <div className='nav-wrapper'>
         <ul>
           <li className='logo'>
@@ -36,17 +35,12 @@ function Navbar() {
 }
 
 const StyledStickyNavbar = styled.div`
-  .ghost-nav {
-    height: 3.6em;
-    margin-bottom: 30px;
-  }
   .nav-wrapper {
-    position: fixed;
     top: 0;
     width: 100%;
     background: #d1e9ffff;
     z-index: 0;
-    padding: 15px 10px;
+    padding: 30px 10px;
     box-sizing: border-box;
     height: 3.6em;
     display: flex;
