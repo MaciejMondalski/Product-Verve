@@ -21,7 +21,7 @@ function Sidebar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to='/'>
+              <NavLink to='/create'>
                 <img src={AddIcon} alt='add project icon' />
                 <span>New Project</span>
               </NavLink>
@@ -56,7 +56,14 @@ const StyledSidebar = styled.div`
   .links {
     margin-top: 80px;
     margin-left: 20px;
-
+    .active {
+      color: #555;
+      background: var(--bg-color);
+      border-radius: 20px 0 0 20px;
+      img {
+        filter: invert(40%);
+      }
+    }
     li {
       margin-top: 10px;
     }
@@ -68,16 +75,6 @@ const StyledSidebar = styled.div`
       width: 100%;
       color: #fff;
       box-sizing: border-box;
-
-      .active {
-        color: #555;
-        background: var(--bg-color);
-        border-radius: 20px 0 0 20px;
-
-        img {
-          filter: invert(40%);
-        }
-      }
     }
 
     img {
