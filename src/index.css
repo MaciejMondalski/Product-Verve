@@ -5,6 +5,8 @@
   --heading-color: #444;
   --text-color: #999;
   --primary-color: #8d69f1;
+  --darker-color: #7657c9;
+  --nice-gray: #dbdee2d4;
   --highlight-color: #d13267;
   --bg-color: #f4f4f4;
 }
@@ -16,7 +18,13 @@ body {
   font-size: 1.1em;
   background: var(--bg-color);
 }
-ul, li, p, h1, h2, h3, h4 {
+ul,
+li,
+p,
+h1,
+h2,
+h3,
+h4 {
   margin: 0;
   padding: 0;
 }
@@ -53,7 +61,8 @@ label span {
   display: block;
   margin-bottom: 6px;
 }
-input, textarea {
+input,
+textarea {
   padding: 8px 6px;
   font-size: 1em;
   color: #777;
