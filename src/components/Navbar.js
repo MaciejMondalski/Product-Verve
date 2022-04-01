@@ -9,13 +9,6 @@ function Navbar() {
     <StyledStickyNavbar>
       <div className='nav-wrapper'>
         <ul>
-          <li className='logo'>
-            <Link to='/'>
-              {' '}
-              <img src={Temple} alt='verve logo' />
-              <span>Product Verve</span>
-            </Link>
-          </li>
           <div className='menu-wrapper'>
             <li>
               <Link to='login'>Login</Link>
@@ -38,11 +31,11 @@ const StyledStickyNavbar = styled.div`
   .nav-wrapper {
     top: 0;
     width: 100%;
-    background: #d1e9ffff;
+    //background: var(--nice-gray);
     z-index: 0;
     padding: 30px 10px;
     box-sizing: border-box;
-    height: 3.6em;
+    height: 4.2em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,7 +43,7 @@ const StyledStickyNavbar = styled.div`
 
   ul {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin: 0 auto;
     width: 90%;
@@ -80,10 +73,6 @@ const StyledStickyNavbar = styled.div`
     .menu-wrapper {
       display: flex;
       align-items: center;
-    }
-
-    li {
-      margin: 0 16px;
     }
 
     a {
