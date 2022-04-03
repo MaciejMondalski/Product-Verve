@@ -89,6 +89,7 @@ const StyledSidebar = styled.div`
       margin-right: 5px;
       filter: invert(95%);
       width: 32px;
+      margin-top: -2px;
     }
   }
 
