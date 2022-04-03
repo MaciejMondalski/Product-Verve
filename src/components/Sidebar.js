@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 // images
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
-import Temple from '../assets/temple.svg';
+import Logo from '../assets/pv_logo.svg';
 
 function Sidebar() {
   return (
@@ -13,7 +13,7 @@ function Sidebar() {
           <div className='logo'>
             <Link to='/'>
               {' '}
-              <img src={Temple} alt='verve logo' />
+              <img src={Logo} alt='verve logo' />
               <span>Product Verve</span>
             </Link>
           </div>
@@ -62,11 +62,13 @@ const StyledSidebar = styled.div`
   }
 
   .logo {
-    padding: 20px 30px;
+    //padding: 20px 30px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     height: 4.2em;
     box-sizing: border-box;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     a {
       letter-spacing: 1px;
       font-weight: bold;
@@ -78,14 +80,15 @@ const StyledSidebar = styled.div`
 
     span {
       color: var(--bg-color);
-      font-size: 1.3em;
+      font-size: 1.6em;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
     }
 
     img {
-      margin-right: 10px;
+      margin-right: 5px;
       filter: invert(95%);
-      width: 36px;
-      margin-top: -10px;
+      width: 32px;
     }
   }
 
