@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import '../index.css';
 
 import styled from 'styled-components';
-import Temple from '../assets/temple.svg';
 
 function Navbar() {
   return (
@@ -46,7 +45,7 @@ const StyledStickyNavbar = styled.div`
     justify-content: flex-end;
     align-items: center;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 
     .logo {
       a {
@@ -73,6 +72,7 @@ const StyledStickyNavbar = styled.div`
     .menu-wrapper {
       display: flex;
       align-items: center;
+      margin: 0 30px;
     }
 
     a {
