@@ -5,13 +5,42 @@ function Signup() {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [thumbnail, setThumbnail] = useState('');
+  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnailError, setThumbnailError] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(displayName, email, password, thumbnail);
+  };
+
+  const handleFileChange = (e) => {
+    setThumbnail(null);
+    let selected = e.target.files[0];
+    console.log(selected);
+
+    if (!selected) {
+      setThumbnailError('Please select a file');
+      return;
+    }
+    if (!selected.type.includes('image')) {
+      setThumbnailError('Selected file must be an image');
+      return;
+    }
+    if (!selected > 100000) {
+      setThumbnailError('Image file size must be less than 100kb');
+      return;
+    }
+
+    setThumbnailError(null);
+    setThumbnail(selected);
+    console.log('thumbnail updated');
+  };
 
   return (
-    <StyledAuthForm>
+    <StyledAuthForm onSubmit={handleSubmit}>
       <h2>Sign up</h2>
       <label>
-        <span>name:</span>
+        <span>display name:</span>
         <input
           type='text'
           onChange={(e) => setDisplayName(e.target.value)}
@@ -38,7 +67,8 @@ function Signup() {
       </label>
       <label>
         <span>profile picture:</span>
-        <input required type='file' />
+        <input required type='file' onChange={handleFileChange} />
+        {thumbnailError && <div className='error'>{thumbnailError}</div>}
       </label>
       <button className='btn'>Signup</button>
     </StyledAuthForm>
