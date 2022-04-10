@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useSignup } from '../hooks/useSignup';
 
 function Signup() {
   const [displayName, setDisplayName] = useState('');
@@ -7,10 +8,11 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailError, setThumbnailError] = useState(null);
+  const { signup, isPending, error } = useSignup();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(displayName, email, password, thumbnail);
+    signup(displayName, email, password, thumbnail);
   };
 
   const handleFileChange = (e) => {
@@ -70,7 +72,14 @@ function Signup() {
         <input required type='file' onChange={handleFileChange} />
         {thumbnailError && <div className='error'>{thumbnailError}</div>}
       </label>
-      <button className='btn'>Signup</button>
+      {!isPending && <button className='btn'>Sign up</button>}
+      {isPending && (
+        <button className='btn' disabled>
+          loading
+        </button>
+      )}
+
+      {error && <div className='error'>{error}</div>}
     </StyledAuthForm>
   );
 }
