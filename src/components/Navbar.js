@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import '../index.css';
+import { useLogout } from '../hooks/useLogout';
 
 import styled from 'styled-components';
 
 function Navbar() {
+  const { logout, error, isPending } = useLogout();
+
   return (
     <StyledStickyNavbar>
       <div className='nav-wrapper'>
@@ -17,7 +20,16 @@ function Navbar() {
             </li>
 
             <li>
-              <button className='btn'>Logout</button>
+              {!isPending && (
+                <button className='btn' onClick={logout}>
+                  Logout
+                </button>
+              )}
+              {isPending && (
+                <button className='btn' onClick={logout}>
+                  Logging out...
+                </button>
+              )}
             </li>
           </div>
         </ul>
