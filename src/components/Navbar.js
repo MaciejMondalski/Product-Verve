@@ -5,7 +5,7 @@ import { useLogout } from '../hooks/useLogout';
 import styled from 'styled-components';
 
 function Navbar() {
-  const { logout, error, isPending } = useLogout();
+  const { logout, isPending } = useLogout();
 
   return (
     <StyledStickyNavbar>
