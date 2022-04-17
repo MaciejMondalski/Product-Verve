@@ -1,17 +1,21 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { useLogin } from '../hooks/useLogin';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, isPending, error } = useLogin();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(email, password);
+  };
+
   return (
     <StyledLogin onSubmit={handleSubmit}>
-      <h2>Sign up</h2>
-      <label>
-        <span>display name:</span>
-        <input
-          type='text'
-          onChange={(e) => setDisplayName(e.target.value)}
-          value={displayName}
-        />
-      </label>
+      <h2>Login</h2>
+
       <label>
         <span>email:</span>
         <input
@@ -30,12 +34,8 @@ function Login() {
           value={password}
         />
       </label>
-      <label>
-        <span>profile picture:</span>
-        <input required type='file' onChange={handleFileChange} />
-        {thumbnailError && <div className='error'>{thumbnailError}</div>}
-      </label>
-      {!isPending && <button className='btn'>Sign up</button>}
+
+      {!isPending && <button className='btn'>Login</button>}
       {isPending && (
         <button className='btn' disabled>
           loading
@@ -47,6 +47,13 @@ function Login() {
   );
 }
 
-const StyledLogin = styled.div``;
+const StyledLogin = styled.form`
+  max-width: 360px;
+  margin: 60px auto;
+  padding: 40px;
+  border: 1px solid #ddd;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+  background: #fff;
+`;
 
 export default Login;
