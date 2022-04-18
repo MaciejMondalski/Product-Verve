@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
 import '../index.css';
 import { useLogout } from '../hooks/useLogout';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 import styled from 'styled-components';
 
 function Navbar() {
+  const { user } = useAuthContext();
+
   const { logout, isPending } = useLogout();
 
   return (
@@ -12,25 +15,33 @@ function Navbar() {
       <div className='nav-wrapper'>
         <ul>
           <div className='menu-wrapper'>
-            <li>
-              <Link to='login'>Login</Link>
-            </li>
-            <li>
-              <Link to='signup'>Sign up</Link>
-            </li>
+            {!user && (
+              <>
+                <li>
+                  <Link to='login'>Login</Link>
+                </li>
+                <li>
+                  <Link to='signup'>Sign up</Link>
+                </li>
+              </>
+            )}
 
-            <li>
-              {!isPending && (
-                <button className='btn' onClick={logout}>
-                  Logout
-                </button>
-              )}
-              {isPending && (
-                <button className='btn' onClick={logout}>
-                  Logging out...
-                </button>
-              )}
-            </li>
+            {user && (
+              <>
+                <li>
+                  {!isPending && (
+                    <button className='btn' onClick={logout}>
+                      Logout
+                    </button>
+                  )}
+                  {isPending && (
+                    <button className='btn' onClick={logout}>
+                      Logging out...
+                    </button>
+                  )}
+                </li>
+              </>
+            )}
           </div>
         </ul>
       </div>
