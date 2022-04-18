@@ -12,7 +12,7 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(displayName, email, password, thumbnail);
+    signup(email, password, displayName, thumbnail);
   };
 
   const handleFileChange = (e) => {
@@ -41,14 +41,7 @@ function Signup() {
   return (
     <StyledAuthForm onSubmit={handleSubmit}>
       <h2>Sign up</h2>
-      <label>
-        <span>display name:</span>
-        <input
-          type='text'
-          onChange={(e) => setDisplayName(e.target.value)}
-          value={displayName}
-        />
-      </label>
+
       <label>
         <span>email:</span>
         <input
@@ -65,6 +58,14 @@ function Signup() {
           type='password'
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+        />
+      </label>
+      <label>
+        <span>display name:</span>
+        <input
+          type='text'
+          onChange={(e) => setDisplayName(e.target.value)}
+          value={displayName}
         />
       </label>
       <label>
