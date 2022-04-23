@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
+import Avatar from './Avatar';
 
 // images
 import DashboardIcon from '../assets/dashboard_icon.svg';
@@ -16,7 +17,6 @@ function Sidebar() {
         <div className='side-header'>
           <div className='logo'>
             <Link to='/'>
-              {' '}
               <img src={Logo} alt='verve logo' />
               <span>Product Verve</span>
             </Link>
@@ -24,6 +24,7 @@ function Sidebar() {
 
           {user && (
             <div className='user'>
+              <Avatar src={user.photoURL} />
               <p>Hello {user.displayName}</p>
             </div>
           )}
@@ -100,10 +101,16 @@ const StyledSidebar = styled.div`
   }
 
   .user {
+    display: flex;
+    align-items: center;
     font-weight: medium;
     letter-spacing: 1px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 10px 30px;
+
+    p {
+      padding: 0 15px;
+    }
   }
 
   .links {
