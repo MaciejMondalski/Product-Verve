@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import Avatar from './Avatar';
+import Logo from './Logo';
 
 // images
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
-import Logo from '../assets/pv_logo.svg';
 
 function Sidebar() {
   const { user } = useAuthContext();
@@ -16,10 +16,7 @@ function Sidebar() {
       <div className='sidebar-content'>
         <div className='side-header'>
           <div className='logo'>
-            <Link to='/'>
-              <img src={Logo} alt='verve logo' />
-              <span>Product Verve</span>
-            </Link>
+            <Logo />
           </div>
 
           {user && (
@@ -69,35 +66,7 @@ const StyledSidebar = styled.div`
   }
 
   .logo {
-    //padding: 20px 30px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    height: 4.2em;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    a {
-      letter-spacing: 1px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-    }
-
-    span {
-      color: var(--bg-color);
-      font-size: 1.6em;
-      font-family: 'Chakra Petch', sans-serif;
-      font-weight: 700;
-    }
-
-    img {
-      margin-right: 5px;
-      filter: invert(95%);
-      width: 32px;
-      margin-top: -2px;
-    }
   }
 
   .user {
