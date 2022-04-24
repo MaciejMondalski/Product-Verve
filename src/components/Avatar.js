@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 function Avatar({ src }) {
   return (
-    <StyledAvatar>
+    <StyledAvatar className='avatar'>
       <img src={src} alt='user avatar' />
     </StyledAvatar>
   );
