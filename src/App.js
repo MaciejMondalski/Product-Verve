@@ -10,6 +10,7 @@ import Project from './pages/Project';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import UserList from './components/UserList';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -22,26 +23,29 @@ function App() {
 
           <div className='container'>
             <Navbar />
-            <div className='route-wrapper'>
-              <Routes>
-                <Route
-                  path='/'
-                  element={!user ? <Navigate to='/login' /> : <Dashboard />}
-                />
-                <Route
-                  path='/create'
-                  element={!user ? <Navigate to='/login' /> : <Create />}
-                />
-                <Route
-                  path='login'
-                  element={user ? <Navigate to='/' /> : <Login />}
-                />
-                <Route
-                  path='signup'
-                  element={user ? <Navigate to='/' /> : <Signup />}
-                />
-                <Route path='projects/:id' element={<Project />} />
-              </Routes>
+            <div className='below-nav'>
+              <div className='route-wrapper'>
+                <Routes>
+                  <Route
+                    path='/'
+                    element={!user ? <Navigate to='/login' /> : <Dashboard />}
+                  />
+                  <Route
+                    path='/create'
+                    element={!user ? <Navigate to='/login' /> : <Create />}
+                  />
+                  <Route
+                    path='login'
+                    element={user ? <Navigate to='/' /> : <Login />}
+                  />
+                  <Route
+                    path='signup'
+                    element={user ? <Navigate to='/' /> : <Signup />}
+                  />
+                  <Route path='projects/:id' element={<Project />} />
+                </Routes>
+              </div>
+              {user && <UserList />}
             </div>
           </div>
         </BrowserRouter>
