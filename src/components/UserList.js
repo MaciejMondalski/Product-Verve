@@ -14,6 +14,7 @@ function UserList() {
             <div className='user-list-item'>
               <Avatar src={user.photoURL} />
               <span>{user.displayName}</span>
+              {user.online && <span className='online-user'></span>}
             </div>
           ))}
       </div>
@@ -45,6 +46,15 @@ const StyledUserList = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin: 20px auto;
+
+    .online-user {
+      display: inline-block;
+      margin-left: 10px;
+      width: 12px;
+      height: 12px;
+      background: #0ebb50;
+      border-radius: 50%;
+    }
   }
 
   .avatar {
