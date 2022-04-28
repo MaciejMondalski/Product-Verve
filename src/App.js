@@ -23,7 +23,7 @@ function App() {
 
           <div className='container'>
             <Navbar />
-            <div className='below-nav'>
+            <div className={user ? 'below-nav' : 'below-nav center-content'}>
               <div className='route-wrapper'>
                 <Routes>
                   <Route
