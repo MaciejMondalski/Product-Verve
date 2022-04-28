@@ -86,7 +86,7 @@ function Signup() {
 }
 
 const StyledAuthForm = styled.form`
-  max-width: 360px;
+  width: 360px;
   margin: 60px auto;
   padding: 40px;
   border: 1px solid #ddd;
