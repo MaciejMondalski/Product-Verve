@@ -48,7 +48,8 @@ function Login() {
 }
 
 const StyledLogin = styled.form`
-  width: 360px;
+  max-width: 360px;
+  width: 100%;
   margin: 60px auto;
   padding: 40px;
   border: 1px solid #ddd;
