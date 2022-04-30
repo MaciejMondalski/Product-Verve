@@ -53,11 +53,9 @@ const StyledSidebar = styled.div`
   background: var(--primary-color);
   min-height: 100vh;
   box-sizing: border-box;
-  position: relative;
   color: #fff;
 
   .sidebar-content {
-    position: fixed;
     width: inherit;
   }
 
