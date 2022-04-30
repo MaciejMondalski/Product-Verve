@@ -11,9 +11,11 @@ function UserList() {
       <div className='user-list'>
         {documents &&
           documents.map((user) => (
-            <div className='user-list-item'>
-              <Avatar src={user.photoURL} />
-              <span>{user.displayName}</span>
+            <div key={user.id} className='user-list-item'>
+              <div className='user-wrapper'>
+                <Avatar src={user.photoURL} />
+                <span>{user.displayName}</span>
+              </div>
               {user.online && <span className='online-user'></span>}
             </div>
           ))}
@@ -43,17 +45,22 @@ const StyledUserList = styled.div`
 
   .user-list-item {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin: 20px auto;
 
+    .user-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
     .online-user {
-      display: inline-block;
-      margin-left: 10px;
+      margin: 0 10px;
       width: 12px;
       height: 12px;
       background: #0ebb50;
       border-radius: 50%;
+      justify-self: left;
     }
   }
 
