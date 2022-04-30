@@ -1,7 +1,19 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import Select from 'react-select';
+import { useCollection } from '../../hooks/useCollection';
+
+const categories = [
+  { value: 'development', label: 'Development' },
+  { value: 'design', label: 'Design' },
+  { value: 'sales', label: 'Sales' },
+  { value: 'marketing', label: 'Marketing' },
+];
 
 function Create() {
+  const { documents } = useCollection('');
+
+  // form field values
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -10,7 +22,7 @@ function Create() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, details, dueDate);
+    console.log(name, details, dueDate, category.value);
   };
 
   return (
@@ -46,11 +58,17 @@ function Create() {
         </label>
         <label>
           <span>Project category:</span>
-          {/* category select here */}
+          <Select
+            onChange={(option) => setCategory(option)}
+            options={categories}
+          />
         </label>
         <label>
           <span>Assign to:</span>
-          {/* assignee select here */}
+          <Select
+            onChange={(option) => setAssignedUsers(option)}
+            options={categories}
+          />{' '}
         </label>
         <button className='btn'>Add Project</button>
       </form>
@@ -61,7 +79,8 @@ function Create() {
 const StyledCreate = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  max-width: 500px;
+  min-width: 300px;
   width: 100%;
 `;
 
