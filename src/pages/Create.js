@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import Select from 'react-select';
-import { useCollection } from '../../hooks/useCollection';
+import { useCollection } from '../hooks/useCollection';
 
 const categories = [
   { value: 'development', label: 'Development' },
@@ -11,7 +11,7 @@ const categories = [
 ];
 
 function Create() {
-  const { documents } = useCollection('');
+  const { documents } = useCollection('users');
 
   // form field values
   const [name, setName] = useState('');
