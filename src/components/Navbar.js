@@ -73,12 +73,12 @@ const StyledStickyNavbar = styled.div`
     margin: 0 30px;
 
     span {
-      color: var(--darker-color);
+      color: var(--primary-color);
     }
 
     img {
-      filter: invert(43%) sepia(16%) saturate(3564%) hue-rotate(223deg)
-        brightness(83%) contrast(87%);
+      filter: invert(18%) sepia(67%) saturate(3286%) hue-rotate(198deg)
+        brightness(97%) contrast(98%);
     }
   }
 
