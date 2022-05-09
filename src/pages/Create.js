@@ -4,6 +4,8 @@ import Select from 'react-select';
 import { useCollection } from '../hooks/useCollection';
 import { timestamp } from '../firebase/config';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useFirestore } from '../hooks/useFirestore';
+import { useNavigate } from 'react-router-dom';
 
 const categories = [
   { value: 'development', label: 'Development' },
@@ -13,9 +15,11 @@ const categories = [
 ];
 
 function Create() {
+  const navigate = useNavigate();
+  const { addDocument, response } = useFirestore('projects');
+  const { user } = useAuthContext();
   const { documents } = useCollection('users');
   const [users, setUsers] = useState([]);
-  const { user } = useAuthContext();
 
   // form field values
   const [name, setName] = useState('');
@@ -25,32 +29,29 @@ function Create() {
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [formError, setFormError] = useState(null);
 
+  // create user values for react-select
   useEffect(() => {
     if (documents) {
-      const options = documents.map((user) => {
-        return { value: user, label: user.displayName };
-      });
-      setUsers(options);
+      setUsers(
+        documents.map((user) => {
+          return { value: { ...user, id: user.id }, label: user.displayName };
+        })
+      );
     }
   }, [documents]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError(null);
+
     if (!category) {
-      setFormError('Please select a project category');
+      setFormError('Please select a project category.');
       return;
     }
     if (assignedUsers.length < 1) {
       setFormError('Please assign the project to at least 1 user');
       return;
     }
-
-    const createdBy = {
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      id: user.uid,
-    };
 
     const assignedUsersList = assignedUsers.map((u) => {
       return {
@@ -59,18 +60,26 @@ function Create() {
         id: u.value.id,
       };
     });
+    const createdBy = {
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      id: user.uid,
+    };
 
     const project = {
       name,
       details,
+      assignedUsersList,
+      createdBy,
       category: category.value,
       dueDate: timestamp.fromDate(new Date(dueDate)),
       comments: [],
-      createdBy,
-      assignedUsersList,
     };
 
-    console.log(project);
+    await addDocument(project);
+    if (!response.error) {
+      navigate('/');
+    }
   };
 
   return (
