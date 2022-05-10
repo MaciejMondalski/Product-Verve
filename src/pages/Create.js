@@ -136,6 +136,7 @@ function Create() {
 }
 
 const StyledCreate = styled.div`
+  margin: auto;
   display: flex;
   flex-direction: column;
   max-width: 500px;
