@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useDocument } from '../hooks/useDocument';
+import ProjectSummary from './ProjectSummary';
 
 function Project() {
   const { id } = useParams();
@@ -15,10 +16,18 @@ function Project() {
     return <div className='loading'>Loading...</div>;
   }
   return (
-    <div className='project-details'>
-      <h1>{document.name}</h1>
-    </div>
+    <StyledProject>
+      <ProjectSummary project={document} />
+    </StyledProject>
   );
 }
+
+const StyledProject = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: start;
+  grid-gap: 60px;
+  width: 100%;
+`;
 
 export default Project;
