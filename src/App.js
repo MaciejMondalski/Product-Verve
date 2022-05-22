@@ -6,7 +6,7 @@ import './App.scss';
 import Dashboard from './pages/Dashboard';
 import Create from './pages/Create';
 import Login from './pages/Login';
-import Project from './pages/Project';
+import Project from './pages/project/Project';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';

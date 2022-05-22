@@ -11,13 +11,13 @@
       height: 100%;
     }
     .center-content {
+      display: flex;
       justify-content: center;
     }
 
     .route-wrapper {
       padding: 60px;
       flex-grow: 1;
-      display: flex;
     }
   }
 }
