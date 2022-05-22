@@ -25,7 +25,7 @@ function UserList() {
 }
 
 const StyledUserList = styled.div`
-  width: 250px;
+  min-width: 230px;
   min-height: 250px;
   box-sizing: border-box;
   background: #fbfbfb;
