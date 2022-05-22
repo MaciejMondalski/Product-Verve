@@ -48,8 +48,7 @@ function Sidebar() {
 }
 
 const StyledSidebar = styled.div`
-  width: 300px;
-  min-width: 300px;
+  min-width: 280px;
   background: var(--primary-color);
   min-height: 100vh;
   box-sizing: border-box;
