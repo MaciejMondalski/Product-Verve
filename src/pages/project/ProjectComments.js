@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { timestamp } from '../../firebase/config';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import styled from 'styled-components';
+import { useFirestore } from '../../hooks/useFirestore';
 
 const ProjectComments = () => {
   const [newComment, setNewComment] = useState('');
   const { user } = useAuthContext();
+  const { updateDocument, response } = useFirestore('projects');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
