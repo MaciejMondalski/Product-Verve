@@ -19,7 +19,7 @@ function Project() {
   return (
     <StyledProject>
       <ProjectSummary project={document} />
-      <ProjectComments />
+      <ProjectComments project={document} />
     </StyledProject>
   );
 }
