@@ -36,13 +36,11 @@ const ProjectComments = ({ project }) => {
         {project.comments.length > 0 &&
           project.comments.map((comment) => (
             <li key={comment.id}>
-              <div className='top-row'>
+              <div className='comment-info'>
                 <div className='comment-author'>
                   <Avatar src={comment.photoURL} />
                   <p>{comment.displayName}</p>
-                </div>
-                <div className='comment-date'>
-                  <p>date here</p>
+                  <p className='comment-date'>date here</p>
                 </div>
               </div>
               <div className='comment-content'>
@@ -73,7 +71,8 @@ const StyledComments = styled.div`
   }
   textarea {
     min-height: 40px;
-    font-size: 1.5em;
+    font-size: 0.9em;
+    font-family: Poppins, sans-serif;
   }
 
   /* project comments */
@@ -83,7 +82,7 @@ const StyledComments = styled.div`
   }
 
   li {
-    padding: 16px;
+    padding: 0.9em;
     border-radius: 4px;
     border: 1px solid #f2f2f2;
     margin-top: 20px;
@@ -101,15 +100,17 @@ const StyledComments = styled.div`
       height: 30px;
       margin-right: 10px;
     }
+    .comment-date {
+      color: var(--text-color);
+      font-size: 0.8em;
+      margin-left: 10px;
+    }
   }
-  .comment-date {
-    color: var(--text-color);
-    font-size: 0.9em;
-    margin: 4px 0 10px;
-  }
+
   .comment-content {
     color: var(--text-color);
     font-size: 0.9em;
+    margin: 0.9em 0 0 0;
   }
 `;
 
