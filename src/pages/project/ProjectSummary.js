@@ -1,11 +1,24 @@
 import styled from 'styled-components';
 import Avatar from '../../components/Avatar';
+import { useFirestore } from '../../hooks/useFirestore';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectSummary = ({ project }) => {
+  const { deleteDocument } = useFirestore('projects');
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    deleteDocument(project.id);
+    navigate('/');
+  };
+
   return (
     <StyledProjectSummary>
       <div className='project-summary'>
         <h2 className='page-title'>{project.name}</h2>
+        <p>Created by {project.createdBy.displayName}</p>
         <p className='due-date'>
           Project due by {project.dueDate.toDate().toDateString()}
         </p>
@@ -16,20 +29,26 @@ const ProjectSummary = ({ project }) => {
             <div key={user.id}>
               <Avatar src={user.photoURL} />
             </div>
-          ))}{' '}
+          ))}
         </div>
       </div>
+      {user.uid === project.createdBy.id && (
+        <div className='btn' onClick={handleClick}>
+          Mark as Complete
+        </div>
+      )}
     </StyledProjectSummary>
   );
 };
 
 const StyledProjectSummary = styled.div`
-  /* project summary */
-  .project-summary {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 4px;
 
+  .project-summary {
     .due-date {
       margin: 10px 0;
       font-size: 0.9em;
