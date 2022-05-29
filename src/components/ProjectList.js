@@ -31,7 +31,7 @@ function ProjectList({ projects }) {
 const StyledProjectList = styled.div`
   margin-top: 40px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   grid-gap: 20px;
 
   a {
