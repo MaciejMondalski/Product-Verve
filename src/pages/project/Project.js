@@ -12,7 +12,6 @@ function Project() {
     return <div className='error'>{error}</div>;
   }
 
-  console.log(error);
   if (!document) {
     return <div className='loading'>Loading...</div>;
   }
