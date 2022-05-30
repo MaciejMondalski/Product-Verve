@@ -4,6 +4,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import styled from 'styled-components';
 import { useFirestore } from '../../hooks/useFirestore';
 import Avatar from '../../components/Avatar';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const ProjectComments = ({ project }) => {
   const [newComment, setNewComment] = useState('');
@@ -36,11 +37,11 @@ const ProjectComments = ({ project }) => {
         {project.comments.length > 0 &&
           project.comments.map((comment) => (
             <li key={comment.id}>
-              <div className='comment-info'>
-                <div className='comment-author'>
-                  <Avatar src={comment.photoURL} />
-                  <p>{comment.displayName}</p>
-                  <p className='comment-date'>date here</p>
+              <div className='comment-author'>
+                <Avatar src={comment.photoURL} />
+                <p>{comment.displayName}</p>
+                <div className='comment-date'>
+                  <p>{formatDistanceToNow(comment.createdAt.toDate(), { addSuffix: true })}</p>
                 </div>
               </div>
               <div className='comment-content'>
@@ -53,11 +54,7 @@ const ProjectComments = ({ project }) => {
       <form className='add-comment' onSubmit={handleSubmit}>
         <label>
           <span>Add new comment:</span>
-          <textarea
-            required
-            onChange={(e) => setNewComment(e.target.value)}
-            value={newComment}
-          ></textarea>
+          <textarea required onChange={(e) => setNewComment(e.target.value)} value={newComment}></textarea>
         </label>
         <button className='btn'>Add Comment</button>
       </form>
@@ -102,13 +99,13 @@ const StyledComments = styled.div`
     }
     .comment-date {
       color: var(--text-color);
-      font-size: 0.8em;
+      font-size: 0.7em;
       margin-left: 10px;
     }
   }
 
   .comment-content {
-    color: var(--text-color);
+    color: black;
     font-size: 0.9em;
     margin: 0.9em 0 0 0;
   }
