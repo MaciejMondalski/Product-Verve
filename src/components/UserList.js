@@ -1,42 +1,92 @@
 import styled from 'styled-components';
 import { useCollection } from '../hooks/useCollection';
 import Avatar from './Avatar';
+import { useState } from 'react';
+
+// icon
+import ArrowIcon from '../assets/arrow_icon.svg';
 
 function UserList() {
   const { documents, error } = useCollection('users');
+  const [userListStatus, setUserListStatus] = useState(false);
+
   return (
     <StyledUserList>
-      <h2>All Users</h2>
-      {error && <div className='error'>{error}</div>}
-      <div className='user-list'>
-        {documents &&
-          documents.map((user) => (
-            <div key={user.id} className='user-list-item'>
-              <div className='user-wrapper'>
-                <Avatar src={user.photoURL} />
-                <span>{user.displayName}</span>
+      <div className={`userlist-wrapper ${userListStatus ? 'active-userlist' : ''}`}>
+        <div className='top-row'>
+          <h2>User List</h2>
+          <img className='arrow' src={ArrowIcon} alt='arrow icon' onClick={() => setUserListStatus(!userListStatus)} />
+        </div>
+        {error && <div className='error'>{error}</div>}
+        <div className='user-list'>
+          {documents &&
+            documents.map((user) => (
+              <div key={user.id} className='user-list-item'>
+                <div className='user-wrapper'>
+                  <Avatar src={user.photoURL} />
+                  <span>{user.displayName}</span>
+                </div>
+                {user.online && <span className='online-user'></span>}
               </div>
-              {user.online && <span className='online-user'></span>}
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </StyledUserList>
   );
 }
 
-const StyledUserList = styled.div`
-  min-width: 230px;
-  min-height: 250px;
-  box-sizing: border-box;
-  background: #fbfbfb;
-  color: var(--heading-color);
+// {`library ${userListStatus ? 'active-userlist' : ''}`}
 
-  h2 {
-    text-align: left;
-    margin: 10px 20px;
-    font-size: 1.2em;
+const StyledUserList = styled.div`
+  .userlist-wrapper {
+    min-width: 230px;
+    min-height: 100%;
+    box-sizing: border-box;
+    background: #fbfbfb;
+    color: var(--heading-color);
+    border-radius: 6px;
+    box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.05);
+
+    position: fixed;
+    top: 0em;
+    right: 0em;
+    overflow: scroll;
+    transform: translateY(94%);
+    transition: all 0.5s ease;
+  }
+
+  .active-userlist {
+    transform: translateY(4.2em);
+
+    .arrow {
+      transform: rotate(90deg);
+    }
+  }
+
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid rgba(185, 185, 185, 0.322);
-    padding: 10px 0;
+    margin: 5px 0;
+
+    h2 {
+      font-size: 1.2em;
+      padding: 10px 0;
+      margin: 0 14px;
+    }
+
+    img {
+      transition: 0.1s ease;
+      margin: 0 14px;
+      transform: rotate(-90deg);
+      border-radius: 50%;
+      padding: 6px;
+
+      &:hover {
+        background: rgba(214, 214, 214, 1);
+      }
+    }
   }
 
   .user-list {
