@@ -51,7 +51,7 @@ const StyledUserList = styled.div`
     top: 0em;
     right: 0em;
     overflow: scroll;
-    transform: translateY(94%);
+    transform: translateY(95%);
     transition: all 0.5s ease;
   }
 
@@ -67,11 +67,11 @@ const StyledUserList = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(185, 185, 185, 0.322);
-    margin: 5px 0;
+    border-bottom: 3px solid rgba(185, 185, 185, 0.322);
+    margin: 0;
 
     h2 {
-      font-size: 1.2em;
+      font-size: 1.1em;
       padding: 10px 0;
       margin: 0 14px;
     }
@@ -89,15 +89,12 @@ const StyledUserList = styled.div`
     }
   }
 
-  .user-list {
-    padding: 0 20px;
-  }
-
   .user-list-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px auto;
+    border-bottom: 1px solid rgba(185, 185, 185, 0.322);
+    padding: 10px 12px;
 
     .user-wrapper {
       display: flex;
