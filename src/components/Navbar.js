@@ -23,19 +23,23 @@ function Navbar() {
           {!user ? (
             <>
               <li>
-                <Link to='login'>Login</Link>
+                <Link className='before-log' to='login'>
+                  Login
+                </Link>
               </li>
               <li>
-                <Link to='signup'>Sign up</Link>
+                <Link className='before-log' to='signup'>
+                  Sign up
+                </Link>
               </li>
             </>
           ) : (
             <>
               <li>
                 {!isPending && (
-                  <button className='btn' onClick={logout}>
+                  <Link to='login' className='btn' onClick={logout}>
                     Logout
-                  </button>
+                  </Link>
                 )}
                 {isPending && (
                   <button className='btn' onClick={logout}>
@@ -77,8 +81,7 @@ const StyledStickyNavbar = styled.div`
     }
 
     img {
-      filter: invert(18%) sepia(67%) saturate(3286%) hue-rotate(198deg)
-        brightness(97%) contrast(98%);
+      filter: invert(18%) sepia(67%) saturate(3286%) hue-rotate(198deg) brightness(97%) contrast(98%);
     }
   }
 
@@ -88,9 +91,12 @@ const StyledStickyNavbar = styled.div`
     justify-content: flex-end;
     margin: 0 30px;
 
+    .before-log {
+      color: #333;
+    }
+
     a {
       text-decoration: none;
-      color: #333;
       margin: 0 10px;
       font-weight: 500;
     }
