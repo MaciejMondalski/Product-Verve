@@ -77,7 +77,7 @@ const StyledUserList = styled.div`
     }
 
     img {
-      transition: 0.1s ease;
+      transition: 0.2s ease;
       margin: 0 14px;
       transform: rotate(-90deg);
       border-radius: 50%;
