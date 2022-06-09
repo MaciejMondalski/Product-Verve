@@ -1,5 +1,7 @@
+import { signOut } from 'firebase/auth';
+import { doc, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { projectAuth, projectFirestore } from '../firebase/config';
+import { auth, db } from '../firebase/config';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 export const useLogout = () => {
@@ -11,17 +13,18 @@ export const useLogout = () => {
   const logout = async () => {
     setError(null);
     setIsPending(true);
+    console.log('useLogout was activated');
 
-    //sign the user out
     try {
       //update online status
       const { uid } = user;
-      await projectFirestore
-        .collection('users')
-        .doc(uid)
-        .update({ online: false });
+      const ref = doc(db, 'users', uid);
+      await updateDoc(ref, {
+        online: false,
+      });
 
-      await projectAuth.signOut();
+      //sign the user out
+      await signOut(auth);
 
       // dispatch logout action
       dispatch({ type: 'LOGOUT' });
