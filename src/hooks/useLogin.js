@@ -1,4 +1,5 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, updateDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { auth, db } from '../firebase/config';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -12,26 +13,30 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setError(null);
     setIsPending(true);
+    console.log('useLogin activated');
+    try {
+      // login
+      const res = await signInWithEmailAndPassword(auth, email, password);
 
-    // login user
-    signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        dispatch({ type: 'LOGIN', payload: res.user });
-      })
-      .then((res) => {
-        db.collection('users').doc(res.user.uid).update({ online: true });
-      })
-      .catch((err) => {
-        if (!isCancelled) {
-          console.log(err.message);
-          setError(err.message);
-          setIsPending(false);
-        }
-      });
+      // update online status
+      const documentRef = doc(db, 'users', res.user.uid);
+      await updateDoc(documentRef, { online: true });
 
-    // update online status
+      // dispatch login action
+      dispatch({ type: 'LOGIN', payload: res.user });
 
-    // update state
+      // update state
+      if (!isCancelled) {
+        setIsPending(false);
+        setError(null);
+      }
+    } catch (err) {
+      if (!isCancelled) {
+        console.log(err.message);
+        setError(err.message);
+        setIsPending(false);
+      }
+    }
   };
 
   useEffect(() => {
