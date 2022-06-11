@@ -23,12 +23,12 @@ const db = getFirestore();
 
 // init firebase auth
 
-const auth = getAuth;
+const auth = getAuth();
 
 // init firebase storage
 const storage = getStorage();
 
 // timestamp
-const timestamp = Timestamp.now();
+const timestamp = Timestamp;
 
 export { db, auth, storage, timestamp };
