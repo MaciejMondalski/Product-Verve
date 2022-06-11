@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
-import {
-  projectAuth,
-  projectStorage,
-  projectFirestore,
-} from '../firebase/config';
+import { auth, storage, db } from '../firebase/config';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export const useSignup = () => {
   const [isCancelled, setSetIsCancelled] = useState(false);
@@ -17,12 +14,8 @@ export const useSignup = () => {
     setIsPending(true);
 
     try {
-      // signup user
-      const res = await projectAuth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log(res.user);
+      // signup
+      const res = await createUserWithEmailAndPassword(auth, password);
 
       if (!res) {
         throw new Error('Could not complete signup');
@@ -30,14 +23,14 @@ export const useSignup = () => {
 
       // upload user thumbnail
       const uploadPath = `thumbnails/${res.user.uid}/${thumbnail.name}`;
-      const img = await projectStorage.ref(uploadPath).put(thumbnail);
+      const img = await storage.ref(uploadPath).put(thumbnail);
       const imgUrl = await img.ref.getDownloadURL();
 
-      // add display and photoURL name to user
+      // add display AND PHOTO_URL name to user
       await res.user.updateProfile({ displayName, photoURL: imgUrl });
 
       // create a user document
-      await projectFirestore.collection('users').doc(res.user.uid).set({
+      await db.collection('users').doc(res.user.uid).set({
         online: true,
         displayName,
         photoURL: imgUrl,
@@ -46,20 +39,17 @@ export const useSignup = () => {
       // dispatch login action
       dispatch({ type: 'LOGIN', payload: res.user });
 
-      // update state
       if (!isCancelled) {
         setIsPending(false);
         setError(null);
       }
     } catch (err) {
       if (!isCancelled) {
-        console.log(err.message);
         setError(err.message);
         setIsPending(false);
       }
     }
   };
-
   useEffect(() => {
     return () => {
       setSetIsCancelled(true);
