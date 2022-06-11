@@ -51,6 +51,8 @@ const StyledProjectSummary = styled.div`
   }
 
   .project-summary {
+    word-break: break-all;
+
     .due-date {
       margin: 10px 0;
       font-size: 0.9em;
