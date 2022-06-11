@@ -88,45 +88,23 @@ function Create() {
       <form onSubmit={handleSubmit}>
         <label>
           <span>Project name:</span>
-          <input
-            required
-            type='text'
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
+          <input required type='text' onChange={(e) => setName(e.target.value)} value={name} />
         </label>
         <label>
           <span>Project Details:</span>
-          <textarea
-            required
-            type='text'
-            onChange={(e) => setDetails(e.target.value)}
-            value={details}
-          ></textarea>
+          <textarea required type='text' onChange={(e) => setDetails(e.target.value)} value={details}></textarea>
         </label>
         <label>
           <span>Set due date:</span>
-          <input
-            required
-            type='date'
-            onChange={(e) => setDueDate(e.target.value)}
-            value={dueDate}
-          />
+          <input required type='date' onChange={(e) => setDueDate(e.target.value)} value={dueDate} />
         </label>
         <label>
           <span>Project category:</span>
-          <Select
-            onChange={(option) => setCategory(option)}
-            options={categories}
-          />
+          <Select onChange={(option) => setCategory(option)} options={categories} />
         </label>
         <label>
           <span>Assign to:</span>
-          <Select
-            onChange={(option) => setAssignedUsers(option)}
-            options={users}
-            isMulti
-          />
+          <Select onChange={(option) => setAssignedUsers(option)} options={users} isMulti />
         </label>
         <button className='btn'>Add Project</button>
         {formError && <p className='error'>{formError}</p>}
