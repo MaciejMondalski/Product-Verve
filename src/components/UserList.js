@@ -15,9 +15,9 @@ function UserList() {
   return (
     <StyledUserList>
       <div className={`userlist-wrapper ${userListStatus ? 'active-userlist' : ''}`}>
-        <div className='top-row'>
+        <div className='top-row' onClick={() => setUserListStatus(!userListStatus)}>
           <h2>User List</h2>
-          <img className='arrow' src={ArrowIcon} alt='arrow icon' onClick={() => setUserListStatus(!userListStatus)} />
+          <img className='arrow' src={ArrowIcon} alt='arrow icon' />
         </div>
         {error && <div className='error'>{error}</div>}
         <div className='user-list'>
