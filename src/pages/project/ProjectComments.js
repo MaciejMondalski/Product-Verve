@@ -44,8 +44,6 @@ const ProjectComments = ({ project }) => {
 
     const filteredArray = commentsArray.filter((comment) => comment.id !== id);
 
-    console.log(filteredArray);
-
     await updateDocument(project.id, {
       comments: [...filteredArray],
     });
@@ -113,10 +111,10 @@ const StyledComments = styled.div`
   }
 
   li {
-    padding: 0.9em;
+    padding: 0.7em;
     border-radius: 4px;
     border: 1px solid #f2f2f2;
-    margin-top: 20px;
+    margin-top: 12px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
     background: #fff;
     position: relative;
@@ -126,8 +124,9 @@ const StyledComments = styled.div`
     position: absolute;
     right: 0;
     top: 0;
-    margin: 5px;
-    height: 1em;
+    margin: 8px;
+    height: 0.9em;
+    filter: invert(45%) sepia(7%) saturate(250%) hue-rotate(202deg) brightness(93%) contrast(91%);
   }
 
   .comment-author {
