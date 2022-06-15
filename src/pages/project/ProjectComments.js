@@ -5,28 +5,50 @@ import styled from 'styled-components';
 import { useFirestore } from '../../hooks/useFirestore';
 import Avatar from '../../components/Avatar';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import TrashIcon from '../../assets/trash_icon.svg';
 
 const ProjectComments = ({ project }) => {
   const [newComment, setNewComment] = useState('');
   const { user } = useAuthContext();
   const { updateDocument, response } = useFirestore('projects');
 
+  const commentsArray = project.comments;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const createdBy = {
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      userId: user.uid,
+    };
 
     const commentToAdd = {
       displayName: user.displayName,
       photoURL: user.photoURL,
       content: newComment,
       createdAt: timestamp.fromDate(new Date()),
+      createdBy,
       id: Math.random(),
     };
     await updateDocument(project.id, {
-      comments: [...project.comments, commentToAdd],
+      comments: [...commentsArray, commentToAdd],
     });
     if (!response.error) {
       setNewComment('');
     }
+  };
+
+  const handleDeleteComment = async (e, id) => {
+    e.preventDefault();
+
+    const filteredArray = commentsArray.filter((comment) => comment.id !== id);
+
+    console.log(filteredArray);
+
+    await updateDocument(project.id, {
+      comments: [...filteredArray],
+    });
   };
 
   return (
@@ -37,6 +59,17 @@ const ProjectComments = ({ project }) => {
         {project.comments.length > 0 &&
           project.comments.map((comment) => (
             <li key={comment.id}>
+              {user.uid === comment.createdBy.userId && (
+                <img
+                  className='delete-comment'
+                  src={TrashIcon}
+                  alt='trash icon'
+                  onClick={(e) => {
+                    handleDeleteComment(e, comment.id);
+                  }}
+                />
+              )}
+
               <div className='comment-author'>
                 <Avatar src={comment.photoURL} />
                 <p>{comment.displayName}</p>
@@ -44,6 +77,7 @@ const ProjectComments = ({ project }) => {
                   <p>{formatDistanceToNow(comment.createdAt.toDate(), { addSuffix: true })}</p>
                 </div>
               </div>
+
               <div className='comment-content'>
                 <p>{comment.content}</p>
               </div>
@@ -85,6 +119,15 @@ const StyledComments = styled.div`
     margin-top: 20px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
     background: #fff;
+    position: relative;
+  }
+
+  .delete-comment {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 5px;
+    height: 1em;
   }
 
   .comment-author {
