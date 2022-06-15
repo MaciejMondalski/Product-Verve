@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useCollection } from '../hooks/useCollection';
 import Avatar from './Avatar';
 import { useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 // icon
 import ArrowIcon from '../assets/arrow_icon.svg';
@@ -9,6 +10,7 @@ import ArrowIcon from '../assets/arrow_icon.svg';
 function UserList() {
   const { documents, error } = useCollection('users');
   const [userListStatus, setUserListStatus] = useState(false);
+  const { user: loggedInUser } = useAuthContext();
 
   return (
     <StyledUserList>
@@ -19,16 +21,25 @@ function UserList() {
         </div>
         {error && <div className='error'>{error}</div>}
         <div className='user-list'>
+          <div className='user-list-item'>
+            <div className='user-wrapper'>
+              <Avatar src={loggedInUser.photoURL} />
+              <span>{loggedInUser.displayName}</span>
+            </div>
+            <span className='online-user'></span>
+          </div>
           {documents &&
-            documents.map((user) => (
-              <div key={user.id} className='user-list-item'>
-                <div className='user-wrapper'>
-                  <Avatar src={user.photoURL} />
-                  <span>{user.displayName}</span>
+            documents
+              .filter((user) => user.id !== loggedInUser.uid)
+              .map((user) => (
+                <div key={user.id} className='user-list-item'>
+                  <div className='user-wrapper'>
+                    <Avatar src={user.photoURL} />
+                    <span>{user.displayName}</span>
+                  </div>
+                  {user.online && <span className='online-user'></span>}
                 </div>
-                {user.online && <span className='online-user'></span>}
-              </div>
-            ))}
+              ))}
         </div>
       </div>
     </StyledUserList>
