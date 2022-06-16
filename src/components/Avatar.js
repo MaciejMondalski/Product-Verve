@@ -9,7 +9,6 @@ function Avatar({ src }) {
 }
 
 const StyledAvatar = styled.div`
-  display: inline-block;
   width: 50px;
   height: 50px;
   border-radius: 50%;
