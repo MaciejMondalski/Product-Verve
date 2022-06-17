@@ -2,14 +2,20 @@ import { Link } from 'react-router-dom';
 import '../index.css';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
-
+import { useState } from 'react';
 import styled from 'styled-components';
 import Logo from './Logo';
+import Avatar from './Avatar';
+import Dropdown from './Dropdown';
 
 function Navbar() {
   const { user } = useAuthContext();
-
+  const [dropdownStatus, setDropdownStatus] = useState(false);
   const { logout, isPending } = useLogout();
+
+  const handleDropdownClose = () => {
+    setDropdownStatus(!dropdownStatus);
+  };
 
   return (
     <StyledStickyNavbar>
@@ -47,6 +53,13 @@ function Navbar() {
                   </button>
                 )}
               </li>
+              <div className='user'>
+                <p>Hello {user.displayName}</p>
+                <div className='avatar-wrapper' onClick={handleDropdownClose}>
+                  <Avatar src={user.photoURL} />
+                </div>
+                {dropdownStatus && <Dropdown status={dropdownStatus} onClickOutside={handleDropdownClose} />}
+              </div>
             </>
           )}
         </ul>
@@ -55,11 +68,15 @@ function Navbar() {
   );
 }
 
+// !dropdownStatus &&
+
 const StyledStickyNavbar = styled.div`
   .nav-wrapper {
     top: 0;
     width: 100%;
-    //background: var(--nice-gray);
+    background: white;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+
     z-index: 0;
     padding: 30px 10px;
     box-sizing: border-box;
@@ -69,8 +86,20 @@ const StyledStickyNavbar = styled.div`
     justify-content: flex-end;
   }
 
+  .user {
+    display: flex;
+    align-items: center;
+  }
+
   .no-user {
     justify-content: space-between;
+    background: none;
+    box-shadow: none;
+  }
+
+  .avatar-wrapper {
+    margin-left: 15px;
+    position: relative;
   }
 
   .logo {
