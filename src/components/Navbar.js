@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import '../index.css';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Logo from './Logo';
 import Avatar from './Avatar';
@@ -12,6 +12,7 @@ function Navbar() {
   const { user } = useAuthContext();
   const [dropdownStatus, setDropdownStatus] = useState(false);
   const { logout, isPending } = useLogout();
+  const ref = useRef(null);
 
   const handleDropdownClose = () => {
     setDropdownStatus(!dropdownStatus);
@@ -55,10 +56,12 @@ function Navbar() {
               </li>
               <div className='user'>
                 <p>Hello {user.displayName}</p>
-                <div className='avatar-wrapper' onClick={handleDropdownClose}>
+                <div ref={ref} className='avatar-wrapper' onClick={handleDropdownClose}>
                   <Avatar src={user.photoURL} />
                 </div>
-                {dropdownStatus && <Dropdown status={dropdownStatus} onClickOutside={handleDropdownClose} />}
+                {dropdownStatus && (
+                  <Dropdown avatarRef={ref} status={dropdownStatus} onClickOutside={handleDropdownClose} />
+                )}
               </div>
             </>
           )}

@@ -1,19 +1,22 @@
 import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
 
-function Dropdown({ onClickOutside, status }) {
+function Dropdown({ onClickOutside, status, avatarRef }) {
   const ref = useRef(null);
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        onClickOutside();
+      if (ref.current && !ref.current.contains(e.target) && !avatarRef.current.contains(e.target)) {
+        onClickOutside && onClickOutside();
+        console.log();
       }
     };
     document.addEventListener('click', handleClickOutside, true);
-    if (!status) {
+    return () => {
       document.removeEventListener('click', handleClickOutside, true);
-    }
-  }, [onClickOutside, status]);
+    };
+  }, [onClickOutside, avatarRef]);
+
+  if (!status) return null;
 
   return (
     <StyledDropdown ref={ref}>
