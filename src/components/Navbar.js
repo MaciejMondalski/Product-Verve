@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import '../index.css';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Logo from './Logo';
 import Avatar from './Avatar';
@@ -13,6 +13,10 @@ function Navbar() {
   const [dropdownStatus, setDropdownStatus] = useState(false);
   const { logout, isPending } = useLogout();
   const ref = useRef(null);
+
+  useEffect(() => {
+    if (!user) setDropdownStatus(false);
+  }, [user]);
 
   const handleDropdownClose = () => {
     setDropdownStatus(!dropdownStatus);
@@ -42,18 +46,6 @@ function Navbar() {
             </>
           ) : (
             <>
-              <li>
-                {!isPending && (
-                  <Link to='login' className='btn' onClick={logout}>
-                    Logout
-                  </Link>
-                )}
-                {isPending && (
-                  <button className='btn' onClick={logout}>
-                    Logging out...
-                  </button>
-                )}
-              </li>
               <div className='user'>
                 <p>Hello {user.displayName}</p>
                 <div ref={ref} className='avatar-wrapper' onClick={handleDropdownClose}>

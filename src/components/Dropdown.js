@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
+import { useLogout } from '../hooks/useLogout';
+import { Link } from 'react-router-dom';
 
 function Dropdown({ onClickOutside, status, avatarRef }) {
   const ref = useRef(null);
+  const { logout, isPending } = useLogout();
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target) && !avatarRef.current.contains(e.target)) {
@@ -24,8 +28,15 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
         <ul>
           <li>Profile</li>
           <li>Settings</li>
-          <li>Logout</li>
-          <li></li>
+
+          {!isPending && (
+            <li>
+              <Link className='logout' to='login' onClick={logout}>
+                Logout
+              </Link>
+            </li>
+          )}
+          {isPending && <li onClick={logout}>Logging out...</li>}
         </ul>
       </div>
     </StyledDropdown>
@@ -34,8 +45,7 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
 
 const StyledDropdown = styled.div`
   .dropdown-wrapper {
-    height: 220px;
-    width: 200px;
+    width: 180px;
     background: white;
     position: absolute;
     top: 9%;
@@ -60,6 +70,13 @@ const StyledDropdown = styled.div`
     margin: 5px 10px;
     li {
       margin: 5px 0;
+
+      .logout {
+        text-decoration: none;
+        margin: 0px;
+        color: black;
+        font-weight: 400;
+      }
     }
   }
 `;
