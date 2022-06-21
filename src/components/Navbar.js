@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import '../index.css';
-import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
@@ -11,7 +10,6 @@ import Dropdown from './Dropdown';
 function Navbar() {
   const { user } = useAuthContext();
   const [dropdownStatus, setDropdownStatus] = useState(false);
-  const { logout, isPending } = useLogout();
   const ref = useRef(null);
 
   useEffect(() => {
