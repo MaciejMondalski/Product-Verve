@@ -36,6 +36,7 @@ function Signup() {
     setThumbnailError(null);
     setThumbnail(selected);
     console.log('thumbnail updated');
+    console.log(thumbnail);
   };
 
   return (
@@ -44,29 +45,15 @@ function Signup() {
 
       <label>
         <span>email:</span>
-        <input
-          required
-          type='email'
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
+        <input required type='email' onChange={(e) => setEmail(e.target.value)} value={email} />
       </label>
       <label>
         <span>password:</span>
-        <input
-          required
-          type='password'
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
+        <input required type='password' onChange={(e) => setPassword(e.target.value)} value={password} />
       </label>
       <label>
         <span>display name:</span>
-        <input
-          type='text'
-          onChange={(e) => setDisplayName(e.target.value)}
-          value={displayName}
-        />
+        <input type='text' onChange={(e) => setDisplayName(e.target.value)} value={displayName} />
       </label>
       <label>
         <span>profile picture:</span>
