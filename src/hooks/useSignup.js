@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { auth, storage, db } from '../firebase/config';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+
 import { useAuthContext } from '../hooks/useAuthContext';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 export const useSignup = () => {
   const [isCancelled, setSetIsCancelled] = useState(false);
@@ -15,25 +18,25 @@ export const useSignup = () => {
 
     try {
       // signup
-      const res = await createUserWithEmailAndPassword(auth, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
       if (!res) {
         throw new Error('Could not complete signup');
       }
 
       // upload user thumbnail
-      const uploadPath = `thumbnails/${res.user.uid}/${thumbnail.name}`;
-      const img = await storage.ref(uploadPath).put(thumbnail);
-      const imgUrl = await img.ref.getDownloadURL();
+      const storageRef = ref(storage, `thumbnails/${res.user.uid}/${thumbnail.name}`);
+      await uploadBytes(storageRef, thumbnail);
+      const downloadUrl = await getDownloadURL(storageRef);
 
       // add display AND PHOTO_URL name to user
-      await res.user.updateProfile({ displayName, photoURL: imgUrl });
+      await updateProfile(res.user, { displayName, photoURL: downloadUrl });
 
-      // create a user document
-      await db.collection('users').doc(res.user.uid).set({
+      // Add a new document in collection "cities"
+      await setDoc(doc(db, 'users', res.user.uid), {
         online: true,
         displayName,
-        photoURL: imgUrl,
+        photoURL: downloadUrl,
       });
 
       // dispatch login action
