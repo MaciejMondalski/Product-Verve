@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getAuth } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { Timestamp } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -25,10 +25,12 @@ const db = getFirestore();
 
 const auth = getAuth();
 
+const provider = new GoogleAuthProvider();
+
 // init firebase storage
 const storage = getStorage();
 
 // timestamp
 const timestamp = Timestamp;
 
-export { db, auth, storage, timestamp };
+export { db, auth, storage, timestamp, provider };
