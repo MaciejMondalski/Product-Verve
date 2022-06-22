@@ -5,7 +5,7 @@ import { auth, db } from '../firebase/config';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 export const useLogin = () => {
-  const [isCancelled, setSetIsCancelled] = useState(false);
+  const [isCancelled, setIsCancelled] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const { dispatch } = useAuthContext();
@@ -41,7 +41,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     return () => {
-      setSetIsCancelled(true);
+      setIsCancelled(true);
     };
   }, []);
 
