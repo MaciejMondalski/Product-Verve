@@ -44,6 +44,7 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
 }
 
 const StyledDropdown = styled.div`
+  z-index: 100;
   .dropdown-wrapper {
     width: 180px;
     background: white;
