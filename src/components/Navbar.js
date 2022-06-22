@@ -82,6 +82,7 @@ const StyledStickyNavbar = styled.div`
   .user {
     display: flex;
     align-items: center;
+    position: relative;
   }
 
   .no-user {
@@ -92,7 +93,6 @@ const StyledStickyNavbar = styled.div`
 
   .avatar-wrapper {
     margin-left: 15px;
-    position: relative;
   }
 
   .logo {
