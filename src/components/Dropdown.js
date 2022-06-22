@@ -49,8 +49,8 @@ const StyledDropdown = styled.div`
     width: 180px;
     background: white;
     position: absolute;
-    top: 9%;
-    right: 1%;
+    top: 120%;
+    left: 10%;
     box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.05);
     animation-direction: alternate;
     animation: fadeInAnimation ease-out 0.1s;
