@@ -63,11 +63,11 @@ const StyledUserList = styled.div`
     right: 0em;
     overflow: scroll;
     transform: translateY(95%);
-    transition: all 0.5s ease;
+    transition: all 0.4s ease;
   }
 
   .active-userlist {
-    transform: translateY(4.2em);
+    transform: translateY(5em);
 
     .arrow {
       transform: rotate(90deg);
@@ -80,6 +80,11 @@ const StyledUserList = styled.div`
     justify-content: space-between;
     border-bottom: 3px solid rgba(185, 185, 185, 0.322);
     margin: 0;
+    transition: 0.1s ease;
+
+    &:hover {
+      background: #eeeef0;
+    }
 
     h2 {
       font-size: 1.1em;
