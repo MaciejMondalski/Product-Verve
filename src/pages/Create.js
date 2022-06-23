@@ -100,11 +100,11 @@ function Create() {
         </label>
         <label>
           <span>Project category:</span>
-          <Select onChange={(option) => setCategory(option)} options={categories} />
+          <Select styles={selectStyles} onChange={(option) => setCategory(option)} options={categories} />
         </label>
         <label>
           <span>Assign to:</span>
-          <Select onChange={(option) => setAssignedUsers(option)} options={users} isMulti />
+          <Select styles={selectStyles} onChange={(option) => setAssignedUsers(option)} options={users} isMulti />
         </label>
         <button className='btn'>Add Project</button>
         {formError && <p className='error'>{formError}</p>}
@@ -113,13 +113,30 @@ function Create() {
   );
 }
 
+const selectStyles = {
+  control: (styles) => ({ ...styles, backgroundColor: 'var(--input-color)' }),
+};
+
 const StyledCreate = styled.div`
   margin: 0 auto;
+  padding: 40px;
+  background: white;
   display: flex;
   flex-direction: column;
   max-width: 500px;
   min-width: 300px;
   width: 100%;
+  border: 1px solid #ddd;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+
+  input,
+  textarea {
+    border: px solid #ddd;
+    background-color: var(--input-color);
+    font-family: Poppins, sans-serif;
+    font-size: 1sem;
+  }
 `;
 
 export default Create;
