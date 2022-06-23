@@ -65,6 +65,11 @@ const StyledLogin = styled.form`
   border: 1px solid #ddd;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
   background: #fff;
+  border-radius: 6px;
+
+  input {
+    border: 2px solid #ddd;
+  }
 
   button {
     padding: 14px;
