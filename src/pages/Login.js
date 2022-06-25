@@ -69,6 +69,7 @@ const StyledLogin = styled.form`
 
   input {
     border: 2px solid #ddd;
+    background-color: var(--input-color);
   }
 
   button {

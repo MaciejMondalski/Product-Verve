@@ -135,7 +135,7 @@ const StyledCreate = styled.div`
     border: px solid #ddd;
     background-color: var(--input-color);
     font-family: Poppins, sans-serif;
-    font-size: 1sem;
+    font-size: 1em;
   }
 `;
 
