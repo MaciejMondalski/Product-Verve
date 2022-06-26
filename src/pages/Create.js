@@ -14,7 +14,7 @@ const categories = [
   { value: 'marketing', label: 'Marketing' },
 ];
 
-function Create() {
+function Create({ setCreateModal }) {
   const navigate = useNavigate();
   const { addDocument, response } = useFirestore('projects');
   const { user } = useAuthContext();
@@ -78,57 +78,101 @@ function Create() {
 
     await addDocument(project);
     if (!response.error) {
+      setCreateModal(false);
       navigate('/');
     }
   };
 
   return (
     <StyledCreate>
-      <h2 className='page-title'>Create a new project</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <span>Project name:</span>
-          <input required type='text' onChange={(e) => setName(e.target.value)} value={name} />
-        </label>
-        <label>
-          <span>Project Details:</span>
-          <textarea required type='text' onChange={(e) => setDetails(e.target.value)} value={details}></textarea>
-        </label>
-        <label>
-          <span>Set due date:</span>
-          <input required type='date' onChange={(e) => setDueDate(e.target.value)} value={dueDate} />
-        </label>
-        <label>
-          <span>Project category:</span>
-          <Select styles={selectStyles} onChange={(option) => setCategory(option)} options={categories} />
-        </label>
-        <label>
-          <span>Assign to:</span>
-          <Select styles={selectStyles} onChange={(option) => setAssignedUsers(option)} options={users} isMulti />
-        </label>
-        <button className='btn'>Add Project</button>
-        {formError && <p className='error'>{formError}</p>}
-      </form>
+      <div className='modal-container'>
+        <div className='modal'>
+          <h2 className='page-title'>Create a new project</h2>
+          <form onSubmit={handleSubmit}>
+            <label>
+              <span>Project name:</span>
+              <input required type='text' onChange={(e) => setName(e.target.value)} value={name} />
+            </label>
+            <label>
+              <span>Project Details:</span>
+              <textarea required type='text' onChange={(e) => setDetails(e.target.value)} value={details}></textarea>
+            </label>
+            <label>
+              <span>Set due date:</span>
+              <input required type='date' onChange={(e) => setDueDate(e.target.value)} value={dueDate} />
+            </label>
+            <label>
+              <span>Project category:</span>
+              <Select styles={selectStyles} onChange={(option) => setCategory(option)} options={categories} />
+            </label>
+            <label>
+              <span>Assign to:</span>
+              <Select styles={selectStyles} onChange={(option) => setAssignedUsers(option)} options={users} isMulti />
+            </label>
+            <div className='buttons'>
+              <button className='cancel-button' type='button' onClick={() => setCreateModal((prevState) => !prevState)}>
+                Cancel
+              </button>
+              <button className='btn'>Add Project</button>
+
+              {formError && <p className='error'>{formError}</p>}
+            </div>
+          </form>
+        </div>
+      </div>
     </StyledCreate>
   );
 }
 
+// Styles for the React-Select package
 const selectStyles = {
   control: (styles) => ({ ...styles, backgroundColor: 'var(--input-color)' }),
 };
 
 const StyledCreate = styled.div`
-  margin: 0 auto;
-  padding: 40px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  max-width: 500px;
-  min-width: 300px;
-  width: 100%;
-  border: 1px solid #ddd;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
-  border-radius: 6px;
+  .modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 30px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    min-width: 300px;
+    border: 1px solid #ddd;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+  }
+
+  .modal-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+
+  .buttons {
+    text-align: right;
+    margin-top: 40px;
+  }
+
+  .cancel-button {
+    margin-right: 1em;
+    color: var(--heading-color);
+    border: none;
+    background: none;
+    font-size: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
   input,
   textarea {
@@ -136,6 +180,7 @@ const StyledCreate = styled.div`
     background-color: var(--input-color);
     font-family: Poppins, sans-serif;
     font-size: 1em;
+    resize: none;
   }
 `;
 
