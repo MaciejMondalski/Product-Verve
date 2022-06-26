@@ -7,7 +7,7 @@ import Logo from './Logo';
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
 
-function Sidebar() {
+function Sidebar({ setCreateModal }) {
   return (
     <StyledSidebar>
       <div className='sidebar-content'>
@@ -25,10 +25,10 @@ function Sidebar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to='/create'>
+              <div className='item-wrapper' onClick={() => setCreateModal((prevState) => !prevState)}>
                 <img src={AddIcon} alt='add project icon' />
                 <span>New Project</span>
-              </NavLink>
+              </div>
             </li>
           </ul>
         </nav>
@@ -56,19 +56,6 @@ const StyledSidebar = styled.div`
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .user {
-    display: flex;
-    align-items: center;
-    font-weight: medium;
-    letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px 30px;
-
-    p {
-      padding: 0 15px;
-    }
-  }
-
   .links {
     margin-top: 40px;
     margin-left: 20px;
@@ -84,7 +71,8 @@ const StyledSidebar = styled.div`
       margin-top: 10px;
     }
 
-    a {
+    a,
+    .item-wrapper {
       display: flex;
       padding: 10px;
       text-decoration: none;
