@@ -7,6 +7,11 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useFirestore } from '../hooks/useFirestore';
 import { useNavigate } from 'react-router-dom';
 
+// Datepicker
+import DatePicker from 'react-datepicker';
+//import 'react-datepicker/dist/react-datepicker.css';
+import './DatePicker.scss';
+
 const categories = [
   { value: 'development', label: 'Development' },
   { value: 'design', label: 'Design' },
@@ -24,7 +29,7 @@ function Create({ setCreateModal }) {
   // form field values
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [dueDate, setDueDate] = useState(new Date());
   const [category, setCategory] = useState('');
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [formError, setFormError] = useState(null);
@@ -97,10 +102,14 @@ function Create({ setCreateModal }) {
               <span>Project Details:</span>
               <textarea required type='text' onChange={(e) => setDetails(e.target.value)} value={details}></textarea>
             </label>
-            <label>
-              <span>Set due date:</span>
-              <input required type='date' onChange={(e) => setDueDate(e.target.value)} value={dueDate} />
-            </label>
+            <div className='datepicker-wrapper'>
+              <DatePicker
+                calendarClassName='datepicker'
+                required
+                selected={dueDate}
+                onChange={(date) => setDueDate(date)}
+              />
+            </div>
             <label>
               <span>Project category:</span>
               <Select styles={selectStyles} onChange={(option) => setCategory(option)} options={categories} />
@@ -155,6 +164,9 @@ const StyledCreate = styled.div`
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
+  }
+
+  .datepicker-wrapper {
   }
 
   .buttons {
