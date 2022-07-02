@@ -6,6 +6,7 @@ import { timestamp } from '../firebase/config';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useFirestore } from '../hooks/useFirestore';
 import { useNavigate } from 'react-router-dom';
+import CalendarIcon from '../assets/calendar_icon.svg';
 
 // Datepicker
 import DatePicker from 'react-datepicker';
@@ -109,6 +110,7 @@ function Create({ setCreateModal }) {
                 selected={dueDate}
                 onChange={(date) => setDueDate(date)}
               />
+              <img src={CalendarIcon} alt='calendar icon' />
             </div>
             <label>
               <span>Project category:</span>
@@ -167,6 +169,18 @@ const StyledCreate = styled.div`
   }
 
   .datepicker-wrapper {
+    position: relative;
+
+    input {
+      color: var(--text-color);
+    }
+    img {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      right: 2%;
+      filter: invert(68%) sepia(8%) saturate(11%) hue-rotate(355deg) brightness(88%) contrast(88%);
+    }
   }
 
   .buttons {
