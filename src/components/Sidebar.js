@@ -19,7 +19,7 @@ function Sidebar({ setCreateModal }) {
         <nav className='links'>
           <ul>
             <li>
-              <NavLink end to='/'>
+              <NavLink end to='dashboard'>
                 <img src={DashboardIcon} alt='dashboard icon' />
                 <span>Dashboard</span>
               </NavLink>
