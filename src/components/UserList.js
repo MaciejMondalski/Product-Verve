@@ -62,7 +62,7 @@ const StyledUserList = styled.div`
     top: 0em;
     right: 0em;
     overflow: scroll;
-    transform: translateY(95%);
+    transform: translateY(96%);
     transition: all 0.4s ease;
   }
 
