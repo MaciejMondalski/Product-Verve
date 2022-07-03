@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { AuthContextProvider } from './context/AuthContext';
+import { DashboardContextProvider } from './context/DashboardContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <App />
+      <DashboardContextProvider>
+        <App />
+      </DashboardContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
 
