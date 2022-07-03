@@ -102,6 +102,7 @@ const StyledComments = styled.div`
     min-height: 40px;
     font-size: 0.9em;
     font-family: Poppins, sans-serif;
+    resize: none;
   }
 
   /* project comments */
@@ -118,6 +119,10 @@ const StyledComments = styled.div`
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
     background: #fff;
     position: relative;
+  }
+
+  .btn {
+    margin-top: 0.6em;
   }
 
   .delete-comment {
