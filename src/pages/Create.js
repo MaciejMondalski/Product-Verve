@@ -85,7 +85,7 @@ function Create({ setCreateModal }) {
     await addDocument(project);
     if (!response.error) {
       setCreateModal(false);
-      navigate('/');
+      navigate('/dashboard');
     }
   };
 
@@ -103,6 +103,7 @@ function Create({ setCreateModal }) {
               <span>Project Details:</span>
               <textarea required type='text' onChange={(e) => setDetails(e.target.value)} value={details}></textarea>
             </label>
+            <span>Date due:</span>
             <div className='datepicker-wrapper'>
               <DatePicker
                 calendarClassName='datepicker'
