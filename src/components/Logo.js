@@ -5,7 +5,7 @@ import LogoImage from '../assets/pv_logo.svg';
 function Logo() {
   return (
     <StyledLogo>
-      <Link to='/'>
+      <Link to='dashboard'>
         <img src={LogoImage} alt='verve logo' />
         <span>Product Verve</span>
       </Link>
