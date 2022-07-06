@@ -62,7 +62,7 @@ const StyledSidebar = styled.div`
     .active {
       color: #555;
       background: var(--bg-color);
-      border-radius: 20px 0 0 20px;
+      border-radius: 0.5em 0 0 0.5em;
       img {
         filter: invert(40%);
       }
@@ -73,6 +73,7 @@ const StyledSidebar = styled.div`
 
     a,
     .item-wrapper {
+      cursor: pointer;
       display: flex;
       padding: 10px;
       text-decoration: none;
