@@ -3,9 +3,10 @@ import ProjectList from '../components/ProjectList';
 import { useCollection } from '../hooks/useCollection';
 import styled from 'styled-components';
 import ProjectFilter from '../components/ProjectFilter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useDashboardContext } from '../hooks/useDashboardContext';
+import Pagination from '../components/Pagination';
 
 function Dashboard() {
   const { documents, error } = useCollection('projects');
@@ -13,7 +14,11 @@ function Dashboard() {
   const { user } = useAuthContext();
   const { dispatch, view } = useDashboardContext();
 
-  console.log(view);
+  // Pagination
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentItems, setCurrentItems] = useState();
 
   const handleView = async (e) => {
     console.log(e);
@@ -29,30 +34,42 @@ function Dashboard() {
     setCurrentFilter(newFilter);
   };
 
-  const projects = documents
-    ? documents.filter((document) => {
-        switch (currentFilter) {
-          case 'all':
-            return true;
-          case 'mine':
-            let assignedToMe = false;
-            document.assignedUsersList.forEach((u) => {
-              if (user.uid === u.id) {
-                assignedToMe = true;
-              }
-            });
-            return assignedToMe;
-          case 'development':
-          case 'design':
-          case 'sales':
-          case 'marketing':
-            console.log(document.category, currentFilter);
-            return document.category === currentFilter;
-          default:
-            return true;
-        }
-      })
-    : null;
+  const projects = documents;
+  //  ? documents.filter((document) => {
+  //      switch (currentFilter) {
+  //        case 'all':
+  //          return true;
+  //        case 'mine':
+  //          let assignedToMe = false;
+  //          document.assignedUsersList.forEach((u) => {
+  //            if (user.uid === u.id) {
+  //              assignedToMe = true;
+  //            }
+  //          });
+  //          return assignedToMe;
+  //        case 'development':
+  //        case 'design':
+  //        case 'sales':
+  //        case 'marketing':
+  //          console.log(document.category, currentFilter);
+  //          return document.category === currentFilter;
+  //        default:
+  //          return true;
+  //      }
+  //    })
+  //  : null;
+
+  useEffect(() => {
+    if (projects) {
+      const indexOfLastItem = currentPage * itemsPerPage;
+      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+      const items = projects.slice(indexOfFirstItem, indexOfLastItem);
+      setCurrentItems(items);
+    }
+  }, [projects, currentPage]);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <StyledDashboard>
@@ -66,8 +83,9 @@ function Dashboard() {
       {error && <p className='error'>{error}</p>}
 
       {documents && <ProjectFilter currentFilter={currentFilter} changeFilter={changeFilter} />}
-      {projects && view === 'list' && <ProjectList projects={projects} />}
-      {projects && view === 'card' && <ProjectCards projects={projects} />}
+      {currentItems && view === 'list' && <ProjectList projects={currentItems} />}
+      {currentItems && view === 'card' && <ProjectCards projects={currentItems} />}
+      {currentItems && <Pagination itemsPerPage={itemsPerPage} totalItems={projects.length} paginate={paginate} />}
     </StyledDashboard>
   );
 }
