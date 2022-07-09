@@ -117,7 +117,7 @@ const StyledLogin = styled.form`
     transition-duration: 0.1s;
 
     &:hover {
-      background-color: #e4e5ecc4;
+      filter: brightness(0.9);
       color: black;
     }
 
