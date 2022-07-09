@@ -31,7 +31,7 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
 
           {!isPending && (
             <li>
-              <Link className='logout' to='login' onClick={logout}>
+              <Link className='logout' to='/login' onClick={logout}>
                 Logout
               </Link>
             </li>
