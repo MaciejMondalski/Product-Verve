@@ -11,7 +11,7 @@ const ProjectSummary = ({ project }) => {
 
   const handleClick = (e) => {
     deleteDocument(project.id);
-    navigate('/');
+    navigate('/dashboard/page-1');
   };
 
   return (
