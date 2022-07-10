@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { usePaginationContext } from '../hooks/usePaginationContext';
 
 import Logo from './Logo';
 
@@ -8,6 +9,7 @@ import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
 
 function Sidebar({ setCreateModal }) {
+  const { currentPage, setCurrentPage } = usePaginationContext();
   return (
     <StyledSidebar>
       <div className='sidebar-content'>
@@ -19,8 +21,8 @@ function Sidebar({ setCreateModal }) {
         <nav className='links'>
           <ul>
             <li>
-              <NavLink end to='dashboard'>
-                <img src={DashboardIcon} alt='dashboard icon' />
+              <NavLink end to={`dashboard/${'page-' + currentPage}`}>
+                <img src={DashboardIcon} alt='dashboard icon' onClick={() => setCurrentPage(1)} />
                 <span>Dashboard</span>
               </NavLink>
             </li>
