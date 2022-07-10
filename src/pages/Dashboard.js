@@ -6,17 +6,22 @@ import ProjectFilter from '../components/ProjectFilter';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useDashboardContext } from '../hooks/useDashboardContext';
+import { usePaginationContext } from '../hooks/usePaginationContext';
 import Pagination from '../components/Pagination';
+import { useParams } from 'react-router-dom';
 
 function Dashboard() {
   const { documents, error } = useCollection('projects');
   const [currentFilter, setCurrentFilter] = useState('all');
   const { user } = useAuthContext();
   const { dispatch, view } = useDashboardContext();
+  const { pageId } = useParams();
 
   // Pagination
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage } = usePaginationContext();
+
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentItems, setCurrentItems] = useState();
 
@@ -67,6 +72,15 @@ function Dashboard() {
       setCurrentItems(items);
     }
   }, [projects, currentPage]);
+
+  // Maintain page after refresh
+  useEffect(() => {
+    const filteredPageId = () => {
+      const filteredPageId = pageId.substring(5, 7);
+      setCurrentPage(filteredPageId);
+    };
+    filteredPageId();
+  }, [pageId]);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
