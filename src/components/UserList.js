@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 // icon
-import ArrowIcon from '../assets/arrow_icon.svg';
+import ArrowIcon from '../assets/arrow_icon2.svg';
 
 function UserList() {
   const { documents, error } = useCollection('users');
