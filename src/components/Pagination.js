@@ -61,7 +61,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
         <NavLink className={'img-wrapper'} to={`/dashboard/page-${currentPage == 1 ? '1' : currentPage - 1}`}>
           <img className='arrow-left' src={ArrowIcon} alt='arrow icon' />
         </NavLink>
-        {currentPage > 3 && pageNumbers > 4 && (
+        {currentPage > 3 && (
           <div className='dot-page'>
             <NavLink
               onClick={() => paginate(firstPage)}
@@ -89,7 +89,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
           </div>
         )}
 
-        {lastPage - currentPage > 2 && pageNumbers > 4 && (
+        {lastPage - currentPage > 2 && (
           <div className='dot-page'>
             <h3>...</h3>
 
