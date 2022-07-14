@@ -1,10 +1,13 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const filterList = ['all', 'mine', 'development', 'design', 'marketing', 'sales'];
 
 const ProjectFilter = ({ currentFilter, changeFilter }) => {
+  const navigate = useNavigate();
   const handleClick = (newFilter) => {
     changeFilter(newFilter);
+    navigate('/dashboard/page-1');
   };
 
   return (
