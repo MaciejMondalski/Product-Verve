@@ -22,7 +22,7 @@ function Dashboard() {
   // const [currentPage, setCurrentPage] = useState(1);
   const { currentPage, setCurrentPage } = usePaginationContext();
 
-  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const [currentItems, setCurrentItems] = useState();
 
   const handleView = async (e) => {
