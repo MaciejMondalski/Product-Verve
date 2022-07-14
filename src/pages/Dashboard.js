@@ -22,7 +22,7 @@ function Dashboard() {
   // const [currentPage, setCurrentPage] = useState(1);
   const { currentPage, setCurrentPage } = usePaginationContext();
 
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
   const [currentItems, setCurrentItems] = useState();
 
   const handleView = async (e) => {
@@ -35,43 +35,42 @@ function Dashboard() {
     }
   };
 
-  const changeFilter = (newFilter) => {
-    setCurrentFilter(newFilter);
-  };
-
-  const projects = documents;
-  //  ? documents.filter((document) => {
-  //      switch (currentFilter) {
-  //        case 'all':
-  //          return true;
-  //        case 'mine':
-  //          let assignedToMe = false;
-  //          document.assignedUsersList.forEach((u) => {
-  //            if (user.uid === u.id) {
-  //              assignedToMe = true;
-  //            }
-  //          });
-  //          return assignedToMe;
-  //        case 'development':
-  //        case 'design':
-  //        case 'sales':
-  //        case 'marketing':
-  //          console.log(document.category, currentFilter);
-  //          return document.category === currentFilter;
-  //        default:
-  //          return true;
-  //      }
-  //    })
-  //  : null;
+  const projects = documents
+    ? documents.filter((document) => {
+        switch (currentFilter) {
+          case 'all':
+            return true;
+          case 'mine':
+            let assignedToMe = false;
+            document.assignedUsersList.forEach((u) => {
+              if (u.id === user.uid) {
+                assignedToMe = true;
+              }
+            });
+            return assignedToMe;
+          case 'development':
+          case 'design':
+          case 'sales':
+          case 'marketing':
+            return document.category === currentFilter;
+          default:
+            return true;
+        }
+      })
+    : null;
 
   useEffect(() => {
     if (projects) {
-      const indexOfLastItem = currentPage * itemsPerPage;
-      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-      const items = projects.slice(indexOfFirstItem, indexOfLastItem);
-      setCurrentItems(items);
+      const unsub = () => {
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        const items = projects.slice(indexOfFirstItem, indexOfLastItem);
+        setCurrentItems(items);
+        console.log(projects);
+      };
+      unsub();
     }
-  }, [projects, currentPage]);
+  }, [currentFilter, currentPage, documents]);
 
   // Maintain page after refresh
   useEffect(() => {
@@ -96,10 +95,12 @@ function Dashboard() {
       </button>
       {error && <p className='error'>{error}</p>}
 
-      {documents && <ProjectFilter currentFilter={currentFilter} changeFilter={changeFilter} />}
+      {documents && <ProjectFilter currentFilter={currentFilter} changeFilter={setCurrentFilter} />}
       {currentItems && view === 'list' && <ProjectList projects={currentItems} />}
       {currentItems && view === 'card' && <ProjectCards projects={currentItems} />}
-      {currentItems && <Pagination itemsPerPage={itemsPerPage} totalItems={projects.length} paginate={paginate} />}
+      {currentItems && projects && (
+        <Pagination itemsPerPage={itemsPerPage} totalItems={projects.length} paginate={paginate} projects={projects} />
+      )}
     </StyledDashboard>
   );
 }
