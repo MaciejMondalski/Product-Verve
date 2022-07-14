@@ -14,6 +14,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
     pageNumbers.push(i);
   }
 
+  const numberOfPages = pageNumbers.length;
   const firstPage = pageNumbers[0];
   const lastPage = pageNumbers.length;
   console.log(currentPage + ' out of ' + lastPage);
@@ -23,35 +24,71 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
   const indexLastPage = parseInt(lastPage - 1);
 
   useEffect(() => {
-    console.log('current index is ' + indexCurrentPage);
+    console.log('current index is ' + pageNumbers);
 
-    if (indexCurrentPage < 2) {
+    // There are more 4 pages or less
+    if (numberOfPages <= 4) {
       const range = pageNumbers.slice(0, 3);
       setPageRange(range);
+      console.log('condition 1');
     }
-    if (indexCurrentPage === 2) {
-      const range = pageNumbers.slice(0, 4);
-      setPageRange(range);
-    }
+    // There are more than 4 pages
+    else if (numberOfPages > 4) {
+      // First 3 pages
+      if (indexCurrentPage <= 2) {
+        const range = pageNumbers.slice(0, 3);
+        setPageRange(range);
+        console.log('condition 2');
+      }
+      // Last 3 pages
+      if (indexLastPage - indexCurrentPage <= 2) {
+        const rangeStart = indexLastPage - 2;
+        const rangeEnd = indexLastPage + 1;
+        const range = pageNumbers.slice(rangeStart, rangeEnd);
+        setPageRange(range);
+        console.log('condition 3');
+      }
+      // Middle pages
+      if (indexCurrentPage - 2 > indexFirstPage && indexCurrentPage + 2 < indexLastPage) {
+        const rangeStart = indexCurrentPage - 1;
+        const rangeEnd = indexCurrentPage + 2;
+        const range = pageNumbers.slice(rangeStart, rangeEnd);
+        setPageRange(range);
+        console.log('condition 4');
+      }
 
-    if (indexCurrentPage >= 3) {
-      const rangeStart = indexCurrentPage - 1;
-      const rangeEnd = indexCurrentPage + 2;
-      const range = pageNumbers.slice(rangeStart, rangeEnd);
-      setPageRange(range);
-    }
+      //       const range = pageNumbers.slice(0, 4);
+      //       setPageRange(range);
+      //       console.log('condition 2');
+      //     }
 
-    if (indexLastPage - indexCurrentPage === 2) {
-      const rangeStart = indexCurrentPage - 1;
-      const rangeEnd = indexCurrentPage + 3;
-      const range = pageNumbers.slice(rangeStart, rangeEnd);
-      setPageRange(range);
-    }
-    if (indexCurrentPage === indexLastPage) {
-      const rangeStart = indexCurrentPage - 2;
-      const rangeEnd = indexCurrentPage + 2;
-      const range = pageNumbers.slice(rangeStart, rangeEnd);
-      setPageRange(range);
+      //     if (indexCurrentPage === 2) {
+      //       const range = pageNumbers.slice(0, 4);
+      //       setPageRange(range);
+      //       console.log('condition 2');
+      //     }
+      //
+      //     if (numberOfPages > 4 && indexCurrentPage >= 3) {
+      //       const rangeStart = indexCurrentPage - 1;
+      //       const rangeEnd = indexCurrentPage + 2;
+      //       const range = pageNumbers.slice(rangeStart, rangeEnd);
+      //       setPageRange(range);
+      //       console.log('condition 3');
+      //     }
+      //
+      //     if (indexLastPage - indexCurrentPage === 2) {
+      //       const rangeStart = indexCurrentPage - 1;
+      //       const rangeEnd = indexCurrentPage + 3;
+      //       const range = pageNumbers.slice(rangeStart, rangeEnd);
+      //       setPageRange(range);
+      //       console.log('condition 4');
+      //     }
+      //     if (numberOfPages > 4 && indexCurrentPage === indexLastPage) {
+      //       const rangeStart = indexCurrentPage - 2;
+      //       const rangeEnd = indexCurrentPage + 2;
+      //       const range = pageNumbers.slice(rangeStart, rangeEnd);
+      //       setPageRange(range);
+      //       console.log('condition 5');
     }
   }, [currentPage]);
 
@@ -71,7 +108,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
             >
               <h3>{firstPage}</h3>
             </NavLink>
-            <h3>...</h3>
+            <h3 className={`${lastPage - currentPage === 2 && 'left-dots'}`}>...</h3>
           </div>
         )}
         {pageRange && (
@@ -89,9 +126,9 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
           </div>
         )}
 
-        {lastPage - currentPage > 2 && (
+        {lastPage - 2 > currentPage && numberOfPages > 4 && (
           <div className='dot-page'>
-            <h3>...</h3>
+            <h3 className={`${currentPage - 2 === firstPage && 'right-dots'}`}>...</h3>
 
             <NavLink
               onClick={() => paginate(lastPage)}
@@ -163,6 +200,12 @@ const StyledPagination = styled.nav`
   .dot-page {
     display: flex;
     align-items: center;
+    .left-dots {
+      margin-right: 0.9em;
+    }
+    .right-dots {
+      margin-left: 0.9em;
+    }
   }
 
   .page-number {
