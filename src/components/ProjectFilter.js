@@ -14,9 +14,13 @@ const ProjectFilter = ({ currentFilter, changeFilter }) => {
     <StyledProjectFilter>
       <nav>
         <p>Filter by: </p>
-        {filterList.map((f) => (
-          <button key={f} onClick={() => handleClick(f)} className={currentFilter === f ? 'active' : ''}>
-            {f}
+        {filterList.map((category) => (
+          <button
+            key={category}
+            onClick={() => handleClick(category)}
+            className={currentFilter === category ? 'active' : ''}
+          >
+            {category}
           </button>
         ))}
       </nav>
