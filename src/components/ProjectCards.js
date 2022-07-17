@@ -29,7 +29,6 @@ function ProjectCards({ projects }) {
 }
 
 const StyledProjectCards = styled.div`
-  margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   grid-gap: 20px;
