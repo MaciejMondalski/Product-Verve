@@ -10,8 +10,7 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target) && !avatarRef.current.contains(e.target)) {
-        onClickOutside && onClickOutside();
-        console.log();
+        onClickOutside();
       }
     };
     document.addEventListener('click', handleClickOutside, true);
@@ -51,7 +50,7 @@ const StyledDropdown = styled.div`
     position: absolute;
     top: 120%;
     left: 10%;
-    box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
     animation-direction: alternate;
     animation: fadeInAnimation ease-out 0.1s;
   }
