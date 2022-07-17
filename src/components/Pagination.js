@@ -86,8 +86,8 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
   return (
     <StyledPagination>
       <ul className='pagination'>
-        {totalItems !== 0 && (
-          <NavLink className={'img-wrapper'} to={`/dashboard/page-${currentPage == 1 ? '1' : currentPage - 1}`}>
+        {totalItems !== 0 && currentPage !== '1' && (
+          <NavLink className={'img-wrapper'} to={`/dashboard/page-${currentPage === 1 ? '1' : currentPage - 1}`}>
             <img className='arrow-left' src={ArrowIcon} alt='arrow icon' />
           </NavLink>
         )}
@@ -134,10 +134,10 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
           </div>
         )}
 
-        {totalItems !== 0 && (
+        {totalItems !== 0 && parseInt(currentPage) !== lastPage && (
           <NavLink
             className={'img-wrapper'}
-            to={`/dashboard/page-${currentPage == lastPage ? lastPage : parseInt(currentPage) + 1}`}
+            to={`/dashboard/page-${currentPage === lastPage ? lastPage : parseInt(currentPage) + 1}`}
           >
             <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
           </NavLink>
