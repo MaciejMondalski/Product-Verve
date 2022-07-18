@@ -46,12 +46,14 @@ function Navbar() {
             <>
               <div className='user'>
                 <p>Hello {user.displayName}</p>
-                <div ref={ref} className='avatar-wrapper' onClick={handleDropdownClose}>
-                  <Avatar src={user.photoURL} />
+                <div className='avatar-dropdown-wrapper'>
+                  <div ref={ref} className='avatar-wrapper' onClick={handleDropdownClose}>
+                    <Avatar src={user.photoURL} />
+                  </div>
+                  {dropdownStatus && (
+                    <Dropdown avatarRef={ref} status={dropdownStatus} onClickOutside={handleDropdownClose} />
+                  )}
                 </div>
-                {dropdownStatus && (
-                  <Dropdown avatarRef={ref} status={dropdownStatus} onClickOutside={handleDropdownClose} />
-                )}
               </div>
             </>
           )}
@@ -71,7 +73,6 @@ const StyledStickyNavbar = styled.div`
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
 
     z-index: 0;
-    padding: 30px 10px;
     box-sizing: border-box;
     height: 4.2em;
     display: flex;
@@ -82,7 +83,6 @@ const StyledStickyNavbar = styled.div`
   .user {
     display: flex;
     align-items: center;
-    position: relative;
   }
 
   .no-user {
@@ -93,6 +93,7 @@ const StyledStickyNavbar = styled.div`
 
   .avatar-wrapper {
     margin-left: 15px;
+    transform: scale(80%);
   }
 
   .logo {

@@ -44,15 +44,20 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
 
 const StyledDropdown = styled.div`
   z-index: 100;
+
   .dropdown-wrapper {
-    width: 180px;
-    background: white;
     position: absolute;
-    top: 120%;
-    left: 10%;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
+    padding: 8px;
     animation-direction: alternate;
-    animation: fadeInAnimation ease-out 0.1s;
+    animation: fadeInAnimation ease-out 0.2s;
+    border-radius: 0.5em;
+    margin-top: 6px;
   }
 
   @keyframes fadeInAnimation {
@@ -67,15 +72,20 @@ const StyledDropdown = styled.div`
   ul {
     display: flex;
     flex-direction: column;
-    margin: 5px 10px;
-    li {
-      margin: 5px 0;
 
+    li {
+      padding: 6px 8px;
+      transition: 0.1s;
+      border-radius: 6px;
       .logout {
         text-decoration: none;
         margin: 0px;
         color: black;
         font-weight: 400;
+      }
+
+      &:hover {
+        background-color: var(--nice-gray);
       }
     }
   }
