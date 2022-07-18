@@ -40,7 +40,7 @@ function Sidebar({ setCreateModal }) {
 }
 
 const StyledSidebar = styled.div`
-  min-width: 260px;
+  min-width: 220px;
   background: var(--primary-color);
   min-height: 100vh;
   box-sizing: border-box;
