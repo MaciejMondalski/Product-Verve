@@ -27,21 +27,6 @@ const ProjectFilter = ({ currentFilter, changeFilter }) => {
     console.log(CategoryFilterStatus);
   };
 
-  //  <StyledProjectFilter>
-  //  <nav>
-  //  <p>Filter by: </p>
-  //  {filterList.map((category) => (
-  //    <button
-  //      key={category}
-  //      onClick={() => handleClick(category)}
-  //      className={currentFilter === category ? 'active' : ''}
-  //    >
-  //      {category}
-  //    </button>
-  //  ))}
-  //  </nav>
-  //  </StyledProjectFilter>
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (CategoryFilterStatus && ref.current && !ref.current.contains(e.target)) {
@@ -56,43 +41,48 @@ const ProjectFilter = ({ currentFilter, changeFilter }) => {
   }, [handleFilterPicker, filterbtn]);
 
   return (
-    <StyledFilters ref={ref}>
-      <button filterbtn={ref} className={` btn ${CategoryFilterStatus && 'active'}`} onClick={handleFilterPicker}>
-        <p>Category</p> <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
-      </button>
-      {CategoryFilterStatus && (
-        <div className='filter-picker'>
-          <ul>
-            {filterList.map((category) => (
-              <li
-                key={category}
-                onClick={() => handleClick(category)}
-                className={` category ${currentFilter === category && 'active'}`}
-              >
-                {category}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+    <StyledFilters>
+      <div className='filter-wrapper' ref={ref}>
+        <button filterbtn={ref} className={` btn ${CategoryFilterStatus && 'active'}`} onClick={handleFilterPicker}>
+          <p>Category</p> <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
+        </button>
+        {CategoryFilterStatus && (
+          <div className='filter-picker'>
+            <ul>
+              {filterList.map((category) => (
+                <li
+                  key={category}
+                  onClick={() => handleClick(category)}
+                  className={` category ${currentFilter === category && 'active'}`}
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </StyledFilters>
   );
 };
 
 const StyledFilters = styled.div`
   margin: 20px 0;
-  width: fit-content;
-  position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: end;
+
+  .filter-wrapper {
+    position: relative;
+  }
 
   .btn {
     background: var(--nice-gray);
-    border: none;
     color: var(--heading-color);
     display: flex;
     align-items: center;
     justify-content: end;
-    padding: 6px 4px 6px 12px;
+    padding: 4px 4px 4px 12px;
     font-weight: 600;
     border: 2px solid var(--nice-gray);
 
@@ -110,7 +100,7 @@ const StyledFilters = styled.div`
   }
 
   button.active {
-    border: 2px solid var(--heading-color);
+    border: 2px solid #999;
     filter: brightness(0.9);
 
     img {
@@ -130,6 +120,7 @@ const StyledFilters = styled.div`
     animation: fadeInAnimation ease-out 0.2s;
     border-radius: 0.5em;
     margin-top: 6px;
+    right: 0;
 
     @keyframes fadeInAnimation {
       0% {
