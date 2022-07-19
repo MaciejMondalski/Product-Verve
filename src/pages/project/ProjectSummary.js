@@ -1,50 +1,162 @@
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Avatar from '../../components/Avatar';
 import { useFirestore } from '../../hooks/useFirestore';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
+import DotsIcon from '../../assets/dots_icon.svg';
 
 const ProjectSummary = ({ project }) => {
   const { deleteDocument } = useFirestore('projects');
   const { user } = useAuthContext();
   const navigate = useNavigate();
+  const ref = useRef(null);
+  const refbutton = useRef(null);
+  const [optionsStatus, setOptionsStatus] = useState(false);
 
-  const handleClick = (e) => {
+  const handleDeleteProject = () => {
+    console.log('delete was activated');
     deleteDocument(project.id);
     navigate('/dashboard/page-1');
   };
 
+  const handleOptionsDropdown = () => {
+    setOptionsStatus(!optionsStatus);
+    console.log(optionsStatus);
+  };
+
+  const closeOptions = () => {
+    setOptionsStatus(false);
+    console.log(optionsStatus);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (optionsStatus && ref.current && !ref.current.contains(e.target) && !refbutton.current.contains(e.target)) {
+        closeOptions();
+      }
+    };
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [handleOptionsDropdown, closeOptions, optionsStatus]);
+
   return (
     <StyledProjectSummary>
-      <div className='project-summary'>
-        <h2 className='page-title'>{project.name}</h2>
-        <p>Created by {project.createdBy.displayName}</p>
-        <p className='due-date'>Project due by {project.dueDate.toDate().toDateString()}</p>
-        <p className='details'>{project.details}</p>
-        <h4>Project is assigned to:</h4>
-        <div className='assigned-users'>
-          {project.assignedUsersList.map((user) => (
-            <div key={user.id}>
-              <Avatar src={user.photoURL} />
-            </div>
-          ))}
+      <div className='options-wrapper'>
+        <button ref={refbutton} className={`options ${optionsStatus && 'active'}`} onClick={handleOptionsDropdown}>
+          <img className='dots' src={DotsIcon} alt='dots icon' />
+        </button>
+        {optionsStatus && (
+          <ul className='options-dropdown' ref={ref}>
+            <li>Edit</li>
+            {user.uid === project.createdBy.id && (
+              <li onClick={handleDeleteProject} className='option'>
+                Delete
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+      <div className='content-wrapper'>
+        <div className='project-summary'>
+          <h1 className='page-title'>{project.name}</h1>
+          <p>Created by {project.createdBy.displayName}</p>
+          <p className='due-date'>Project due by {project.dueDate.toDate().toDateString()}</p>
+          <p className='details'>{project.details}</p>
+          <h4>Project is assigned to:</h4>
+          <div className='assigned-users'>
+            {project.assignedUsersList.map((user) => (
+              <div key={user.id}>
+                <Avatar src={user.photoURL} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      {user.uid === project.createdBy.id && (
-        <div className='btn' onClick={handleClick}>
-          Mark as Complete
-        </div>
-      )}
     </StyledProjectSummary>
   );
 };
 
 const StyledProjectSummary = styled.div`
-  display: flex;
-  justify-content: space-between;
   background-color: #fff;
-  padding: 30px;
-  border-radius: 4px;
+  padding: 20px;
+  border-radius: 0.6em;
+
+  .options-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+    position: relative;
+  }
+
+  button.active {
+    background: var(--nice-gray);
+  }
+
+  .options {
+    position: relative;
+
+    height: 2.7em;
+    width: 2.7em;
+    display: flex;
+    align-items: flex-end;
+    border: none;
+    background: none;
+    transition-duration: 0.1s;
+    border-radius: 0.4em;
+
+    img {
+      margin: auto;
+      filter: invert(22%) sepia(0%) saturate(0%) hue-rotate(151deg) brightness(104%) contrast(85%);
+    }
+
+    &:hover {
+      background: var(--nice-gray);
+    }
+  }
+
+  .options-dropdown {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: white;
+    box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
+    padding: 4px;
+    animation-direction: alternate;
+    animation: fadeInAnimation ease-out 0.2s;
+    border-radius: 0.3em;
+    margin-top: 6px;
+    top: 75%;
+    z-index: 2;
+
+    @keyframes fadeInAnimation {
+      0% {
+        opacity: 0%;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    li {
+      padding: 3px 6px;
+      transition: 0.1s;
+      border-radius: 0.3em;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--nice-gray);
+      }
+    }
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .btn {
     white-space: nowrap;
@@ -70,7 +182,8 @@ const StyledProjectSummary = styled.div`
     }
     .assigned-users {
       display: flex;
-      margin-top: 20px;
+      margin-top: 10px;
+      transform: scale(0.9);
 
       .avatar {
         margin-right: 10px;
