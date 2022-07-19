@@ -27,7 +27,7 @@ const StyledProject = styled.div`
   display: grid;
   grid-template-columns: 3fr 2fr;
   align-items: start;
-  grid-gap: 60px;
+  grid-gap: 30px;
   width: 100%;
 `;
 
