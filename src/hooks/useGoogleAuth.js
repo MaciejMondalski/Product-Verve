@@ -32,7 +32,7 @@ export const useGoogleAuth = () => {
         console.log("it's a new user!!!!!!!");
         // upload user thumbnail
 
-        const storageRef = ref(storage, `thumbnails/${res.user.uid}/some Google name`);
+        const storageRef = ref(storage, `thumbnails/${res.user.uid}/${res.user.photoURL}`);
         await uploadBytes(storageRef, res.user.photoURL);
         const displayName = res.user.displayName;
 
