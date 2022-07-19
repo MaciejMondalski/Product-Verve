@@ -86,7 +86,7 @@ function Dashboard() {
 
   return (
     <StyledDashboard>
-      <h2 className='page-title'>Dashboard</h2>
+      <p className='page-title'>Dashboard</p>
       <button className='btn' onClick={() => handleView('list')}>
         List
       </button>
@@ -105,5 +105,11 @@ function Dashboard() {
   );
 }
 
-const StyledDashboard = styled.div``;
+const StyledDashboard = styled.div`
+  .page-title {
+    font-size: 2.5em;
+    font-weight: 500;
+    color: var(--heading-color);
+  }
+`;
 export default Dashboard;
