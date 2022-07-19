@@ -27,7 +27,6 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
         <ul>
           <li>Profile</li>
           <li>Settings</li>
-
           {!isPending && (
             <li>
               <Link className='logout' to='/login' onClick={logout}>
@@ -43,17 +42,16 @@ function Dropdown({ onClickOutside, status, avatarRef }) {
 }
 
 const StyledDropdown = styled.div`
-  z-index: 100;
-
   .dropdown-wrapper {
     position: absolute;
+    z-index: 200;
 
     width: fit-content;
     display: flex;
     flex-direction: column;
     background: white;
     box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
-    padding: 8px;
+    padding: 4px;
     animation-direction: alternate;
     animation: fadeInAnimation ease-out 0.2s;
     border-radius: 0.5em;
@@ -74,9 +72,11 @@ const StyledDropdown = styled.div`
     flex-direction: column;
 
     li {
-      padding: 6px 8px;
+      padding: 3px 6px;
       transition: 0.1s;
-      border-radius: 6px;
+      border-radius: 0.3em;
+      cursor: pointer;
+
       .logout {
         text-decoration: none;
         margin: 0px;
