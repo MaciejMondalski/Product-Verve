@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import ArrowIcon from '../assets/arrow_icon.svg';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const filterList = ['all', 'mine', 'development', 'design', 'marketing', 'sales'];
 
@@ -9,7 +9,6 @@ const ProjectFilter = ({ currentFilter, changeFilter }) => {
   const [CategoryFilterStatus, setCategoryFilterStatus] = useState(false);
   const navigate = useNavigate();
   const ref = useRef(null);
-  const filterbtn = useRef(null);
 
   const handleClick = (newFilter) => {
     changeFilter(newFilter);
@@ -38,12 +37,12 @@ const ProjectFilter = ({ currentFilter, changeFilter }) => {
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-  }, [handleFilterPicker, filterbtn]);
+  }, [handleFilterPicker]);
 
   return (
     <StyledFilters>
       <div className='filter-wrapper' ref={ref}>
-        <button filterbtn={ref} className={` btn ${CategoryFilterStatus && 'active'}`} onClick={handleFilterPicker}>
+        <button className={` btn ${CategoryFilterStatus && 'active'}`} onClick={handleFilterPicker}>
           <p>Category</p> <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
         </button>
         {CategoryFilterStatus && (
@@ -68,7 +67,7 @@ const ProjectFilter = ({ currentFilter, changeFilter }) => {
 
 const StyledFilters = styled.div`
   margin: 20px 0;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: end;
 
@@ -115,12 +114,13 @@ const StyledFilters = styled.div`
     position: absolute;
     background: white;
     box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
-    padding: 8px;
+    padding: 4px;
     animation-direction: alternate;
     animation: fadeInAnimation ease-out 0.2s;
     border-radius: 0.5em;
     margin-top: 6px;
     right: 0;
+    z-index: 2;
 
     @keyframes fadeInAnimation {
       0% {
@@ -132,9 +132,10 @@ const StyledFilters = styled.div`
     }
 
     .category {
-      padding: 6px 8px;
+      padding: 3px 6px;
       transition: 0.1s;
-      border-radius: 6px;
+      border-radius: 0.3em;
+      cursor: pointer;
 
       &:hover {
         background-color: var(--nice-gray);
