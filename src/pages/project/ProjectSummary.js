@@ -5,6 +5,7 @@ import { useFirestore } from '../../hooks/useFirestore';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import DotsIcon from '../../assets/dots_icon.svg';
+import StatusButton from './StatusButton';
 
 const ProjectSummary = ({ project }) => {
   const { deleteDocument } = useFirestore('projects');
@@ -65,14 +66,19 @@ const ProjectSummary = ({ project }) => {
           <p>Created by {project.createdBy.displayName}</p>
           <p className='due-date'>Project due by {project.dueDate.toDate().toDateString()}</p>
           <p className='details'>{project.details}</p>
-          <h4>Project is assigned to:</h4>
-          <div className='assigned-users'>
-            {project.assignedUsersList.map((user) => (
-              <div key={user.id}>
-                <Avatar src={user.photoURL} />
-              </div>
-            ))}
+        </div>
+        <div className='info-wrapper'>
+          <div>
+            <h4>Project is assigned to:</h4>
+            <div className='assigned-users'>
+              {project.assignedUsersList.map((user) => (
+                <div key={user.id} className='avatar-wrapper'>
+                  <Avatar src={user.photoURL} />
+                </div>
+              ))}
+            </div>
           </div>
+          <StatusButton project={project} />
         </div>
       </div>
     </StyledProjectSummary>
@@ -155,7 +161,7 @@ const StyledProjectSummary = styled.div`
 
   .content-wrapper {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
   }
 
   .btn {
@@ -176,20 +182,24 @@ const StyledProjectSummary = styled.div`
       line-height: 1.8em;
       font-size: 0.9em;
     }
+  }
+
+  .info-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
     h4 {
       color: var(--text-color);
       font-size: 0.9em;
     }
     .assigned-users {
       display: flex;
-      margin-top: 10px;
-      transform: scale(0.9);
+      align-items: flex-end;
+      margin-top: 0px;
 
       .avatar {
-        margin-right: 10px;
-      }
-      .btn {
-        margin-top: 20px;
+        transform: scale(0.8);
       }
     }
   }
