@@ -1,26 +1,33 @@
 import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
 import Avatar from './Avatar';
 
 function ProjectCards({ projects }) {
+  console.log(projects[0].status);
   return (
     <StyledProjectCards>
       {projects.length === 0 && <p>No projects yet!</p>}
       {projects.map((project) => (
         <Link to={`/projects/${project.id}`} key={project.id}>
-          <h4>{project.name}</h4>
-          <p>Due by {project.dueDate.toDate().toDateString()}</p>
-          <div className='assigned-to'>
-            <p>
-              <strong>Assigned to:</strong>
-            </p>
-            <ul>
-              {project.assignedUsersList.map((user) => (
-                <li key={user.photoURL}>
-                  <Avatar src={user.photoURL} />
-                </li>
-              ))}
-            </ul>
+          <div>
+            <h4>{project.name}</h4>
+            <p>Due by {project.dueDate.toDate().toDateString()}</p>
+          </div>
+          <div className='lower-part'>
+            <div className='assigned-to'>
+              <p>
+                <strong>Assigned to:</strong>
+              </p>
+              <ul>
+                {project.assignedUsersList.map((user) => (
+                  <li key={user.photoURL}>
+                    <Avatar src={user.photoURL} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className='status-icon btn'>{project.status}</div>
           </div>
         </Link>
       ))}
@@ -57,6 +64,27 @@ const StyledProjectCards = styled.div`
     color: var(--text-color);
     font-size: 0.9em;
   }
+
+  .lower-part {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .status-icon {
+    padding: 3px 6px;
+    transition: 0.1s;
+    border-radius: 0.3em;
+    cursor: pointer;
+    background: var(--nice-gray);
+    color: var(--heading-color);
+    display: flex;
+    align-items: center;
+
+    font-weight: 600;
+    border: 2px solid var(--nice-gray);
+  }
+
   .assigned-to {
     margin-top: 20px;
     padding-top: 10px;
