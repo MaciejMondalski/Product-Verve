@@ -34,6 +34,7 @@ function Create({ setCreateModal }) {
   const [category, setCategory] = useState('');
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [formError, setFormError] = useState(null);
+  const [status, setStatus] = useState('To Do');
 
   // create user values for react-select
   useEffect(() => {
@@ -72,6 +73,8 @@ function Create({ setCreateModal }) {
       id: user.uid,
     };
 
+    setStatus('To Do');
+
     const project = {
       name,
       details,
@@ -80,12 +83,14 @@ function Create({ setCreateModal }) {
       category: category.value,
       dueDate: timestamp.fromDate(new Date(dueDate)),
       comments: [],
+      status,
     };
 
     await addDocument(project);
+    navigate('/dashboard/page-1');
     if (!response.error) {
       setCreateModal(false);
-      navigate('/dashboard');
+      navigate('/dashboard/page-1');
     }
   };
 
