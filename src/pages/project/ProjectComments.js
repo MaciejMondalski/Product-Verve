@@ -103,6 +103,7 @@ const StyledComments = styled.div`
     font-size: 0.9em;
     font-family: Poppins, sans-serif;
     resize: none;
+    border-radius: 0.5em;
   }
 
   /* project comments */
@@ -113,7 +114,7 @@ const StyledComments = styled.div`
 
   li {
     padding: 0.7em;
-    border-radius: 4px;
+    border-radius: 0.5em;
     border: 1px solid #f2f2f2;
     margin-top: 12px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
