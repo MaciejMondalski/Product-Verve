@@ -45,10 +45,24 @@ const StatusButton = ({ project }) => {
 
   return (
     <StyledStatusButton>
-      <button ref={refbutton} className={` btn ${projectStatus && 'active'}`} onClick={handleStatusDropdown}>
-        {project.status}
-        <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
-      </button>
+      <div className={`${projectStatus && 'active'}`}>
+        <button
+          ref={refbutton}
+          className={`btn   ${
+            project.status == 'To Do'
+              ? 'gray'
+              : project.status == 'In Progress'
+              ? 'blue'
+              : project.status == 'Done'
+              ? 'green'
+              : project.status == 'Blocked' && 'red'
+          } `}
+          onClick={handleStatusDropdown}
+        >
+          <div>{project.status}</div>
+          <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
+        </button>
+      </div>
       {projectStatus && (
         <div ref={ref} className='status-dropdown'>
           <ul>
@@ -70,8 +84,8 @@ const StatusButton = ({ project }) => {
 
 const StyledStatusButton = styled.div`
   margin: 8px;
+
   .btn {
-    background: var(--nice-gray);
     color: var(--heading-color);
     display: flex;
     align-items: center;
@@ -79,18 +93,28 @@ const StyledStatusButton = styled.div`
     padding: 4px 4px 4px 12px;
 
     font-weight: 600;
-    border: 2px solid var(--nice-gray);
+    border: none;
     position: relative;
+
     &:hover {
       filter: brightness(0.9);
     }
 
     img {
       transition-duration: 0.2s;
-
       height: 2em;
       transform: rotate(-90deg);
       filter: invert(22%) sepia(0%) saturate(0%) hue-rotate(151deg) brightness(104%) contrast(85%);
+    }
+  }
+
+  div.active {
+    button {
+      filter: brightness(0.9);
+
+      img {
+        transform: rotate(90deg);
+      }
     }
   }
 
@@ -127,21 +151,13 @@ const StyledStatusButton = styled.div`
         background-color: var(--nice-gray);
       }
     }
-    .active {
+    li.active {
       background: var(--primary-color);
       color: white;
       &:hover {
         background: var(--primary-color);
         color: white;
       }
-    }
-  }
-  button.active {
-    border: 2px solid #999;
-    filter: brightness(0.9);
-
-    img {
-      transform: rotate(90deg);
     }
   }
 `;
