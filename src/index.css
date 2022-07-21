@@ -90,3 +90,17 @@ textarea {
   height: fit-content;
   width: 100%;
 }
+
+.gray {
+  background: var(--nice-gray);
+}
+.blue {
+  background: #abd6ff;
+}
+
+.green {
+  background: #abffc4;
+}
+.red {
+  background: #ffabab;
+}
