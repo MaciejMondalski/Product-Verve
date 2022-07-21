@@ -7,16 +7,32 @@ function ProjectList({ projects }) {
     <StyledProjectList>
       <ul className='table-header'>
         <li>Project Name</li>
+        <li>Status</li>
         <li>Category</li>
         <li>Due Date</li>
         <li>Asignee</li>
       </ul>
-      {projects.length === 0 && <p>No projects yet!</p>}
+      {projects.length === 0 && <p>No projects to display...</p>}
       {projects.map((project) => (
         <Link className='item' to={`/projects/${project.id}`} key={project.id}>
           <ul>
             <li className='sub-item project-name'>
               <p>{project.name}</p>
+            </li>
+            <li className='sub-item project-status'>
+              <div
+                className={`status-icon ${
+                  project.status == 'To Do'
+                    ? 'gray'
+                    : project.status == 'In Progress'
+                    ? 'blue'
+                    : project.status == 'Done'
+                    ? 'green'
+                    : project.status == 'Blocked' && 'red'
+                }`}
+              >
+                {project.status}
+              </div>
             </li>
             <li className='sub-item project-category'>
               <p>{project.category}</p>
@@ -70,6 +86,9 @@ const StyledProjectList = styled.div`
       :nth-child(4) {
         flex: 1;
       }
+      :nth-child(5) {
+        flex: 1;
+      }
     }
   }
 
@@ -102,6 +121,9 @@ const StyledProjectList = styled.div`
       flex: 3;
       font-weight: 600;
     }
+    .project-status {
+      flex: 1;
+    }
 
     .project-category {
       flex: 1;
@@ -109,6 +131,19 @@ const StyledProjectList = styled.div`
 
     .due-date {
       flex: 1;
+    }
+
+    .status-icon {
+      font-size: 0.9em;
+      width: fit-content;
+      padding: 3px 6px;
+      transition: 0.1s;
+      border-radius: 0.3em;
+      cursor: pointer;
+      color: var(--heading-color);
+      display: flex;
+      align-items: center;
+      font-weight: 600;
     }
 
     .assigned-to {

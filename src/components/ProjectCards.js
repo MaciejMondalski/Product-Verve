@@ -27,7 +27,19 @@ function ProjectCards({ projects }) {
                 ))}
               </ul>
             </div>
-            <div className='status-icon btn'>{project.status}</div>
+            <div
+              className={`status-icon ${
+                project.status == 'To Do'
+                  ? 'gray'
+                  : project.status == 'In Progress'
+                  ? 'blue'
+                  : project.status == 'Done'
+                  ? 'green'
+                  : project.status == 'Blocked' && 'red'
+              }`}
+            >
+              {project.status}
+            </div>{' '}
           </div>
         </Link>
       ))}
@@ -75,14 +87,11 @@ const StyledProjectCards = styled.div`
     padding: 3px 6px;
     transition: 0.1s;
     border-radius: 0.3em;
-    cursor: pointer;
-    background: var(--nice-gray);
     color: var(--heading-color);
     display: flex;
     align-items: center;
-
+    font-size: 0.9em;
     font-weight: 600;
-    border: 2px solid var(--nice-gray);
   }
 
   .assigned-to {
@@ -91,7 +100,7 @@ const StyledProjectCards = styled.div`
     border-top: 1px solid #eee;
   }
   ul {
-    margin: 10px 0;
+    margin: 10px 0 0 0;
     display: flex;
   }
   li {
