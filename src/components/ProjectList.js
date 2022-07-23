@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from './Avatar';
 
-function ProjectList({ projects }) {
+function ProjectList({ filteredProjects }) {
   return (
     <StyledProjectList>
       <ul className='table-header'>
@@ -12,8 +12,8 @@ function ProjectList({ projects }) {
         <li>Due Date</li>
         <li>Asignee</li>
       </ul>
-      {projects.length === 0 && <p>No projects to display...</p>}
-      {projects.map((project) => (
+      {filteredProjects.length === 0 && <p>No projects to display...</p>}
+      {filteredProjects.map((project) => (
         <Link className='item' to={`/projects/${project.id}`} key={project.id}>
           <ul>
             <li className='sub-item project-name'>

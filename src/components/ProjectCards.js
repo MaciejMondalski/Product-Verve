@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from './Avatar';
 
-function ProjectCards({ projects }) {
-  console.log(projects[0].status);
+function ProjectCards({ filteredProjects }) {
   return (
     <StyledProjectCards>
-      {projects.length === 0 && <p>No projects yet!</p>}
-      {projects.map((project) => (
+      {filteredProjects.length === 0 && <p>No projects yet!</p>}
+      {filteredProjects.map((project) => (
         <Link to={`/projects/${project.id}`} key={project.id}>
           <div>
             <h4>{project.name}</h4>
