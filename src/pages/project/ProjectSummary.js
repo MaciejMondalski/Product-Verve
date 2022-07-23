@@ -149,6 +149,7 @@ const StyledProjectSummary = styled.div`
 
     li {
       padding: 3px 6px;
+      margin: 3px;
       transition: 0.1s;
       border-radius: 0.3em;
       cursor: pointer;
