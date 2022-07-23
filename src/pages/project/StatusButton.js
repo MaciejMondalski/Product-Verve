@@ -8,8 +8,8 @@ const statusList = ['To Do', 'In Progress', 'Done', 'Blocked'];
 const StatusButton = ({ project }) => {
   const ref = useRef(null);
   const refbutton = useRef(null);
-  const [projectStatus, setProjectStatus] = useState(false);
-  const [currentStatus, setCurrentStatus] = useState();
+  const [projectStatusButton, setProjectStatusButton] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState(project.status);
   const { updateDocument, response } = useFirestore('projects');
 
   const updateStatus = async (value) => {
@@ -22,18 +22,23 @@ const StatusButton = ({ project }) => {
   };
 
   const handleStatusDropdown = () => {
-    setProjectStatus(!projectStatus);
-    console.log(projectStatus);
+    setProjectStatusButton(!projectStatusButton);
+    console.log(projectStatusButton);
   };
 
   const closeStatus = () => {
-    setProjectStatus(false);
-    console.log(projectStatus);
+    setProjectStatusButton(false);
+    console.log(projectStatusButton);
   };
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (projectStatus && ref.current && !ref.current.contains(e.target) && !refbutton.current.contains(e.target)) {
+      if (
+        projectStatusButton &&
+        ref.current &&
+        !ref.current.contains(e.target) &&
+        !refbutton.current.contains(e.target)
+      ) {
         closeStatus();
       }
     };
@@ -41,11 +46,11 @@ const StatusButton = ({ project }) => {
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-  }, [handleStatusDropdown, closeStatus, projectStatus]);
+  }, [handleStatusDropdown, closeStatus, projectStatusButton]);
 
   return (
     <StyledStatusButton>
-      <div className={`${projectStatus && 'active'}`}>
+      <div className={`${projectStatusButton && 'active'}`}>
         <button
           ref={refbutton}
           className={`btn   ${
@@ -63,14 +68,14 @@ const StatusButton = ({ project }) => {
           <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
         </button>
       </div>
-      {projectStatus && (
+      {projectStatusButton && (
         <div ref={ref} className='status-dropdown'>
           <ul>
             {statusList.map((status) => (
               <li
                 key={status}
                 onClick={() => updateStatus(status)}
-                className={`${currentStatus === status && 'active'}`}
+                className={`${currentStatus == status && 'active'}`}
               >
                 {status}
               </li>
@@ -143,6 +148,7 @@ const StyledStatusButton = styled.div`
 
     li {
       padding: 3px 6px;
+      margin: 3px;
       transition: 0.1s;
       border-radius: 0.3em;
       cursor: pointer;
