@@ -42,7 +42,7 @@ const CategoryFilter = ({ currentStatusFilter, setCurrentStatusFilter }) => {
   return (
     <StyledCategoryFilter>
       <div className='filter-wrapper' ref={ref}>
-        <button className={` btn ${statusFilterButton && 'active'}`} onClick={handleFilterPicker}>
+        <button className={` filter-btn ${statusFilterButton && 'active'}`} onClick={handleFilterPicker}>
           <p>Status</p> <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
         </button>
         {statusFilterButton && (
@@ -71,18 +71,13 @@ const StyledCategoryFilter = styled.div`
     position: relative;
   }
 
-  .btn {
-    background: var(--nice-gray);
-    color: var(--heading-color);
+  .filter-btn {
     display: flex;
     align-items: center;
     justify-content: end;
-    padding: 4px 4px 4px 12px;
-    font-weight: 600;
-    border: 2px solid var(--nice-gray);
 
     &:hover {
-      filter: brightness(0.9);
+      border: 1px solid var(--primary-color);
     }
 
     img {
@@ -95,7 +90,7 @@ const StyledCategoryFilter = styled.div`
   }
 
   button.active {
-    filter: brightness(0.9);
+    border: 1px solid var(--primary-color);
 
     img {
       transform: rotate(90deg);
