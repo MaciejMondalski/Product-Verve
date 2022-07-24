@@ -91,7 +91,6 @@ const StyledStatusButton = styled.div`
   margin: 8px;
 
   .btn {
-    color: var(--heading-color);
     display: flex;
     align-items: center;
     justify-content: end;
@@ -109,7 +108,6 @@ const StyledStatusButton = styled.div`
       transition-duration: 0.2s;
       height: 2em;
       transform: rotate(-90deg);
-      filter: invert(22%) sepia(0%) saturate(0%) hue-rotate(151deg) brightness(104%) contrast(85%);
     }
   }
 
