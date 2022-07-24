@@ -43,13 +43,13 @@ function Dashboard() {
       const filteredArray = documents
         ? documents.filter((document) => {
             switch (currentCategoryFilter) {
-              case 'all':
+              case 'All':
                 if (currentStatusFilter === 'All') {
                   return true;
                 } else {
                   return document.status == currentStatusFilter;
                 }
-              case 'mine':
+              case 'Mine':
                 let assignedToMe = false;
                 document.assignedUsersList.forEach((u) => {
                   if (u.id === user.uid) {
@@ -61,10 +61,10 @@ function Dashboard() {
                 } else {
                   return assignedToMe && document.status == currentStatusFilter;
                 }
-              case 'development':
-              case 'design':
-              case 'sales':
-              case 'marketing':
+              case 'Development':
+              case 'Design':
+              case 'Sales':
+              case 'Marketing':
                 if (currentStatusFilter === 'All') {
                   return document.category === currentCategoryFilter;
                 } else {

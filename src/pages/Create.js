@@ -14,10 +14,10 @@ import DatePicker from 'react-datepicker';
 import './DatePicker.scss';
 
 const categories = [
-  { value: 'development', label: 'Development' },
-  { value: 'design', label: 'Design' },
-  { value: 'sales', label: 'Sales' },
-  { value: 'marketing', label: 'Marketing' },
+  { value: 'Development', label: 'Development' },
+  { value: 'Design', label: 'Design' },
+  { value: 'Sales', label: 'Sales' },
+  { value: 'Marketing', label: 'Marketing' },
 ];
 
 function Create({ setCreateModal }) {
