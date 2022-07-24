@@ -86,7 +86,6 @@ const StyledProjectCards = styled.div`
     padding: 3px 6px;
     transition: 0.1s;
     border-radius: 0.3em;
-    color: var(--heading-color);
     display: flex;
     align-items: center;
     font-size: 0.9em;

@@ -140,7 +140,6 @@ const StyledProjectList = styled.div`
       transition: 0.1s;
       border-radius: 0.3em;
       cursor: pointer;
-      color: var(--heading-color);
       display: flex;
       align-items: center;
       font-weight: 600;
