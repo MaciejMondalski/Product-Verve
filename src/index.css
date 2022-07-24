@@ -10,9 +10,14 @@
   --darker-color: #023e7d;
   --nice-gray: #dbdee2;
   --highlight-color: #70e000;
-  --bg-color: #f4f4f4;
+  --bg-color: #f6f7f9;
   --input-color: #f9f9fad4;
 }
+
+/*#f2f4f7 
+--bg-color: #f4f4f4;
+
+*/
 
 /* base styles */
 body {
@@ -44,7 +49,7 @@ ul {
 .btn {
   background: var(--primary-color);
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 0.6em;
   color: #fff;
   cursor: pointer;
   font-size: 1em;
@@ -52,6 +57,21 @@ ul {
   width: fit-content;
   height: fit-content;
   transition: 0.1s;
+}
+
+.filter-btn {
+  background: white;
+  color: var(--heading-color);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 0.6em;
+  cursor: pointer;
+  font-size: 1em;
+  width: fit-content;
+  height: fit-content;
+  transition: 0.1s;
+  padding: 4px 4px 4px 12px;
+  font-weight: 600;
+  border: 1px solid var(--nice-gray);
 }
 
 .btn:hover {
@@ -93,14 +113,36 @@ textarea {
 
 .gray {
   background: var(--nice-gray);
+  color: var(--heading-color);
 }
+
+.gray img {
+  filter: invert(22%) sepia(0%) saturate(0%) hue-rotate(151deg) brightness(104%) contrast(85%);
+}
+
 .blue {
-  background: #abd6ff;
+  background: #e2f2ff;
+  color: #0058aa;
+}
+
+.blue img {
+  filter: invert(13%) sepia(100%) saturate(5422%) hue-rotate(199deg) brightness(79%) contrast(102%);
 }
 
 .green {
-  background: #abffc4;
+  background: #e1ffe9;
+  color: #007c25;
 }
+
+.green img {
+  filter: invert(25%) sepia(72%) saturate(2001%) hue-rotate(123deg) brightness(79%) contrast(103%);
+}
+
 .red {
-  background: #ffabab;
+  background: #ffe5e5;
+  color: #aa0000;
+}
+
+.red img {
+  filter: invert(8%) sepia(95%) saturate(7393%) hue-rotate(12deg) brightness(71%) contrast(111%);
 }
