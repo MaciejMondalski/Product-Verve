@@ -41,9 +41,11 @@ const CategoryFilter = ({ currentCategoryFilter, setCurrentCategoryFilter }) => 
 
   return (
     <StyledCategoryFilter>
+      <p className='filter-title'>Category</p>
+
       <div className='filter-wrapper' ref={ref}>
         <button className={` filter-btn ${categoryFilterButton && 'active'}`} onClick={handleFilterPicker}>
-          <p>Category</p> <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
+          <p>{currentCategoryFilter}</p> <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
         </button>
         {categoryFilterButton && (
           <div className='filter-picker'>
@@ -66,6 +68,11 @@ const CategoryFilter = ({ currentCategoryFilter, setCurrentCategoryFilter }) => 
 };
 
 const StyledCategoryFilter = styled.div`
+  .filter-title {
+    font-size: 0.9em;
+    color: var(--text-color);
+    margin-bottom: 0.3em;
+  }
   .filter-wrapper {
     position: relative;
   }
@@ -74,6 +81,8 @@ const StyledCategoryFilter = styled.div`
     display: flex;
     align-items: center;
     justify-content: end;
+    justify-content: space-between;
+    width: 10em;
 
     &:hover {
       border: 1px solid var(--primary-color);
