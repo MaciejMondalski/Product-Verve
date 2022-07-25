@@ -60,7 +60,10 @@ const StyledProjectList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border: 1px solid var(--nice-gray);
+  border-radius: 0.5em;
+  overflow: hidden;
 
   .table-header {
     display: flex;
@@ -69,8 +72,8 @@ const StyledProjectList = styled.div`
     width: 100%;
     height: 3em;
     font-size: 1em;
-    background: var(--nice-gray);
-    border-radius: 0.5em 0.5em 0 0;
+    background: var(--lighter-gray);
+    border-bottom: 1px solid var(--nice-gray);
 
     li {
       padding: 10px 20px;
@@ -101,7 +104,7 @@ const StyledProjectList = styled.div`
       filter: brightness(0.97);
     }
     :nth-last-child(1) {
-      border-radius: 0 0 0.5em 0.5em;
+      border: none;
     }
   }
 
