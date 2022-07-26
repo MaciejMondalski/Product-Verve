@@ -60,11 +60,12 @@ const StyledProjectCards = styled.div`
     text-decoration: none;
     color: inherit;
     transition-duration: 0.2s;
+    border: 1px solid var(--nice-gray);
 
     &:hover {
       transform: scale(1.02);
       box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.04);
-      filter: brightness(0.97);
+      filter: brightness(0.98);
     }
   }
   h4 {
