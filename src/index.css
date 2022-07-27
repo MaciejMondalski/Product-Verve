@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@1,700&display=swap');
 
 /* variables */
 :root {
   --heading-color: #444;
   --text-color: #999;
-  --primary-color: #0353a4;
+  --primary-color: #3e379e;
   --lighter-color: #2081e2;
   --darker-color: #023e7d;
   --nice-gray: #dbdee2;
   --lighter-gray: #eff2f5;
-  --highlight-color: #70e000;
   --bg-color: #f6f7f9;
   --input-color: #f9f9fad4;
 }
@@ -22,7 +22,7 @@
 
 /* base styles */
 body {
-  font-family: Poppins, sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   font-size: 0.8em;
   background: var(--bg-color);
