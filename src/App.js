@@ -3,7 +3,7 @@ import { useAuthContext } from './hooks/useAuthContext';
 import './App.scss';
 
 // pages and components
-import Dashboard from './pages/Dashboard';
+import Initiatives from './pages/Initiatives';
 import Create from './pages/Create';
 import Login from './pages/Login';
 import Project from './pages/project/Project';
@@ -30,15 +30,15 @@ function App() {
             <div className={user ? 'below-nav' : 'below-nav center-content'}>
               <div className='route-wrapper'>
                 <Routes>
-                  <Route path={'dashboard/:pageId'} element={!user ? <Navigate to='/login' /> : <Dashboard />} />
+                  <Route path={'initiatives/:pageId'} element={!user ? <Navigate to='/login' /> : <Initiatives />} />
                   <Route
                     exact
                     path='login'
-                    element={user ? <Navigate to={`/dashboard/${'page-' + currentPage}`} /> : <Login />}
+                    element={user ? <Navigate to={`/initiatives/${'page-' + currentPage}`} /> : <Login />}
                   />
                   <Route
                     path='signup'
-                    element={user ? <Navigate to={`/dashboard/${'page-' + currentPage}`} /> : <Signup />}
+                    element={user ? <Navigate to={`/initiatives/${'page-' + currentPage}`} /> : <Signup />}
                   />
                   <Route path='projects/:id' element={<Project />} />
                 </Routes>

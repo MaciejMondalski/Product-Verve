@@ -21,9 +21,9 @@ function Sidebar({ setCreateModal }) {
         <nav className='links'>
           <ul>
             <li>
-              <NavLink end to={`dashboard/${'page-' + currentPage}`}>
+              <NavLink end to={`initiatives/${'page-' + currentPage}`}>
                 <img src={DashboardIcon} alt='dashboard icon' onClick={() => setCurrentPage(1)} />
-                <span>Dashboard</span>
+                <span>Initiatives</span>
               </NavLink>
             </li>
             <li>
@@ -50,24 +50,12 @@ const StyledSidebar = styled.div`
     width: inherit;
   }
 
-  .side-header {
-    background: var(--darker-color);
-  }
-
-  .logo {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
   .links {
-    margin-top: 40px;
-    margin-left: 20px;
+    margin: 40px 10px;
     .active {
-      color: #555;
-      background: var(--bg-color);
-      border-radius: 0.5em 0 0 0.5em;
-      img {
-        filter: invert(40%);
-      }
+      color: #fff;
+      background: #4f42c7;
+      border-radius: 0.6em;
     }
     li {
       margin-top: 10px;
@@ -82,6 +70,9 @@ const StyledSidebar = styled.div`
       width: 100%;
       color: #fff;
       box-sizing: border-box;
+      align-items: center;
+      font-weight: 500;
+      font-size: 1.1em;
     }
 
     img {

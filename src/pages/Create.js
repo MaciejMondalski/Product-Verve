@@ -87,10 +87,10 @@ function Create({ setCreateModal }) {
     };
 
     await addDocument(project);
-    navigate('/dashboard/page-1');
+    navigate('/initiatives/page-1');
     if (!response.error) {
       setCreateModal(false);
-      navigate('/dashboard/page-1');
+      navigate('/initiatives/page-1');
     }
   };
 

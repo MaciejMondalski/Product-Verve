@@ -13,7 +13,7 @@ const CategoryFilter = ({ currentStatusFilter, setCurrentStatusFilter }) => {
   const handleClick = (newFilter) => {
     setCurrentStatusFilter(newFilter);
     setStatusFilterButton(!statusFilterButton);
-    navigate('/dashboard/page-1');
+    navigate('/initiatives/page-1');
   };
 
   const handleFilterPicker = () => {
@@ -111,7 +111,7 @@ const StyledCategoryFilter = styled.div`
     flex-direction: column;
     position: absolute;
     background: white;
-    box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
     padding: 4px;
     animation-direction: alternate;
     animation: fadeInAnimation ease-out 0.2s;
