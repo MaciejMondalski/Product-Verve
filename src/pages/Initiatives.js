@@ -1,0 +1,138 @@
+import ProjectCards from '../components/ProjectCards';
+import ProjectList from '../components/ProjectList';
+import { useCollection } from '../hooks/useCollection';
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useInitiativesContext } from '../hooks/useInitiativesContext';
+import { usePaginationContext } from '../hooks/usePaginationContext';
+import Pagination from '../components/Pagination';
+import { useParams } from 'react-router-dom';
+import FilterBar from '../components/filter/FilterBar';
+
+function Initiatives() {
+  const { documents, error } = useCollection('projects');
+  const [currentCategoryFilter, setCurrentCategoryFilter] = useState('All');
+  const [currentStatusFilter, setCurrentStatusFilter] = useState('All');
+  const [filteredProjects, setFilteredProjects] = useState();
+
+  const { user } = useAuthContext();
+  const { dispatch, view } = useInitiativesContext();
+  const { pageId } = useParams();
+
+  // Pagination
+  const [loading, setLoading] = useState(false);
+  // const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage } = usePaginationContext();
+
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [currentItems, setCurrentItems] = useState();
+
+  const handleView = async (e) => {
+    console.log(e);
+    if (e === 'list') {
+      dispatch({ type: 'LIST', payload: e });
+    }
+    if (e === 'card') {
+      dispatch({ type: 'CARD', payload: e });
+    }
+  };
+
+  useEffect(() => {
+    const unsub = () => {
+      const filteredArray = documents
+        ? documents.filter((document) => {
+            switch (currentCategoryFilter) {
+              case 'All':
+                if (currentStatusFilter === 'All') {
+                  return true;
+                } else {
+                  return document.status == currentStatusFilter;
+                }
+              case 'Mine':
+                let assignedToMe = false;
+                document.assignedUsersList.forEach((u) => {
+                  if (u.id === user.uid) {
+                    assignedToMe = true;
+                  }
+                });
+                if (currentStatusFilter === 'All') {
+                  return assignedToMe;
+                } else {
+                  return assignedToMe && document.status == currentStatusFilter;
+                }
+              case 'Development':
+              case 'Design':
+              case 'Sales':
+              case 'Marketing':
+                if (currentStatusFilter === 'All') {
+                  return document.category === currentCategoryFilter;
+                } else {
+                  return document.category === currentCategoryFilter && document.status == currentStatusFilter;
+                }
+              default:
+                return true;
+            }
+          })
+        : null;
+
+      setFilteredProjects(filteredArray);
+    };
+    unsub();
+  }, [documents, currentCategoryFilter, currentStatusFilter]);
+
+  useEffect(() => {
+    if (filteredProjects) {
+      const unsub = () => {
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        const items = filteredProjects.slice(indexOfFirstItem, indexOfLastItem);
+        setCurrentItems(items);
+      };
+      unsub();
+    }
+  }, [filteredProjects, currentPage, documents]);
+
+  // Maintain page after refresh
+  useEffect(() => {
+    const filteredPageId = () => {
+      const filteredPageId = pageId.substring(5, 7);
+      setCurrentPage(filteredPageId);
+    };
+    filteredPageId();
+  }, [pageId]);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  return (
+    <StyledInitiatives>
+      <h2 className='page-title'>Initiatives</h2>
+
+      {error && <p className='error'>{error}</p>}
+      {documents && (
+        <FilterBar
+          handleView={handleView}
+          currentStatusFilter={currentStatusFilter}
+          setCurrentStatusFilter={setCurrentStatusFilter}
+          currentCategoryFilter={currentCategoryFilter}
+          setCurrentCategoryFilter={setCurrentCategoryFilter}
+        />
+      )}
+      {currentItems && view === 'list' && <ProjectList filteredProjects={currentItems} />}
+      {currentItems && view === 'card' && <ProjectCards filteredProjects={currentItems} />}
+      {currentItems && filteredProjects && (
+        <Pagination itemsPerPage={itemsPerPage} totalItems={filteredProjects.length} paginate={paginate} />
+      )}
+    </StyledInitiatives>
+  );
+}
+
+const StyledInitiatives = styled.div`
+  .page-title {
+    font-size: 2.5em;
+    font-weight: 500;
+    color: var(--heading-color);
+  }
+`;
+export default Initiatives;
