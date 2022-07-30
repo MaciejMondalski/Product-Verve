@@ -26,9 +26,8 @@ const FilterBar = ({
 
 const StyledFilterBar = styled.div`
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
-
   .filters {
     margin: 20px 0;
     z-index: 2;
