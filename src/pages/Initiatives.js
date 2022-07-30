@@ -1,4 +1,4 @@
-import ProjectCards from '../components/ProjectCards';
+import ProjectGrid from '../components/ProjectGrid';
 import ProjectList from '../components/ProjectList';
 import { useCollection } from '../hooks/useCollection';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import { usePaginationContext } from '../hooks/usePaginationContext';
 import Pagination from '../components/Pagination';
 import { useParams } from 'react-router-dom';
 import FilterBar from '../components/filter/FilterBar';
+import ProjectBoard from '../components/ProjectBoard';
 
 function Initiatives() {
   const { documents, error } = useCollection('projects');
@@ -33,8 +34,8 @@ function Initiatives() {
     if (e === 'list') {
       dispatch({ type: 'LIST', payload: e });
     }
-    if (e === 'card') {
-      dispatch({ type: 'CARD', payload: e });
+    if (e === 'grid') {
+      dispatch({ type: 'GRID', payload: e });
     }
   };
 
@@ -119,8 +120,9 @@ function Initiatives() {
           setCurrentCategoryFilter={setCurrentCategoryFilter}
         />
       )}
+      {currentItems && <ProjectBoard filteredProjects={currentItems} />}
       {currentItems && view === 'list' && <ProjectList filteredProjects={currentItems} />}
-      {currentItems && view === 'card' && <ProjectCards filteredProjects={currentItems} />}
+      {currentItems && view === 'grid' && <ProjectGrid filteredProjects={currentItems} />}
       {currentItems && filteredProjects && (
         <Pagination itemsPerPage={itemsPerPage} totalItems={filteredProjects.length} paginate={paginate} />
       )}
