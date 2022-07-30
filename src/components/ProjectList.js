@@ -72,7 +72,7 @@ const StyledProjectList = styled.div`
     width: 100%;
     height: 3em;
     font-size: 1em;
-    background: var(--lighter-gray);
+    background: #eaecf0;
     border-bottom: 1px solid var(--nice-gray);
 
     li {
