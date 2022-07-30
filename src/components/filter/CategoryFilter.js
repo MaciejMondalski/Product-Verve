@@ -88,6 +88,7 @@ const StyledCategoryFilter = styled.div`
 
     &:hover {
       border: 1px solid var(--primary-color);
+      color: var(--primary-color);
     }
 
     img {
