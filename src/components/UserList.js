@@ -49,6 +49,7 @@ function UserList() {
 // {`library ${userListStatus ? 'active-userlist' : ''}`}
 
 const StyledUserList = styled.div`
+  z-index: 10;
   .userlist-wrapper {
     min-width: 230px;
     min-height: 100%;
