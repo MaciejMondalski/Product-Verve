@@ -80,7 +80,7 @@ function Initiatives() {
       setFilteredProjects(filteredArray);
     };
     unsub();
-  }, [documents, currentCategoryFilter, currentStatusFilter]);
+  }, [documents, currentCategoryFilter, currentStatusFilter, user.uid]);
 
   useEffect(() => {
     if (filteredProjects) {
@@ -92,7 +92,7 @@ function Initiatives() {
       };
       unsub();
     }
-  }, [filteredProjects, currentPage, documents]);
+  }, [filteredProjects, currentPage, documents, itemsPerPage]);
 
   // Maintain page after refresh
   useEffect(() => {
@@ -101,7 +101,7 @@ function Initiatives() {
       setCurrentPage(filteredPageId);
     };
     filteredPageId();
-  }, [pageId]);
+  }, [pageId, setCurrentPage]);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
