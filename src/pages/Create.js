@@ -169,9 +169,9 @@ const StyledCreate = styled.div`
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 3;
+    z-index: 20;
   }
 
   .datepicker-wrapper {
