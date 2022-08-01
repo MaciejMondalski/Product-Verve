@@ -16,7 +16,7 @@ const StatusButton = ({ project }) => {
     console.log(value);
     setCurrentStatus(value);
     updateDocument(project.id, {
-      status: [value],
+      status: value,
     });
     await closeStatus();
   };
