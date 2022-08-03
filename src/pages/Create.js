@@ -20,12 +20,21 @@ const categories = [
   { value: 'Marketing', label: 'Marketing' },
 ];
 
-function Create({ setCreateModal }) {
+function Create({ setCreateModal, projectsCollection }) {
   const navigate = useNavigate();
   const { addDocument, response } = useFirestore('projects');
   const { user } = useAuthContext();
   const { documents } = useCollection('users');
   const [users, setUsers] = useState([]);
+
+  // Index EXPERIMENT
+
+  const indexedProjects = projectsCollection.map((project) => {
+    return project.index;
+  });
+  const highestIndex = Math.max(...indexedProjects);
+  const newIndex = highestIndex + 1;
+  console.log(newIndex);
 
   // form field values
   const [name, setName] = useState('');
@@ -76,6 +85,7 @@ function Create({ setCreateModal }) {
     setStatus('To Do');
 
     const project = {
+      index: newIndex,
       name,
       details,
       assignedUsersList,

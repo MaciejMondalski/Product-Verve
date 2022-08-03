@@ -13,18 +13,20 @@ import Sidebar from './components/Sidebar';
 import UserList from './components/UserList';
 import { useState } from 'react';
 import { usePaginationContext } from './hooks/usePaginationContext';
+import { useCollection } from './hooks/useCollection';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
   const [createModal, setCreateModal] = useState(false);
   const { currentPage, setCurrentPage } = usePaginationContext();
+  const { documents } = useCollection('projects');
 
   return (
     <div className='App'>
       {authIsReady && (
         <BrowserRouter>
           {user && <Sidebar setCreateModal={setCreateModal} />}
-          {createModal && <Create setCreateModal={setCreateModal} />}
+          {createModal && <Create setCreateModal={setCreateModal} projectsCollection={documents} />}
           <div className='container'>
             <Navbar />
             <div className={user ? 'below-nav' : 'below-nav center-content'}>
