@@ -9,12 +9,14 @@ import { usePaginationContext } from '../hooks/usePaginationContext';
 import Pagination from '../components/Pagination';
 import { useParams } from 'react-router-dom';
 import FilterBar from '../components/filter/FilterBar';
+import ProjectBoardTest from '../components/ProjectBoardTest';
 import ProjectBoard from '../components/ProjectBoard';
 
 function Initiatives() {
   const { documents, error } = useCollection('projects');
   const [currentCategoryFilter, setCurrentCategoryFilter] = useState('All');
   const [currentStatusFilter, setCurrentStatusFilter] = useState('All');
+  const [sortedProjects, setSortedProjects] = useState();
   const [filteredProjects, setFilteredProjects] = useState();
 
   const { user } = useAuthContext();
@@ -41,43 +43,51 @@ function Initiatives() {
 
   useEffect(() => {
     const unsub = () => {
-      const filteredArray = documents
-        ? documents.filter((document) => {
-            switch (currentCategoryFilter) {
-              case 'All':
-                if (currentStatusFilter === 'All') {
-                  return true;
-                } else {
-                  return document.status == currentStatusFilter;
-                }
-              case 'Mine':
-                let assignedToMe = false;
-                document.assignedUsersList.forEach((u) => {
-                  if (u.id === user.uid) {
-                    assignedToMe = true;
-                  }
-                });
-                if (currentStatusFilter === 'All') {
-                  return assignedToMe;
-                } else {
-                  return assignedToMe && document.status == currentStatusFilter;
-                }
-              case 'Development':
-              case 'Design':
-              case 'Sales':
-              case 'Marketing':
-                if (currentStatusFilter === 'All') {
-                  return document.category === currentCategoryFilter;
-                } else {
-                  return document.category === currentCategoryFilter && document.status == currentStatusFilter;
-                }
-              default:
-                return true;
-            }
-          })
-        : null;
+      if (documents) {
+        const sortedArray = documents.sort(function (a, b) {
+          return a.index - b.index;
+        });
 
-      setFilteredProjects(filteredArray);
+        setSortedProjects(sortedArray);
+
+        const filteredArray = sortedArray
+          ? sortedArray.filter((document) => {
+              switch (currentCategoryFilter) {
+                case 'All':
+                  if (currentStatusFilter === 'All') {
+                    return true;
+                  } else {
+                    return document.status == currentStatusFilter;
+                  }
+                case 'Mine':
+                  let assignedToMe = false;
+                  document.assignedUsersList.forEach((u) => {
+                    if (u.id === user.uid) {
+                      assignedToMe = true;
+                    }
+                  });
+                  if (currentStatusFilter === 'All') {
+                    return assignedToMe;
+                  } else {
+                    return assignedToMe && document.status == currentStatusFilter;
+                  }
+                case 'Development':
+                case 'Design':
+                case 'Sales':
+                case 'Marketing':
+                  if (currentStatusFilter === 'All') {
+                    return document.category === currentCategoryFilter;
+                  } else {
+                    return document.category === currentCategoryFilter && document.status == currentStatusFilter;
+                  }
+                default:
+                  return true;
+              }
+            })
+          : null;
+
+        setFilteredProjects(filteredArray);
+      }
     };
     unsub();
   }, [documents, currentCategoryFilter, currentStatusFilter, user.uid]);
@@ -120,7 +130,8 @@ function Initiatives() {
           setCurrentCategoryFilter={setCurrentCategoryFilter}
         />
       )}
-      {currentItems && <ProjectBoard filteredProjects={currentItems} />}
+      {currentItems && <ProjectBoard filteredProjects={currentItems} allProjects={sortedProjects} />}
+      {currentItems && <ProjectBoardTest filteredProjects={currentItems} />}
       {currentItems && view === 'list' && <ProjectList filteredProjects={currentItems} />}
       {currentItems && view === 'grid' && <ProjectGrid filteredProjects={currentItems} />}
       {currentItems && filteredProjects && (
