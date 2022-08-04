@@ -9,7 +9,6 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
   const { updateDocument, response } = useFirestore('projects');
 
   const [columns, setColumns] = useState();
-  const [boardProjects, setBoardProjects] = useState(allProjects);
   const statuses = documents;
 
   // //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //
@@ -30,25 +29,56 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
     const finishStatusName = statuses.filter((status) => status.id.includes(finishStatusId))[0].name;
 
     // Object of the project being dragged
-    const currentDraggedProject = boardProjects.filter((project) => project.id === draggableId)[0];
+    const currentDraggedProject = allProjects.filter((project) => project.id === draggableId)[0];
 
     // Arrays of projects in start and finish columns
-    const startStatusProjects = boardProjects.filter((project) => project.status === startStatusName);
-    const finishStatusProjects = boardProjects
+    const startStatusProjects = allProjects.filter((project) => project.status === startStatusName);
+    const finishStatusProjects = allProjects
       .filter((project) => project.status === finishStatusName)
       .concat(currentDraggedProject);
 
+    /////////////////////////////////////////////
+
     if (startStatusId === finishStatusId) {
-      const updatedColumnProjects = Array.from(startStatusProjects);
-      updatedColumnProjects.splice(source.index, 1);
-      updatedColumnProjects.splice(destination.index, 0, currentDraggedProject);
+      console.log('same column');
+      console.log(startStatusProjects);
+      // Project Proper Indexes
+      const itemIndexArray = startStatusProjects.map((item) => {
+        return item.index;
+      });
 
-      // Create a new project array after reordering items in a column
-      const otherColumnProjects = boardProjects.filter((project) => project.status !== startStatusName);
-      const newProjectArray = otherColumnProjects.concat(updatedColumnProjects);
+      if (source.index > destination.index) {
+        console.log(itemIndexArray[destination.index]);
 
-      setBoardProjects(newProjectArray);
-      console.log(newProjectArray);
+        console.log(startStatusProjects);
+
+        const copyStartStatusProjects = Array.from(startStatusProjects);
+
+        const itemsToUpdate = copyStartStatusProjects.splice(destination.index, startStatusProjects.length - 1);
+        itemsToUpdate.splice(source.index, 1);
+
+        console.log(startStatusProjects);
+
+        const idItemsToUpdate = itemsToUpdate.map((item) => {
+          return item.id;
+        });
+
+        updateIndexes(idItemsToUpdate, itemIndexArray, source, destination, currentDraggedProject);
+      }
+
+      if (source.index < destination.index) {
+      }
+
+      //  const updatedColumnProjects = Array.from(startStatusProjects);
+      //  updatedColumnProjects.splice(source.index, 1);
+      //  updatedColumnProjects.splice(destination.index, 0, currentDraggedProject);
+      //
+      //  // Create a new project array after reordering items in a column
+      //  const otherColumnProjects = boardProjects.filter((project) => project.status !== startStatusName);
+      //  const newProjectArray = otherColumnProjects.concat(updatedColumnProjects);
+      //
+      //  setBoardProjects(newProjectArray);
+      //  console.log(newProjectArray);
     } else {
       updateStatus(finishStatusId, draggableId, finishStatusName);
     }
@@ -67,7 +97,21 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
     // updateStatus(finishStatusId, draggableId, finishStatusName);
   };
 
-  // //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //
+  const updateIndexes = (idItemsToUpdate, itemIndexArray, source, destination, currentDraggedProject) => {
+    // Update Firebase document
+    console.log('dziala');
+    updateDocument(currentDraggedProject, {
+      index: itemIndexArray[destination.index],
+    });
+
+    for (let i = 1; i < idItemsToUpdate.length; i++) {
+      console.log(source.index);
+      updateDocument(idItemsToUpdate[i], {
+        index: itemIndexArray[destination.index + i],
+      });
+    }
+  };
+
   const updateStatus = (finishStatusId, draggableId, finishStatusName) => {
     // Update Firebase document
     updateDocument(draggableId, {
@@ -77,6 +121,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
 
   useEffect(() => {
     setColumns(documents);
+
     console.log('documents useEffect');
   }, [documents]);
 
@@ -91,7 +136,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
                   return (
                     <div className='droppable-column' {...provided.droppableProps} ref={provided.innerRef}>
                       {column.name}
-                      {boardProjects
+                      {allProjects
                         .filter((project) => project.status.includes(column.name))
                         .map((project, index) => {
                           return (
