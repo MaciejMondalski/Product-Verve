@@ -8,7 +8,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
   const { documents } = useCollection('statuses');
   const { updateDocument, response } = useFirestore('projects');
 
-  const [boardProjects, setBoardProjects] = useState([]);
+  const [boardProjects, setBoardProjects] = useState();
   const [columns, setColumns] = useState();
   const statuses = documents;
 
@@ -22,46 +22,51 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
     }
 
     // Status IDs
-    const startStatusId = source.droppableId;
-    const finishStatusId = destination.droppableId;
+    const sourceStatusId = source.droppableId;
+    const destinationStatusId = destination.droppableId;
 
     // Status Names
-    const startStatusName = statuses.filter((status) => status.id.includes(startStatusId))[0].name;
-    const finishStatusName = statuses.filter((status) => status.id.includes(finishStatusId))[0].name;
+    const sourceStatusName = statuses.filter((status) => status.id.includes(sourceStatusId))[0].name;
+    const destinationStatusName = statuses.filter((status) => status.id.includes(destinationStatusId))[0].name;
 
     // Object of the project being dragged
     const currentDraggedProject = allProjects.filter((project) => project.id === draggableId)[0];
 
-    // Arrays of projects in start and finish columns
-    const startStatusProjects = allProjects.filter((project) => project.status === startStatusName);
-    const finishStatusProjects = allProjects
-      .filter((project) => project.status === finishStatusName)
-      .concat(currentDraggedProject);
+    // Arrays of projects in source and destination columns
+    const sourceStatusProjects = allProjects.filter((project) => project.status === sourceStatusName);
+    const destinationStatusProjects = allProjects
+      .filter((project) => project.status === destinationStatusName)
+      .concat(currentDraggedProject)
+      .sort(function (a, b) {
+        return a.index - b.index;
+      });
+
+    const beforeDestinationStatusProjects = allProjects.filter((project) => project.status === destinationStatusName);
 
     /////////////////////////////////////////////
 
-    if (startStatusId === finishStatusId) {
+    if (sourceStatusId === destinationStatusId) {
       // Project Proper Indexes
-      const itemIndexArray = startStatusProjects.map((item) => {
+      const itemIndexArray = sourceStatusProjects.map((item) => {
         return item.index;
       });
 
-      const copyOneStartStatusProjects = Array.from(startStatusProjects);
-      const copyTwoStartStatusProjects = Array.from(startStatusProjects);
+      const copyOneSourceStatusProjects = Array.from(sourceStatusProjects);
+      const copyTwoSourceStatusProjects = Array.from(sourceStatusProjects);
 
       if (source.index > destination.index) {
         // Temporary column upgrade to avoid flickering
-        copyOneStartStatusProjects.splice(source.index, 1);
-        copyOneStartStatusProjects.splice(destination.index, 0, currentDraggedProject);
+        copyOneSourceStatusProjects.splice(source.index, 1);
+        copyOneSourceStatusProjects.splice(destination.index, 0, currentDraggedProject);
         // Create a new project array after reordering items in a column
-        const otherColumnProjects = boardProjects.filter((project) => project.status !== startStatusName);
-        const newProjectArray = otherColumnProjects.concat(copyOneStartStatusProjects);
+        const otherColumnProjects = boardProjects.filter((project) => project.status !== sourceStatusName);
+        const newProjectArray = otherColumnProjects.concat(copyOneSourceStatusProjects);
         setBoardProjects(newProjectArray);
         ///////////////
 
         // Updating Firebase indexes
-        const itemsToUpdate = copyTwoStartStatusProjects.splice(destination.index, startStatusProjects.length - 1);
-        itemsToUpdate.splice(source.index, 1);
+        const itemsToUpdate = copyTwoSourceStatusProjects.slice(destination.index, source.index);
+        console.log(itemsToUpdate);
 
         const idItemsToUpdate = itemsToUpdate.map((item) => {
           return item.id;
@@ -82,17 +87,16 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
         console.log('down');
 
         // Temporary column upgrade to avoid flickering
-        copyOneStartStatusProjects.splice(source.index, 1);
-        copyOneStartStatusProjects.splice(destination.index, 0, currentDraggedProject);
+        copyOneSourceStatusProjects.splice(source.index, 1);
+        copyOneSourceStatusProjects.splice(destination.index, 0, currentDraggedProject);
         // Create a new project array after reordering items in a column
-        const otherColumnProjects = boardProjects.filter((project) => project.status !== startStatusName);
-        const newProjectArray = otherColumnProjects.concat(copyOneStartStatusProjects);
+        const otherColumnProjects = boardProjects.filter((project) => project.status !== sourceStatusName);
+        const newProjectArray = otherColumnProjects.concat(copyOneSourceStatusProjects);
         setBoardProjects(newProjectArray);
         ///////////////
 
         // Updating Firebase indexes
-        const itemsToUpdate = copyTwoStartStatusProjects.splice(source.index + 1, startStatusProjects.length);
-        itemsToUpdate.splice(destination.index, 1);
+        const itemsToUpdate = copyTwoSourceStatusProjects.slice(source.index + 1, destination.index + 1);
         console.log(itemsToUpdate);
 
         console.log(itemIndexArray);
@@ -111,16 +115,73 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
         }
       }
     } else {
-      updateDocument(draggableId, {
-        status: finishStatusName,
-      });
+      // Step 1. Avoid flickering in the source column
+      const copyOneSourceStatusProjects = Array.from(sourceStatusProjects);
+      const copyOneDestinationStatusProjects = Array.from(destinationStatusProjects);
+
+      const copyOnebeforeDestinationStatusProjects = Array.from(beforeDestinationStatusProjects);
+      // Temporary column upgrade to avoid flickering
+      copyOneSourceStatusProjects.splice(source.index, 1);
+      // copyOnebeforeDestinationStatusProjects.splice(destination.index, 0, currentDraggedProject);
+      // Create a new project array after reordering items in a column
+      const otherColumnProjects = boardProjects.filter((project) => project.status !== sourceStatusName);
+      const newProjectArray = otherColumnProjects.concat(copyOneSourceStatusProjects);
+      console.log(copyOnebeforeDestinationStatusProjects);
+      setBoardProjects(newProjectArray);
+      ///////////////
+
+      // Step 2. Update Firebase
+      console.log('hello');
+
+      if (copyOnebeforeDestinationStatusProjects.length === 0) {
+        updateDocument(draggableId, {
+          status: destinationStatusName,
+        });
+      } else {
+        console.log(copyOnebeforeDestinationStatusProjects);
+
+        const itemIndexArray = copyOneDestinationStatusProjects.map((item) => {
+          return item.index;
+        });
+        // Above
+        const itemsToUpdateAbove = beforeDestinationStatusProjects.slice(0, destination.index);
+        const idItemsToUpdateAbove = itemsToUpdateAbove.map((item) => {
+          return item.id;
+        });
+        for (let i = 0; i < idItemsToUpdateAbove.length; i++) {
+          updateDocument(idItemsToUpdateAbove[i], {
+            index: itemIndexArray[i],
+          });
+
+          //Below
+          const itemsToUpdateBelow = beforeDestinationStatusProjects.slice(
+            destination.index,
+            copyOneDestinationStatusProjects.length + 1
+          );
+          const idItemsToUpdateBelow = itemsToUpdateBelow.map((item) => {
+            return item.id;
+          });
+          for (let i = 0; i < idItemsToUpdateBelow.length; i++) {
+            updateDocument(idItemsToUpdateBelow[i], {
+              index: itemIndexArray[destination.index + i + 1],
+            });
+          }
+          updateDocument(currentDraggedProject.id, {
+            index: itemIndexArray[destination.index],
+          });
+          updateDocument(draggableId, {
+            status: destinationStatusName,
+          });
+        }
+      }
     }
   };
+
+  ///////////////////////////////////////////
 
   useEffect(() => {
     setColumns(documents);
     setBoardProjects(allProjects);
-    console.log('documents useEffect');
   }, [documents, allProjects]);
 
   return (
@@ -148,6 +209,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
                                     {...provided.dragHandleProps}
                                   >
                                     {project.name}
+                                    <h2>{project.index}</h2>
                                   </div>
                                 );
                               }}
