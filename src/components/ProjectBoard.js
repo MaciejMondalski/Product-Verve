@@ -120,9 +120,10 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
       const copyOneDestinationStatusProjects = Array.from(destinationStatusProjects);
 
       const copyOnebeforeDestinationStatusProjects = Array.from(beforeDestinationStatusProjects);
+
       // Temporary column upgrade to avoid flickering
       copyOneSourceStatusProjects.splice(source.index, 1);
-      // copyOnebeforeDestinationStatusProjects.splice(destination.index, 0, currentDraggedProject);
+
       // Create a new project array after reordering items in a column
       const otherColumnProjects = boardProjects.filter((project) => project.status !== sourceStatusName);
       const newProjectArray = otherColumnProjects.concat(copyOneSourceStatusProjects);
@@ -131,7 +132,6 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
       ///////////////
 
       // Step 2. Update Firebase
-      console.log('hello');
 
       if (copyOnebeforeDestinationStatusProjects.length === 0) {
         updateDocument(draggableId, {
@@ -143,6 +143,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
         const itemIndexArray = copyOneDestinationStatusProjects.map((item) => {
           return item.index;
         });
+
         // Above
         const itemsToUpdateAbove = beforeDestinationStatusProjects.slice(0, destination.index);
         const idItemsToUpdateAbove = itemsToUpdateAbove.map((item) => {
@@ -152,27 +153,27 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
           updateDocument(idItemsToUpdateAbove[i], {
             index: itemIndexArray[i],
           });
+        }
 
-          //Below
-          const itemsToUpdateBelow = beforeDestinationStatusProjects.slice(
-            destination.index,
-            copyOneDestinationStatusProjects.length + 1
-          );
-          const idItemsToUpdateBelow = itemsToUpdateBelow.map((item) => {
-            return item.id;
-          });
-          for (let i = 0; i < idItemsToUpdateBelow.length; i++) {
-            updateDocument(idItemsToUpdateBelow[i], {
-              index: itemIndexArray[destination.index + i + 1],
-            });
-          }
-          updateDocument(currentDraggedProject.id, {
-            index: itemIndexArray[destination.index],
-          });
-          updateDocument(draggableId, {
-            status: destinationStatusName,
+        //Below
+        const itemsToUpdateBelow = beforeDestinationStatusProjects.slice(
+          destination.index,
+          copyOneDestinationStatusProjects.length + 1
+        );
+        const idItemsToUpdateBelow = itemsToUpdateBelow.map((item) => {
+          return item.id;
+        });
+        for (let i = 0; i < idItemsToUpdateBelow.length; i++) {
+          updateDocument(idItemsToUpdateBelow[i], {
+            index: itemIndexArray[destination.index + i + 1],
           });
         }
+        updateDocument(currentDraggedProject.id, {
+          index: itemIndexArray[destination.index],
+        });
+        updateDocument(draggableId, {
+          status: destinationStatusName,
+        });
       }
     }
   };
@@ -194,7 +195,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
                 {(provided, snapshot) => {
                   return (
                     <div className='droppable-column' {...provided.droppableProps} ref={provided.innerRef}>
-                      {column.name}
+                      <h3 className={`${column.name.toLowerCase().replace(/\s+/g, '-')}`}>{column.name}</h3>
                       {boardProjects
                         .filter((project) => project.status.includes(column.name))
                         .map((project, index) => {
@@ -231,25 +232,50 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
 const StyledBoard = styled.div`
   display: flex;
   justify-content: center;
-  height: 70vh;
-  background-color: lightblue;
+  height: fit-content;
 
   .droppable-column {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: lightcoral;
-    width: 200px;
+
+    background: #eaecf0;
+    border-radius: 0.6em;
+    width: 250px;
     margin: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border: 1px solid var(--nice-gray);
+    overflow: hidden;
+
+    h3 {
+      width: 90%;
+      text-align: center;
+      padding: 1em;
+      color: var(--heading-color);
+    }
+
+    .to-do {
+      border-top: 0.6em solid #d0d5dd;
+    }
+    .in-progress {
+      border-top: 0.6em solid #7cd4fd;
+    }
+    .done {
+      border-top: 0.6em solid #6ce9a6;
+    }
+    .blocked {
+      border-top: 0.6em solid #fda29b;
+    }
   }
 
   .draggable-item {
-    user-select: none;
-    padding: 6px;
+    padding: 1em;
     margin-bottom: 8px;
     width: 80%;
     height: 50px;
-    background: lightgray;
+    background: #fff;
+    border-radius: 0.5em;
+    border: 1px solid var(--nice-gray);
   }
 `;
 
