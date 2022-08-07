@@ -39,6 +39,9 @@ function Initiatives() {
     if (e === 'grid') {
       dispatch({ type: 'GRID', payload: e });
     }
+    if (e === 'board') {
+      dispatch({ type: 'BOARD', payload: e });
+    }
   };
 
   useEffect(() => {
@@ -130,11 +133,12 @@ function Initiatives() {
           setCurrentCategoryFilter={setCurrentCategoryFilter}
         />
       )}
-      {currentItems && <ProjectBoard filteredProjects={currentItems} allProjects={sortedProjects} />}
-      {currentItems && <ProjectBoardTest filteredProjects={currentItems} />}
+      {currentItems && view === 'board' && (
+        <ProjectBoard filteredProjects={currentItems} allProjects={sortedProjects} />
+      )}
       {currentItems && view === 'list' && <ProjectList filteredProjects={currentItems} />}
       {currentItems && view === 'grid' && <ProjectGrid filteredProjects={currentItems} />}
-      {currentItems && filteredProjects && (
+      {view !== 'board' && (
         <Pagination itemsPerPage={itemsPerPage} totalItems={filteredProjects.length} paginate={paginate} />
       )}
     </StyledInitiatives>
