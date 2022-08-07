@@ -2,6 +2,7 @@ import { useInitiativesContext } from '../../hooks/useInitiativesContext';
 import styled from 'styled-components';
 import ListIcon from '../../assets/list_icon.svg';
 import GridIcon from '../../assets/grid_icon.svg';
+import BoardIcon from '../../assets/board_icon.svg';
 
 const ViewToggle = ({ handleView }) => {
   const { view } = useInitiativesContext();
@@ -9,14 +10,23 @@ const ViewToggle = ({ handleView }) => {
   return (
     <StyledToggle>
       <div className='toggle-container'>
-        <div className={`slider   ${view === 'grid' && 'slide-right'} `}>
-          {view === 'list' ? (
+        <div
+          className={`slider slide-center   ${view === 'list' && 'slide-left'} ${view === 'board' && 'slide-right'}  `}
+        >
+          {view === 'list' && (
             <div>
               <img src={ListIcon} alt='list icon' /> <p>List</p>
             </div>
-          ) : (
+          )}
+
+          {view === 'grid' && (
             <div>
               <img src={GridIcon} alt='grid icon' /> <p>Grid</p>
+            </div>
+          )}
+          {view === 'board' && (
+            <div>
+              <img src={BoardIcon} alt='board icon' /> <p>Board</p>
             </div>
           )}
         </div>
@@ -27,6 +37,10 @@ const ViewToggle = ({ handleView }) => {
         <div className='grid toggle-option' onClick={() => handleView('grid')}>
           <img src={GridIcon} alt='list icon' />
           <p>Grid</p>
+        </div>
+        <div className='grid toggle-option' onClick={() => handleView('board')}>
+          <img src={BoardIcon} alt='board icon' />
+          <p>Board</p>
         </div>
       </div>
     </StyledToggle>
@@ -66,12 +80,11 @@ const StyledToggle = styled.div`
     .slider {
       opacity: 100%;
       position: absolute;
-      width: 50%;
+      width: 33%;
       height: 86%;
       top: 0;
       bottom: 0;
-      left: 0%;
-      margin: auto 3px;
+      margin: auto;
       background: white;
       pointer-events: none;
       color: black;
@@ -83,7 +96,6 @@ const StyledToggle = styled.div`
       justify-content: center;
       align-items: center;
       font-weight: 600;
-
       p {
         padding: 4px;
         color: white;
@@ -101,9 +113,14 @@ const StyledToggle = styled.div`
         }
       }
     }
+    .slide-center {
+      left: 33%;
+    }
     .slide-right {
-      left: 50%;
-      margin: auto -3px;
+      left: 66%;
+    }
+    .slide-left {
+      left: 1%;
     }
 
     .toggle-option {
