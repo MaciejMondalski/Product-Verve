@@ -8,6 +8,8 @@ export const initiativesReducer = (state, action) => {
       return { ...state, view: action.payload };
     case 'GRID':
       return { ...state, view: action.payload };
+    case 'BOARD':
+      return { ...state, view: action.payload };
     default:
       return state;
   }
