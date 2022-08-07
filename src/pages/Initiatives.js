@@ -138,7 +138,7 @@ function Initiatives() {
       )}
       {currentItems && view === 'list' && <ProjectList filteredProjects={currentItems} />}
       {currentItems && view === 'grid' && <ProjectGrid filteredProjects={currentItems} />}
-      {view !== 'board' && (
+      {view !== 'board' && filteredProjects && (
         <Pagination itemsPerPage={itemsPerPage} totalItems={filteredProjects.length} paginate={paginate} />
       )}
     </StyledInitiatives>
