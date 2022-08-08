@@ -204,13 +204,15 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
                               {(provided, snapshot) => {
                                 return (
                                   <div
-                                    className='draggable-item'
+                                    className={`draggable-item   ${snapshot.isDragging === true && 'is-dragged'}  `}
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                   >
-                                    {project.name}
-                                    <h2>{project.index}</h2>
+                                    <div className='item-wrapper'>
+                                      {project.name}
+                                      <h2>{project.index}</h2>
+                                    </div>
                                   </div>
                                 );
                               }}
@@ -269,6 +271,12 @@ const StyledBoard = styled.div`
   }
 
   .draggable-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .item-wrapper {
     padding: 1em;
     margin-bottom: 8px;
     width: 80%;
@@ -276,6 +284,16 @@ const StyledBoard = styled.div`
     background: #fff;
     border-radius: 0.5em;
     border: 1px solid var(--nice-gray);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.13s;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  .is-dragged {
+    filter: brightness(0.96);
   }
 `;
 
