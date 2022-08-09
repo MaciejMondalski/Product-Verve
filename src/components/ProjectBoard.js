@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useCollection } from '../hooks/useCollection';
 import { useFirestore } from '../hooks/useFirestore';
+import BoardTile from './BoardTile';
 
 const ProjectBoard = ({ filteredProjects, allProjects }) => {
   const { documents } = useCollection('statuses');
@@ -209,10 +210,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                   >
-                                    <div className='item-wrapper'>
-                                      {project.name}
-                                      <h2>{project.index}</h2>
-                                    </div>
+                                    <BoardTile project={project} />
                                   </div>
                                 );
                               }}
@@ -274,22 +272,6 @@ const StyledBoard = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
-  }
-
-  .item-wrapper {
-    padding: 1em;
-    margin-bottom: 8px;
-    width: 80%;
-    height: 50px;
-    background: #fff;
-    border-radius: 0.5em;
-    border: 1px solid var(--nice-gray);
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
-    transition: transform 0.13s;
-
-    &:hover {
-      transform: scale(1.02);
-    }
   }
 
   .is-dragged {
