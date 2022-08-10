@@ -99,12 +99,9 @@ const StyledStickyNavbar = styled.div`
   .logo {
     margin: 0 30px;
 
-    span {
-      color: var(--primary-color);
-    }
-
     img {
-      filter: invert(18%) sepia(67%) saturate(3286%) hue-rotate(198deg) brightness(97%) contrast(98%);
+      filter: brightness(0) saturate(100%) invert(26%) sepia(28%) saturate(2792%) hue-rotate(219deg) brightness(90%)
+        contrast(104%);
     }
   }
 
