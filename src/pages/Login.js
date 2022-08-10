@@ -65,7 +65,7 @@ const StyledLogin = styled.form`
   border: 1px solid #ddd;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
   background: #fff;
-  border-radius: 6px;
+  border-radius: 0.6em;
 
   input {
     border: 2px solid #ddd;
@@ -85,6 +85,7 @@ const StyledLogin = styled.form`
 
     &:hover {
       background-color: var(--darker-color);
+      color: var(--primary-color);
     }
   }
 
@@ -111,13 +112,13 @@ const StyledLogin = styled.form`
     width: 100%;
     color: var(--heading-color);
     background-color: white;
-    border-radius: 4px;
+    border-radius: 0.6em;
     font-size: 1em;
     border: 2px solid var(--heading-color);
     transition-duration: 0.1s;
 
     &:hover {
-      filter: brightness(0.9);
+      filter: brightness(0.94);
       color: black;
     }
 
