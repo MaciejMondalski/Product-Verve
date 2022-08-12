@@ -9,7 +9,6 @@ import { usePaginationContext } from '../hooks/usePaginationContext';
 import Pagination from '../components/Pagination';
 import { useParams } from 'react-router-dom';
 import FilterBar from '../components/filter/FilterBar';
-import ProjectBoardTest from '../components/ProjectBoardTest';
 import ProjectBoard from '../components/ProjectBoard';
 
 function Initiatives() {

@@ -60,7 +60,7 @@ const StyledProjectList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--nice-gray);
   border-radius: 0.5em;
   overflow: hidden;

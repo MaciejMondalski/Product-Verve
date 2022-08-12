@@ -127,7 +127,8 @@ const StyledStatusButton = styled.div`
     flex-direction: column;
     position: absolute;
     background: white;
-    box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--nice-gray);
     padding: 4px;
     animation-direction: alternate;
     animation: fadeInAnimation ease-out 0.2s;

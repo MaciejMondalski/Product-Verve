@@ -55,7 +55,6 @@ const StyledToggle = styled.div`
     position: relative;
     align-items: center;
     cursor: pointer;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     margin: 0;
     border-radius: 0.6em;
     border: 1px solid var(--nice-gray);

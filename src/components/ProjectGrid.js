@@ -64,8 +64,8 @@ const StyledProjectGrid = styled.div`
 
     &:hover {
       transform: scale(1.02);
-      box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.04);
-      filter: brightness(0.98);
+      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+      filter: brightness(0.99);
     }
   }
   h4 {

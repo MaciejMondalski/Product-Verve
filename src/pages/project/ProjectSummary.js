@@ -89,6 +89,8 @@ const StyledProjectSummary = styled.div`
   background-color: #fff;
   padding: 20px;
   border-radius: 0.6em;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--nice-gray);
 
   .options-wrapper {
     display: flex;
