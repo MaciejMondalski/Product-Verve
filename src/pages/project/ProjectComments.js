@@ -128,6 +128,7 @@ const StyledComments = styled.div`
 
   .delete-comment {
     position: absolute;
+    cursor: pointer;
     right: 0;
     top: 0;
     margin: 8px;
