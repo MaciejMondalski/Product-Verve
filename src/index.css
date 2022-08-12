@@ -15,7 +15,8 @@
 
 /*#f2f4f7 
 --bg-color: #f4f4f4;
-
+box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--nice-gray);
 */
 
 /* base styles */
@@ -61,7 +62,6 @@ ul {
 .filter-btn {
   background: white;
   color: var(--heading-color);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 0.6em;
   cursor: pointer;
   font-size: 1em;
