@@ -84,8 +84,7 @@ const StyledLogin = styled.form`
     transition-duration: 0.1s;
 
     &:hover {
-      background-color: var(--darker-color);
-      color: var(--primary-color);
+      filter: brightness(1.1);
     }
   }
 
@@ -118,7 +117,7 @@ const StyledLogin = styled.form`
     transition-duration: 0.1s;
 
     &:hover {
-      filter: brightness(0.94);
+      filter: brightness(0.96);
       color: black;
     }
 
