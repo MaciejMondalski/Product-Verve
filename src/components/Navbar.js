@@ -71,7 +71,6 @@ const StyledStickyNavbar = styled.div`
     width: 100%;
     background: white;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
-
     z-index: 0;
     box-sizing: border-box;
     height: 4.2em;
