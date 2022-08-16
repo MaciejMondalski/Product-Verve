@@ -110,6 +110,23 @@ textarea {
   width: 100%;
 }
 
+.priority {
+  border-radius: 1em;
+  width: fit-content;
+  padding: 0.4em 1.2em;
+  color: black;
+}
+
+.high {
+  background: #fda29b;
+}
+.medium {
+  background: #fdb022;
+}
+.low {
+  background: #fedf89;
+}
+
 .gray {
   background: var(--nice-gray);
   color: var(--heading-color);
