@@ -7,6 +7,7 @@
   --heading-color: #444;
   --text-color: #999;
   --primary-color: #3e379e;
+  --lighter-primary: #4f42c7;
 
   --nice-gray: #dbdee2;
   --lighter-gray: #eff2f5;
@@ -47,13 +48,13 @@ ul {
   display: inline-block;
 }
 .btn {
-  background: var(--primary-color);
+  background: var(--lighter-primary);
   padding: 8px 12px;
   border-radius: 0.6em;
   color: #fff;
   cursor: pointer;
   font-size: 1em;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--lighter-primary);
   width: fit-content;
   height: fit-content;
   transition: 0.1s;
