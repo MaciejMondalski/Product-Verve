@@ -13,7 +13,7 @@ const CategoryFilter = ({ currentStatusFilter, setCurrentStatusFilter }) => {
   const handleClick = (newFilter) => {
     setCurrentStatusFilter(newFilter);
     setStatusFilterButton(!statusFilterButton);
-    navigate('/initiatives/page-1');
+    navigate('/projects/page-1');
   };
 
   const handleFilterPicker = () => {

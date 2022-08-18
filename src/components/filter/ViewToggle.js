@@ -1,11 +1,11 @@
-import { useInitiativesContext } from '../../hooks/useInitiativesContext';
+import { useProjectsContext } from '../../hooks/useProjectsContext';
 import styled from 'styled-components';
 import ListIcon from '../../assets/list_icon.svg';
 import GridIcon from '../../assets/grid_icon.svg';
 import BoardIcon from '../../assets/board_icon.svg';
 
 const ViewToggle = ({ handleView }) => {
-  const { view } = useInitiativesContext();
+  const { view } = useProjectsContext();
 
   return (
     <StyledToggle>
@@ -64,7 +64,7 @@ const StyledToggle = styled.div`
     transition-duration: 0.1s;
 
     &:hover {
-      border: 1px solid var(--primary-color);
+      border: 1px solid var(--lighter-primary);
 
       .toggle-option {
         color: var(--primary-color);
@@ -87,7 +87,7 @@ const StyledToggle = styled.div`
       background: white;
       pointer-events: none;
       color: black;
-      background: var(--primary-color);
+      background: var(--lighter-primary);
       z-index: 3;
       transition-duration: 0.1s;
       border-radius: 0.4em;

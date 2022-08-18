@@ -8,7 +8,7 @@ function Logo() {
 
   return (
     <StyledLogo>
-      <Link to={'initiatives/page-1'}>
+      <Link to={'projects/page-1'}>
         <img src={LogoImage} alt='verve logo' />
         <span className={`${!user && 'logo-purple'}`}>Product Verve</span>
       </Link>

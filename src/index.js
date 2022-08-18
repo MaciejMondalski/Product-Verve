@@ -3,17 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { AuthContextProvider } from './context/AuthContext';
-import { InitiativesContextProvider } from './context/InitiativesContext';
+import { ProjectsContextProvider } from './context/ProjectsContext';
 import { PaginationContextProvider } from './context/PaginationContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <InitiativesContextProvider>
+      <ProjectsContextProvider>
         <PaginationContextProvider>
           <App />
         </PaginationContextProvider>
-      </InitiativesContextProvider>
+      </ProjectsContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
 
