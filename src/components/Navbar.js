@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import '../index.css';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useState, useRef, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import AddIcon from '../assets/add_icon.svg';
 import styled from 'styled-components';
 import Logo from './Logo';
 import Avatar from './Avatar';
 import Dropdown from './Dropdown';
 
-function Navbar() {
+function Navbar({ setCreateModal }) {
   const { user } = useAuthContext();
   const [dropdownStatus, setDropdownStatus] = useState(false);
   const ref = useRef(null);
@@ -43,11 +45,19 @@ function Navbar() {
               </li>
             </>
           ) : (
-            <>
+            <div className='nav-container'>
+              <button className='btn item-wrapper' onClick={() => setCreateModal((prevState) => !prevState)}>
+                <img src={AddIcon} alt='add project icon' />
+                <span>New Project</span>
+              </button>
               <div className='user'>
                 <p>Hello {user.displayName}</p>
                 <div className='avatar-dropdown-wrapper'>
-                  <div ref={ref} className='avatar-wrapper' onClick={handleDropdownClose}>
+                  <div
+                    ref={ref}
+                    className={`avatar-wrapper ${dropdownStatus && 'active-avatar'}`}
+                    onClick={handleDropdownClose}
+                  >
                     <Avatar src={user.photoURL} />
                   </div>
                   {dropdownStatus && (
@@ -55,7 +65,7 @@ function Navbar() {
                   )}
                 </div>
               </div>
-            </>
+            </div>
           )}
         </ul>
       </div>
@@ -76,7 +86,30 @@ const StyledStickyNavbar = styled.div`
     height: 4.2em;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  button {
+    cursor: pointer;
+    display: flex;
+    padding: 6px 8px 6px 4px;
+    text-decoration: none;
+    color: #fff;
+    box-sizing: border-box;
+    align-items: center;
+
+    img {
+      margin-right: 0.3em;
+      filter: invert(100%);
+      width: 1.6em;
+      box-sizing: border-box;
+    }
   }
 
   .user {
@@ -93,6 +126,19 @@ const StyledStickyNavbar = styled.div`
   .avatar-wrapper {
     margin-left: 15px;
     transform: scale(80%);
+    border: #3e379e00 4px solid;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition-duration: 0.2s;
+
+    &:hover {
+      border: var(--lighter-primary) 4px solid;
+    }
+  }
+
+  .active-avatar {
+    border: var(--lighter-primary) 4px solid;
   }
 
   .logo {
@@ -107,8 +153,9 @@ const StyledStickyNavbar = styled.div`
   .menu-wrapper {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    margin: 0 30px;
+    width: 100%;
+    justify-content: space-around;
+    margin: 0 20px;
 
     .before-log {
       color: #333;

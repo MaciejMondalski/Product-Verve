@@ -3,7 +3,7 @@ import { useAuthContext } from './hooks/useAuthContext';
 import './App.scss';
 
 // pages and components
-import Initiatives from './pages/Initiatives';
+import ProjectsPage from './pages/ProjectsPage';
 import Create from './pages/Create';
 import Login from './pages/Login';
 import Project from './pages/project/Project';
@@ -25,24 +25,24 @@ function App() {
     <div className='App'>
       {authIsReady && (
         <BrowserRouter>
-          {user && <Sidebar setCreateModal={setCreateModal} />}
+          {user && <Sidebar />}
           {createModal && <Create setCreateModal={setCreateModal} projectsCollection={documents} />}
           <div className='container'>
-            <Navbar />
+            <Navbar setCreateModal={setCreateModal} />
             <div className={user ? 'below-nav' : 'below-nav center-content'}>
               <div className='route-wrapper'>
                 <Routes>
-                  <Route path={'initiatives/:pageId'} element={!user ? <Navigate to='/login' /> : <Initiatives />} />
+                  <Route path={'projects/:pageId'} element={!user ? <Navigate to='/login' /> : <ProjectsPage />} />
                   <Route
                     exact
                     path='login'
-                    element={user ? <Navigate to={`/initiatives/${'page-' + currentPage}`} /> : <Login />}
+                    element={user ? <Navigate to={`/projects/${'page-' + currentPage}`} /> : <Login />}
                   />
                   <Route
                     path='signup'
-                    element={user ? <Navigate to={`/initiatives/${'page-' + currentPage}`} /> : <Signup />}
+                    element={user ? <Navigate to={`/projects/${'page-' + currentPage}`} /> : <Signup />}
                   />
-                  <Route path='projects/:id' element={<Project />} />
+                  <Route path='project/:id' element={<Project />} />
                 </Routes>
               </div>
               {user && <UserList />}

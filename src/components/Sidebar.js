@@ -7,6 +7,7 @@ import Logo from './Logo';
 // images
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
+import ProjectsIcon from '../assets/projects_icon.svg';
 
 function Sidebar({ setCreateModal }) {
   const { currentPage, setCurrentPage } = usePaginationContext();
@@ -21,16 +22,21 @@ function Sidebar({ setCreateModal }) {
         <nav className='links'>
           <ul>
             <li>
-              <NavLink end to={`initiatives/${'page-' + currentPage}`}>
+              <NavLink end to='dashboard/'>
                 <img src={DashboardIcon} alt='dashboard icon' onClick={() => setCurrentPage(1)} />
-                <span>Initiatives</span>
+                <span>Dashboard</span>
               </NavLink>
             </li>
             <li>
-              <div className='item-wrapper' onClick={() => setCreateModal((prevState) => !prevState)}>
-                <img src={AddIcon} alt='add project icon' />
-                <span>New Project</span>
-              </div>
+              <NavLink end to={`projects/${'page-' + currentPage}`}>
+                <img
+                  className='projects-img'
+                  src={ProjectsIcon}
+                  alt='projects icon'
+                  onClick={() => setCurrentPage(1)}
+                />
+                <span>Projects</span>
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -78,6 +84,12 @@ const StyledSidebar = styled.div`
     img {
       margin-right: 10px;
       filter: invert(100%);
+      width: 1.7em;
+      box-sizing: border-box;
+    }
+
+    .projects-img {
+      padding: 0.1em;
     }
   }
 `;
