@@ -19,6 +19,11 @@ const categories = [
   { value: 'Sales', label: 'Sales' },
   { value: 'Marketing', label: 'Marketing' },
 ];
+const priorities = [
+  { value: 'Low', label: 'Low' },
+  { value: 'Medium', label: 'Medium' },
+  { value: 'High', label: 'High' },
+];
 
 function Create({ setCreateModal, projectsCollection }) {
   const navigate = useNavigate();
@@ -41,6 +46,7 @@ function Create({ setCreateModal, projectsCollection }) {
   const [details, setDetails] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
   const [category, setCategory] = useState('');
+  const [priority, setPriority] = useState('');
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [formError, setFormError] = useState(null);
   const [status, setStatus] = useState('To Do');
@@ -94,13 +100,14 @@ function Create({ setCreateModal, projectsCollection }) {
       dueDate: timestamp.fromDate(new Date(dueDate)),
       comments: [],
       status,
+      priority: priority.value,
     };
 
     await addDocument(project);
-    navigate('/initiatives/page-1');
+    navigate('/projects/page-1');
     if (!response.error) {
       setCreateModal(false);
-      navigate('/initiatives/page-1');
+      navigate('/projects/page-1');
     }
   };
 
@@ -116,7 +123,13 @@ function Create({ setCreateModal, projectsCollection }) {
             </label>
             <label>
               <span>Project Details:</span>
-              <textarea required type='text' onChange={(e) => setDetails(e.target.value)} value={details}></textarea>
+              <textarea
+                className='details-section'
+                required
+                type='text'
+                onChange={(e) => setDetails(e.target.value)}
+                value={details}
+              ></textarea>
             </label>
             <span>Date due:</span>
             <div className='datepicker-wrapper'>
@@ -131,6 +144,10 @@ function Create({ setCreateModal, projectsCollection }) {
             <label>
               <span>Project category:</span>
               <Select styles={selectStyles} onChange={(option) => setCategory(option)} options={categories} />
+            </label>
+            <label>
+              <span>Priority:</span>
+              <Select styles={selectStyles} onChange={(option) => setPriority(option)} options={priorities} />
             </label>
             <label>
               <span>Assign to:</span>
@@ -218,11 +235,15 @@ const StyledCreate = styled.div`
 
   input,
   textarea {
-    border: px solid #ddd;
+    border: 1px solid #ddd;
     background-color: var(--input-color);
     font-family: Poppins, sans-serif;
     font-size: 1em;
     resize: none;
+  }
+
+  textarea {
+    min-height: 90px;
   }
 `;
 

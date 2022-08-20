@@ -1,27 +1,49 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 import Avatar from './Avatar';
 
 function ProjectGrid({ filteredProjects }) {
+  const [shownName, setShowName] = useState(null);
+
   return (
     <StyledProjectGrid>
       {filteredProjects.length === 0 && <p>No projects yet!</p>}
       {filteredProjects.map((project) => (
-        <Link to={`/projects/${project.id}`} key={project.id}>
-          <div>
+        <Link to={`/project/${project.id}`} key={project.id}>
+          <div className='top-part'>
             <h4>{project.name}</h4>
             <p>Due by {project.dueDate.toDate().toDateString()}</p>
+            <p
+              className={`priority ${
+                !project.priority
+                  ? null
+                  : project.priority === 'High'
+                  ? 'high'
+                  : project.priority === 'Medium'
+                  ? 'medium'
+                  : project.priority === 'Low' && 'low'
+              }`}
+            >
+              {project.priority}
+            </p>
           </div>
-          <div className='lower-part'>
+          <div className='bottom-part'>
             <div className='assigned-to'>
               <p>
                 <strong>Assigned to:</strong>
               </p>
               <ul>
                 {project.assignedUsersList.map((user) => (
-                  <li key={user.photoURL}>
+                  <li
+                    className={`${shownName === user && 'is-hovered'}`}
+                    onMouseEnter={() => setShowName(user)}
+                    onMouseLeave={() => setShowName(null)}
+                    key={user.photoURL}
+                  >
                     <Avatar src={user.photoURL} />
+                    {shownName === user && <p className='hover-name'>{user.displayName}</p>}
                   </li>
                 ))}
               </ul>
@@ -38,7 +60,7 @@ function ProjectGrid({ filteredProjects }) {
               }`}
             >
               {project.status}
-            </div>{' '}
+            </div>
           </div>
         </Link>
       ))}
@@ -69,15 +91,21 @@ const StyledProjectGrid = styled.div`
     }
   }
   h4 {
-    font-size: 0.9em;
     color: var(--heading-color);
+    margin-bottom: 0.4em;
   }
   p {
     color: var(--text-color);
     font-size: 0.9em;
+    margin-bottom: 0.4em;
   }
 
-  .lower-part {
+  .priority {
+    color: black;
+    margin: 0.8em 0;
+  }
+
+  .bottom-part {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -89,25 +117,40 @@ const StyledProjectGrid = styled.div`
     border-radius: 0.3em;
     display: flex;
     align-items: center;
-    font-size: 0.9em;
+    font-size: 1em;
     font-weight: 600;
   }
 
-  .assigned-to {
-    margin-top: 20px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
+  .hover-name {
+    position: absolute;
+    background: grey;
+    color: #fff;
+    padding: 0.2em 0.4em;
+    border-radius: 0.5em;
+    top: 120%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    white-space: nowrap;
   }
+
+  .is-hovered {
+    z-index: 5;
+    transform: scale(1.05);
+  }
+
   ul {
     margin: 10px 0 0 0;
     display: flex;
   }
   li {
-    margin-right: 10px;
+    margin-right: -0.5em;
+    position: relative;
+    transition: 0.2s;
   }
   .avatar {
-    width: 30px;
-    height: 30px;
+    width: 2.6em;
+    height: 2.6em;
   }
 `;
 
