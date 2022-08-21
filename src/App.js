@@ -4,6 +4,7 @@ import './App.scss';
 
 // pages and components
 import ProjectsPage from './pages/ProjectsPage';
+import Dashboard from './pages/Dashboard';
 import Create from './pages/Create';
 import Login from './pages/Login';
 import Project from './pages/project/Project';
@@ -33,6 +34,7 @@ function App() {
               <div className='route-wrapper'>
                 <Routes>
                   <Route path={'projects/:pageId'} element={!user ? <Navigate to='/login' /> : <ProjectsPage />} />
+                  <Route path={'dashboard'} element={!user ? <Navigate to='/login' /> : <Dashboard />} />
                   <Route
                     exact
                     path='login'
