@@ -98,6 +98,8 @@ function Create({ setCreateModal, projectsCollection }) {
       createdBy,
       category: category.value,
       dueDate: timestamp.fromDate(new Date(dueDate)),
+      creationDate: new Date().toDateString(),
+      creationTimestamp: Date.now(),
       comments: [],
       status,
       priority: priority.value,
