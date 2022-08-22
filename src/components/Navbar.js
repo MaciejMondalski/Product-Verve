@@ -154,7 +154,7 @@ const StyledStickyNavbar = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    justify-content: space-around;
+    justify-content: flex-end;
     margin: 0 20px;
 
     .before-log {
