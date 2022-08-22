@@ -36,6 +36,7 @@ const StyledLogo = styled.div`
     font-size: 1.8em;
     font-family: 'Chakra Petch', sans-serif;
     font-weight: 700;
+    white-space: nowrap;
   }
 
   .logo-purple {
