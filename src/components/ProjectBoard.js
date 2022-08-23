@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useCollection } from '../hooks/useCollection';
 import { useFirestore } from '../hooks/useFirestore';
 import BoardTile from './BoardTile';
+import AddIcon from '../assets/add_icon.svg';
 
 const ProjectBoard = ({ filteredProjects, allProjects }) => {
   const { documents } = useCollection('statuses');
@@ -179,6 +180,8 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
     }
   };
 
+  // className={`${column.name.toLowerCase().replace(/\s+/g, '-')}`}
+
   ///////////////////////////////////////////
 
   useEffect(() => {
@@ -196,7 +199,10 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
                 {(provided, snapshot) => {
                   return (
                     <div className='droppable-column' {...provided.droppableProps} ref={provided.innerRef}>
-                      <h3 className={`${column.name.toLowerCase().replace(/\s+/g, '-')}`}>{column.name}</h3>
+                      <div className='column-header'>
+                        <h3>{column.name}</h3>
+                        <img className='add-icon' src={AddIcon} alt='add icon' />
+                      </div>
                       {boardProjects
                         .filter((project) => project.status.includes(column.name))
                         .map((project, index) => {
@@ -231,7 +237,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
 
 const StyledBoard = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   height: fit-content;
 
   .droppable-column {
@@ -239,19 +245,26 @@ const StyledBoard = styled.div`
     flex-direction: column;
     align-items: center;
 
-    background: #eaecf0;
-    border-radius: 0.6em;
     width: 250px;
-    margin: 10px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    border: 1px solid var(--nice-gray);
-    overflow: hidden;
+    margin: 0 14px;
 
-    h3 {
-      width: 90%;
-      text-align: center;
+    .column-header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
       padding: 1em;
-      color: var(--heading-color);
+      align-items: center;
+
+      h3 {
+        color: var(--heading-color);
+      }
+
+      img {
+        height: 1.8em;
+        padding: 0 0.2em;
+        filter: brightness(0) saturate(100%) invert(20%) sepia(0%) saturate(1235%) hue-rotate(233deg) brightness(87%)
+          contrast(71%);
+      }
     }
 
     .to-do {
@@ -276,6 +289,9 @@ const StyledBoard = styled.div`
 
   .is-dragged {
     filter: brightness(0.96);
+    transform: scale(1.02);
+
+    color: black;
   }
 `;
 
