@@ -120,7 +120,6 @@ const Piechart = () => {
 };
 
 const StyledPiechart = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,7 +128,6 @@ const StyledPiechart = styled.div`
   border: 1px solid var(--nice-gray);
   border-radius: 0.6em;
   padding: 0 4em;
-  margin-left: 1em;
 
   svg {
     overflow: inherit;
