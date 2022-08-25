@@ -2,7 +2,6 @@ import { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 import { useCollection } from '../../hooks/useCollection';
-import { timestamp } from '../../firebase/config';
 
 const Piechart = () => {
   const { documents: statuses } = useCollection('statuses');
@@ -124,8 +123,6 @@ const StyledPiechart = styled.div`
   flex-direction: column;
   align-items: center;
   background: white;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--nice-gray);
   border-radius: 0.6em;
   padding: 0 4em;
 
