@@ -19,10 +19,6 @@ const Piechart = () => {
   const COLORS = ['#C9BBFA', '#8677ED', '#4F42C7', '#322F7D'];
 
   //TESTING DATEEEEE
-  console.log(Date.now());
-
-  const today = new Date().toDateString();
-  console.log(today);
 
   useEffect(() => {
     console.log('helloo');
