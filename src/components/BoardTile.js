@@ -83,6 +83,7 @@ const StyledBoardTile = styled.div`
     .avatar {
       width: 2.2em;
       height: 2.2em;
+      border: 1px solid #fff;
     }
 
     .hover-name {

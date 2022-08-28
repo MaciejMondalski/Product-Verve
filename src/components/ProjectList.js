@@ -208,6 +208,7 @@ const StyledProjectList = styled.div`
       .avatar {
         width: 2.6em;
         height: 2.6em;
+        border: 1px solid #fff;
       }
     }
 
