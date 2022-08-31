@@ -30,8 +30,6 @@ const UpcomingIssues = () => {
   //    creationDate: new Date().toDateString(),
   //    creationTimestamp: Date.now(),
 
-  const timeLeft = 'Math.round((project.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24))';
-
   return (
     <StyledUpcoming>
       <h2>Upcoming</h2>
