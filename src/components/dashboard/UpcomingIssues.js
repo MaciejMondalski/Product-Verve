@@ -52,9 +52,10 @@ const UpcomingIssues = () => {
                 {Math.round((project.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24)) > 1 ? (
                   <p> {Math.round((project.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24)) + ' days'}</p>
                 ) : (
-                  <p className={'due-warning'}>
-                    {'<' + Math.round((project.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24)) + ' day'}
-                  </p>
+                  <div className='due-warning'>
+                    <p>{'<' + 1 + ' day'}</p>
+                    <div className='blob'></div>
+                  </div>
                 )}
               </li>
               <li className='sub-item'>
@@ -139,8 +140,45 @@ const StyledUpcoming = styled.div`
   }
 
   .due-warning {
+    background: greenyellow;
+    position: relative;
     color: red;
     font-weight: 500;
+    width: fit-content;
+
+    p {
+      z-index: 500;
+      position: relative;
+    }
+  }
+
+  .blob {
+    position: absolute;
+    background: rgba(255, 121, 63, 1);
+    box-shadow: 0 0 0 0 rgba(255, 121, 63, 1);
+    border-radius: 1em;
+    height: 1em;
+    width: 2em;
+    top: 20%;
+    left: -4%;
+    animation: 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.5);
+      box-shadow: 0 0 0 0 rgba(255, 121, 63, 0.7);
+    }
+
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(255, 121, 63, 0);
+    }
+
+    100% {
+      transform: scale(0.5);
+      box-shadow: 0 0 0 0 rgba(255, 121, 63, 0);
+    }
   }
 
   .project-name {
