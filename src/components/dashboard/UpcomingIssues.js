@@ -149,14 +149,14 @@ const StyledUpcoming = styled.div`
       z-index: 500;
       position: relative;
       width: fit-content;
+      animation: text-animation 2s infinite;
     }
   }
 
   .blob {
     position: absolute;
-    background: rgba(255, 121, 63, 0.207);
-    box-shadow: 0 0 0 10px rgba(255, 121, 63, 0);
-    border-radius: 1em;
+
+    border-radius: 4em;
     height: 100%;
     width: 100%;
     top: 0;
@@ -166,20 +166,37 @@ const StyledUpcoming = styled.div`
 
   @keyframes pulse {
     0% {
-      transform: scale(0.01);
+      transform: scale(0.2);
+      opacity: 0;
       box-shadow: 0 0 0 0 rgba(255, 121, 63, 0.8);
+      background: rgba(255, 121, 63, 0.8);
     }
 
     80% {
-      transform: scale(1.2);
-      box-shadow: 0 0 0 10px rgba(255, 121, 63, 0);
+      transform: scale(1.4);
+      opacity: 1;
+      background: 0 0 0 0 rgba(255, 121, 63, 0.031);
+      box-shadow: 0 0 0 5px rgba(255, 121, 63, 0);
     }
 
     100% {
-      transform: scale(0.01);
-      opacity: 0;
-
+      transform: scale(0.2);
+      opacity: 0.6;
       box-shadow: 0 0 0 0 rgba(255, 121, 63, 0);
+    }
+  }
+
+  @keyframes text-animation {
+    0% {
+      transform: scale(1);
+    }
+
+    80% {
+      transform: scale(1.1);
+    }
+
+    100% {
+      transform: scale(1);
     }
   }
 
