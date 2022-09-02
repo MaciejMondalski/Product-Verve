@@ -140,43 +140,45 @@ const StyledUpcoming = styled.div`
   }
 
   .due-warning {
-    background: greenyellow;
-    position: relative;
-    color: red;
+    color: rgba(255, 121, 63, 1);
     font-weight: 500;
+    position: relative;
     width: fit-content;
 
     p {
       z-index: 500;
       position: relative;
+      width: fit-content;
     }
   }
 
   .blob {
     position: absolute;
-    background: rgba(255, 121, 63, 1);
-    box-shadow: 0 0 0 0 rgba(255, 121, 63, 1);
+    background: rgba(255, 121, 63, 0.207);
+    box-shadow: 0 0 0 10px rgba(255, 121, 63, 0);
     border-radius: 1em;
-    height: 1em;
-    width: 2em;
-    top: 20%;
-    left: -4%;
-    animation: 2s infinite;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    animation: pulse 2s infinite;
   }
 
   @keyframes pulse {
     0% {
-      transform: scale(0.5);
-      box-shadow: 0 0 0 0 rgba(255, 121, 63, 0.7);
+      transform: scale(0.01);
+      box-shadow: 0 0 0 0 rgba(255, 121, 63, 0.8);
     }
 
-    70% {
-      transform: scale(1);
+    80% {
+      transform: scale(1.2);
       box-shadow: 0 0 0 10px rgba(255, 121, 63, 0);
     }
 
     100% {
-      transform: scale(0.5);
+      transform: scale(0.01);
+      opacity: 0;
+
       box-shadow: 0 0 0 0 rgba(255, 121, 63, 0);
     }
   }
