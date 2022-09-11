@@ -13,12 +13,6 @@ import DatePicker from 'react-datepicker';
 //import 'react-datepicker/dist/react-datepicker.css';
 import './DatePicker.scss';
 
-const categories = [
-  { value: 'Development', label: 'Development' },
-  { value: 'Design', label: 'Design' },
-  { value: 'Sales', label: 'Sales' },
-  { value: 'Marketing', label: 'Marketing' },
-];
 const priorities = [
   { value: 'Low', label: 'Low' },
   { value: 'Medium', label: 'Medium' },
@@ -30,6 +24,8 @@ function Create({ setCreateModal, projectsCollection }) {
   const { addDocument, response } = useFirestore('projects');
   const { user } = useAuthContext();
   const { documents } = useCollection('users');
+  const { documents: categories } = useCollection('categories');
+
   const [users, setUsers] = useState([]);
 
   // Index EXPERIMENT
