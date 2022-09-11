@@ -18,8 +18,6 @@ const Piechart = () => {
 
   const COLORS = ['#C9BBFA', '#8677ED', '#4F42C7', '#322F7D'];
 
-  //TESTING DATEEEEE
-
   useEffect(() => {
     console.log('helloo');
     const chartList =
@@ -156,7 +154,7 @@ const StyledPiechart = styled.div`
     svg {
       overflow: inherit;
       padding: 0 0px;
-      margin-top: -50px;
+      margin-top: -60px;
     }
 
     .center-text {
@@ -172,7 +170,7 @@ const StyledPiechart = styled.div`
     .chart-legend {
       display: flex;
       justify-content: center;
-      margin-top: -60px;
+      margin-top: -90px;
       margin-bottom: 2em;
       z-index: 1;
       display: flex;
