@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react';
 
-export const ProjectsContext = createContext();
+export const ViewContext = createContext();
 
 export const projectsReducer = (state, action) => {
   switch (action.type) {
@@ -15,12 +15,12 @@ export const projectsReducer = (state, action) => {
   }
 };
 
-export const ProjectsContextProvider = ({ children }) => {
+export const ViewContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(projectsReducer, {
     view: 'grid',
   });
 
-  console.log('ProjectsContext state:', state);
+  console.log('ViewContext state:', state);
 
-  return <ProjectsContext.Provider value={{ ...state, dispatch }}>{children}</ProjectsContext.Provider>;
+  return <ViewContext.Provider value={{ ...state, dispatch }}>{children}</ViewContext.Provider>;
 };

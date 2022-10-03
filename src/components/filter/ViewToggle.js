@@ -1,11 +1,11 @@
-import { useProjectsContext } from '../../hooks/useProjectsContext';
+import { useViewContext } from '../../hooks/useViewContext';
 import styled from 'styled-components';
 import ListIcon from '../../assets/list_icon.svg';
 import GridIcon from '../../assets/grid_icon.svg';
 import BoardIcon from '../../assets/board_icon.svg';
 
 const ViewToggle = ({ handleView }) => {
-  const { view } = useProjectsContext();
+  const { view } = useViewContext();
 
   return (
     <StyledToggle>

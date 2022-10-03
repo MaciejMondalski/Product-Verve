@@ -4,7 +4,7 @@ import { useCollection } from '../hooks/useCollection';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useProjectsContext } from '../hooks/useProjectsContext';
+import { useViewContext } from '../hooks/useViewContext';
 import { usePaginationContext } from '../hooks/usePaginationContext';
 import Pagination from '../components/Pagination';
 import { useParams } from 'react-router-dom';
@@ -19,7 +19,7 @@ function ProjectsPage() {
   const [filteredProjects, setFilteredProjects] = useState();
 
   const { user } = useAuthContext();
-  const { dispatch, view } = useProjectsContext();
+  const { dispatch, view } = useViewContext();
   const { pageId } = useParams();
 
   // Pagination
