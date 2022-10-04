@@ -28,7 +28,16 @@ function Sidebar({ setCreateModal }) {
               </NavLink>
             </li>
             <li>
-              <NavLink end to={`projects/${'page-' + currentPage}`}>
+              <NavLink end to={`tasks/${'page-' + currentPage}`}>
+                <img
+                  className='projects-img'
+                  src={ProjectsIcon}
+                  alt='projects icon'
+                  onClick={() => setCurrentPage(1)}
+                />
+                <span>Projects</span>
+              </NavLink>
+              <NavLink end to={`tasks/${'page-' + currentPage}`}>
                 <img
                   className='projects-img'
                   src={ProjectsIcon}

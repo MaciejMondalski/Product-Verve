@@ -31,7 +31,7 @@ const RecentIssues = () => {
 
       {recentItems &&
         recentItems.map((project) => (
-          <Link className='item' to={`/project/${project.id}`} key={project.id}>
+          <Link className='item' to={`/task/${project.id}`} key={project.id}>
             <ul>
               <li className='sub-item project-name'>
                 <p>{project.name}</p>

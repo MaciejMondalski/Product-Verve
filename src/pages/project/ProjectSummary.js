@@ -18,7 +18,7 @@ const ProjectSummary = ({ project }) => {
   const handleDeleteProject = () => {
     console.log('delete was activated');
     deleteDocument(project.id);
-    navigate('/projects/page-1');
+    navigate('/tasks/page-1');
   };
 
   const handleOptionsDropdown = () => {

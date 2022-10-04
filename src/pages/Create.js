@@ -102,10 +102,10 @@ function Create({ setCreateModal, projectsCollection }) {
     };
 
     await addDocument(project);
-    navigate('/projects/page-1');
+    navigate('/tasks/page-1');
     if (!response.error) {
       setCreateModal(false);
-      navigate('/projects/page-1');
+      navigate('/tasks/page-1');
     }
   };
 

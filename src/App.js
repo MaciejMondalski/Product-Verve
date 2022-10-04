@@ -33,18 +33,18 @@ function App() {
             <div className={user ? 'below-nav' : 'below-nav center-content'}>
               <div className='route-wrapper'>
                 <Routes>
-                  <Route path={'projects/:pageId'} element={!user ? <Navigate to='/login' /> : <ProjectsPage />} />
+                  <Route path={'tasks/:pageId'} element={!user ? <Navigate to='/login' /> : <ProjectsPage />} />
                   <Route path={'dashboard'} element={!user ? <Navigate to='/login' /> : <Dashboard />} />
                   <Route
                     exact
                     path='login'
-                    element={user ? <Navigate to={`/projects/${'page-' + currentPage}`} /> : <Login />}
+                    element={user ? <Navigate to={`/tasks/${'page-' + currentPage}`} /> : <Login />}
                   />
                   <Route
                     path='signup'
-                    element={user ? <Navigate to={`/projects/${'page-' + currentPage}`} /> : <Signup />}
+                    element={user ? <Navigate to={`/tasks/${'page-' + currentPage}`} /> : <Signup />}
                   />
-                  <Route path='project/:id' element={<Project />} />
+                  <Route path='task/:id' element={<Project />} />
                 </Routes>
               </div>
               {user && <UserList />}

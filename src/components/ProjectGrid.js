@@ -11,7 +11,7 @@ function ProjectGrid({ filteredProjects }) {
     <StyledProjectGrid>
       {filteredProjects.length === 0 && <p>No projects yet!</p>}
       {filteredProjects.map((project) => (
-        <Link to={`/project/${project.id}`} key={project.id}>
+        <Link to={`/task/${project.id}`} key={project.id}>
           <div className='top-part'>
             <h4>{project.name}</h4>
             <p>Due by {project.dueDate.toDate().toDateString()}</p>

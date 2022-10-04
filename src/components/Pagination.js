@@ -87,7 +87,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
     <StyledPagination>
       <ul className='pagination'>
         {totalItems !== 0 && currentPage !== '1' && (
-          <NavLink className={'img-wrapper'} to={`/projects/page-${currentPage === 1 ? '1' : currentPage - 1}`}>
+          <NavLink className={'img-wrapper'} to={`/tasks/page-${currentPage === 1 ? '1' : currentPage - 1}`}>
             <img className='arrow-left' src={ArrowIcon} alt='arrow icon' />
           </NavLink>
         )}
@@ -95,7 +95,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
           <div className='dot-page'>
             <NavLink
               onClick={() => paginate(firstPage)}
-              to={`/projects/${'page-' + firstPage}`}
+              to={`/tasks/${'page-' + firstPage}`}
               key={firstPage}
               className='page-number'
             >
@@ -109,7 +109,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
             {pageRange.map((number) => (
               <NavLink
                 onClick={() => paginate(number)}
-                to={`/projects/${'page-' + number}`}
+                to={`/tasks/${'page-' + number}`}
                 key={number}
                 className={`page-number ${currentPage !== number && 'not-current-page'}`}
               >
@@ -125,7 +125,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
 
             <NavLink
               onClick={() => paginate(lastPage)}
-              to={`/projects/${'page-' + lastPage}`}
+              to={`/tasks/${'page-' + lastPage}`}
               key={lastPage}
               className='page-number'
             >
@@ -137,7 +137,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
         {totalItems !== 0 && parseInt(currentPage) !== lastPage && (
           <NavLink
             className={'img-wrapper'}
-            to={`/projects/page-${currentPage === lastPage ? lastPage : parseInt(currentPage) + 1}`}
+            to={`/tasks/page-${currentPage === lastPage ? lastPage : parseInt(currentPage) + 1}`}
           >
             <img className='arrow-right' src={ArrowIcon} alt='arrow icon' />
           </NavLink>
