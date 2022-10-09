@@ -15,11 +15,14 @@ import UserList from './components/UserList';
 import { useState } from 'react';
 import { usePaginationContext } from './hooks/usePaginationContext';
 import { useCollection } from './hooks/useCollection';
+import { useProjectContext } from './hooks/useProjectContext';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
   const [createModal, setCreateModal] = useState(false);
   const { currentPage, setCurrentPage } = usePaginationContext();
+  const { currentProject, setCurrentProject } = useProjectContext();
+
   const { documents } = useCollection('projects');
 
   return (
@@ -33,8 +36,14 @@ function App() {
             <div className={user ? 'below-nav' : 'below-nav center-content'}>
               <div className='route-wrapper'>
                 <Routes>
-                  <Route path={'tasks/:pageId'} element={!user ? <Navigate to='/login' /> : <ProjectsPage />} />
-                  <Route path={'dashboard'} element={!user ? <Navigate to='/login' /> : <Dashboard />} />
+                  <Route
+                    path={`${currentProject}/tasks/:pageId`}
+                    element={!user ? <Navigate to='/login' /> : <ProjectsPage />}
+                  />
+                  <Route
+                    path={`${currentProject}/dashboard`}
+                    element={!user ? <Navigate to='/login' /> : <Dashboard />}
+                  />
                   <Route
                     exact
                     path='login'
