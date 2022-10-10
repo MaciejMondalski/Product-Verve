@@ -3,7 +3,7 @@ import { useAuthContext } from './hooks/useAuthContext';
 import './App.scss';
 
 // pages and components
-import ProjectsPage from './pages/ProjectsPage';
+import TasksPage from './pages/TasksPage';
 import Dashboard from './pages/Dashboard';
 import Create from './pages/Create';
 import Login from './pages/Login';
@@ -38,7 +38,7 @@ function App() {
                 <Routes>
                   <Route
                     path={`${currentProject}/tasks/:pageId`}
-                    element={!user ? <Navigate to='/login' /> : <ProjectsPage />}
+                    element={!user ? <Navigate to='/login' /> : <TasksPage />}
                   />
                   <Route
                     path={`${currentProject}/dashboard`}
