@@ -47,13 +47,13 @@ function App() {
                   <Route
                     exact
                     path='login'
-                    element={user ? <Navigate to={`/tasks/${'page-' + currentPage}`} /> : <Login />}
+                    element={user ? <Navigate to={`${currentProject}/tasks/${'page-' + currentPage}`} /> : <Login />}
                   />
                   <Route
                     path='signup'
-                    element={user ? <Navigate to={`/tasks/${'page-' + currentPage}`} /> : <Signup />}
+                    element={user ? <Navigate to={`${currentProject}/tasks/${'page-' + currentPage}`} /> : <Signup />}
                   />
-                  <Route path='task/:id' element={<Project />} />
+                  <Route path={`${currentProject}/task/:id`} element={<Project />} />
                 </Routes>
               </div>
               {user && <UserList />}
