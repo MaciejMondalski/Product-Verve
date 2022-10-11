@@ -2,13 +2,15 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import LogoImage from '../assets/pv_logo.svg';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useProjectContext } from '../hooks/useProjectContext';
 
 function Logo() {
   const { user, authIsReady } = useAuthContext();
+  const { currentProject } = useProjectContext();
 
   return (
     <StyledLogo>
-      <Link to={'tasks/page-1'}>
+      <Link to={`${currentProject}/tasks/page-1`}>
         <img src={LogoImage} alt='verve logo' />
         <span className={`${!user && 'logo-purple'}`}>Product Verve</span>
       </Link>

@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from './Avatar';
 
-function ProjectGrid({ filteredProjects }) {
+function ProjectGrid({ filteredProjects, currentProject }) {
   const [shownName, setShowName] = useState(null);
 
   return (
     <StyledProjectGrid>
       {filteredProjects.length === 0 && <p>No projects yet!</p>}
       {filteredProjects.map((project) => (
-        <Link to={`/task/${project.id}`} key={project.id}>
+        <Link to={`/${currentProject}/task/${project.id}`} key={project.id}>
           <div className='top-part'>
             <h4>{project.name}</h4>
             <p>Due by {project.dueDate.toDate().toDateString()}</p>

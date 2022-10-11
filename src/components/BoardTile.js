@@ -3,13 +3,15 @@ import { useState } from 'react';
 
 import styled from 'styled-components';
 import Avatar from './Avatar';
+import { useProjectContext } from '../hooks/useProjectContext';
 
 const BoardTile = ({ project }) => {
+  const { currentProject } = useProjectContext();
   const [shownName, setShowName] = useState(null);
 
   return (
     <StyledBoardTile>
-      <Link to={`/task/${project.id}`} key={project.id}>
+      <Link to={`/${currentProject}/task/${project.id}`} key={project.id}>
         <div className='top-part'>
           <h4>{project.name}</h4>
           <p>Due by {project.dueDate.toDate().toDateString()}</p>

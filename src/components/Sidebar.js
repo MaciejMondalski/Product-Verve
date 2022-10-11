@@ -8,9 +8,12 @@ import Logo from './Logo';
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
 import ProjectsIcon from '../assets/projects_icon.svg';
+import { useProjectContext } from '../hooks/useProjectContext';
 
 function Sidebar({ setCreateModal }) {
   const { currentPage, setCurrentPage } = usePaginationContext();
+  const { currentProject } = useProjectContext();
+
   return (
     <StyledSidebar>
       <div className='sidebar-content'>
@@ -22,22 +25,13 @@ function Sidebar({ setCreateModal }) {
         <nav className='links'>
           <ul>
             <li>
-              <NavLink end to='dashboard/'>
+              <NavLink end to={`${currentProject}/dashboard/`}>
                 <img src={DashboardIcon} alt='dashboard icon' onClick={() => setCurrentPage(1)} />
                 <span>Dashboard</span>
               </NavLink>
             </li>
             <li>
-              <NavLink end to={`tasks/${'page-' + currentPage}`}>
-                <img
-                  className='projects-img'
-                  src={ProjectsIcon}
-                  alt='projects icon'
-                  onClick={() => setCurrentPage(1)}
-                />
-                <span>Projects</span>
-              </NavLink>
-              <NavLink end to={`tasks/${'page-' + currentPage}`}>
+              <NavLink end to={`${currentProject}/tasks/${'page-' + currentPage}`}>
                 <img
                   className='projects-img'
                   src={ProjectsIcon}

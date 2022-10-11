@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from './Avatar';
 
-function ProjectList({ filteredProjects }) {
+function ProjectList({ filteredProjects, currentProject }) {
   const [shownName, setShowName] = useState(null);
 
   return (
@@ -18,7 +18,7 @@ function ProjectList({ filteredProjects }) {
       </ul>
       {filteredProjects.length === 0 && <p>No projects to display...</p>}
       {filteredProjects.map((project) => (
-        <Link className='item' to={`/task/${project.id}`} key={project.id}>
+        <Link className='item' to={`/${currentProject}/task/${project.id}`} key={project.id}>
           <ul>
             <li className='sub-item project-name'>
               <p>{project.name}</p>
