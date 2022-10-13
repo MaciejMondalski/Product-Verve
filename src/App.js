@@ -47,11 +47,11 @@ function App() {
                   <Route
                     exact
                     path='login'
-                    element={user ? <Navigate to={`${currentProject}/tasks/${'page-' + currentPage}`} /> : <Login />}
+                    element={user ? <Navigate to={`/${currentProject}/tasks/${'page-' + currentPage}`} /> : <Login />}
                   />
                   <Route
                     path='signup'
-                    element={user ? <Navigate to={`${currentProject}/tasks/${'page-' + currentPage}`} /> : <Signup />}
+                    element={user ? <Navigate to={`/${currentProject}/tasks/${'page-' + currentPage}`} /> : <Signup />}
                   />
                   <Route path={`${currentProject}/task/:id`} element={<Project />} />
                 </Routes>
