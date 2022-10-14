@@ -4,19 +4,25 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import Avatar from '../Avatar';
+import { useProjectContext } from '../../hooks/useProjectContext';
 
 const RecentIssues = () => {
-  const { documents: projects } = useCollection('projects', ['status', '==', 'To Do'], ['creationTimestamp', 'desc']);
+  const { currentProject } = useProjectContext();
+  const { documents: tasks } = useCollection(
+    'projects',
+    ['status', '==', 'To Do'] && ['projectGroup.projectName', 'in', [`${currentProject}`]],
+    ['creationTimestamp', 'desc']
+  );
   const [recentItems, setRecentItems] = useState();
   const [shownName, setShowName] = useState(null);
 
   useEffect(() => {
-    if (projects) {
-      const sortedRecent = projects.filter((project) => project.creationTimestamp !== undefined).slice(0, 3);
+    if (tasks) {
+      const sortedRecent = tasks.filter((project) => project.creationTimestamp !== undefined).slice(0, 3);
 
       setRecentItems(sortedRecent);
     }
-  }, [projects]);
+  }, [tasks]);
 
   return (
     <StyledRecent>
@@ -30,34 +36,34 @@ const RecentIssues = () => {
       </ul>
 
       {recentItems &&
-        recentItems.map((project) => (
-          <Link className='item' to={`/task/${project.id}`} key={project.id}>
+        recentItems.map((task) => (
+          <Link className='item' to={`/task/${task.id}`} key={task.id}>
             <ul>
-              <li className='sub-item project-name'>
-                <p>{project.name}</p>
+              <li className='sub-item task-name'>
+                <p>{task.name}</p>
               </li>
               <li className='sub-item'>
-                <p> {formatDistanceToNow(project.createdAt.toDate(), { addSuffix: true })}</p>
+                <p> {formatDistanceToNow(task.createdAt.toDate(), { addSuffix: true })}</p>
               </li>
               <li className='sub-item'>
-                <p>{project.dueDate.toDate().toDateString()}</p>
+                <p>{task.dueDate.toDate().toDateString()}</p>
               </li>
-              <li className='sub-item project-priority'>
+              <li className='sub-item task-priority'>
                 <p
                   className={`priority ${
-                    project.priority === 'High'
+                    task.priority === 'High'
                       ? 'high'
-                      : project.priority === 'Medium'
+                      : task.priority === 'Medium'
                       ? 'medium'
-                      : project.priority === 'Low' && 'low'
+                      : task.priority === 'Low' && 'low'
                   }`}
                 >
-                  {project.priority}
+                  {task.priority}
                 </p>
               </li>
               <li className='sub-item assigned-to'>
                 <ul>
-                  {project.assignedUsersList.map((user) => (
+                  {task.assignedUsersList.map((user) => (
                     <li
                       className={`assigne ${shownName === user && 'is-hovered'}`}
                       onMouseEnter={() => setShowName(user)}
@@ -120,7 +126,7 @@ const StyledRecent = styled.div`
     }
   }
 
-  .project-name {
+  .task-name {
     font-weight: 500;
   }
 

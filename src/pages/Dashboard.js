@@ -6,10 +6,12 @@ import CategoriesChart from '../components/dashboard/CategoriesChart';
 import { useCollection } from '../hooks/useCollection';
 import { useEffect, useState } from 'react';
 import InfoBlock from '../components/dashboard/InfoBlock';
+import { useProjectContext } from '../hooks/useProjectContext';
 
 const Dashboard = () => {
   const { documents: statuses } = useCollection('statuses');
-  const { documents: projects } = useCollection('projects');
+  const { currentProject } = useProjectContext();
+  const { documents: tasks } = useCollection('projects', ['projectGroup.projectName', 'in', [`${currentProject}`]]);
   const [blockedQuantity, setBlockedQuantity] = useState();
   const [blockedPercentage, setBlockedPercentage] = useState();
 
@@ -19,29 +21,28 @@ const Dashboard = () => {
   useEffect(() => {
     // Only count overdue issues that are not "Done"
     const overdue =
-      projects &&
-      projects.filter((project) => project.dueDate.toDate() < new Date() && project.status !== 'Done').length;
+      tasks && tasks.filter((project) => project.dueDate.toDate() < new Date() && project.status !== 'Done').length;
 
-    const notDone = projects && projects.filter((project) => project.status !== 'Done').length;
+    const notDone = tasks && tasks.filter((task) => task.status !== 'Done').length;
 
-    const percentage = projects && ((overdue / notDone) * 100).toFixed(2);
+    const percentage = tasks && ((overdue / notDone) * 100).toFixed(2);
     setOverdueQuantity(overdue);
     setOverduePercentage(percentage);
-  }, [projects]);
+  }, [tasks]);
 
   useEffect(() => {
-    const blocked = projects && projects.filter((project) => project.status === 'Blocked').length;
-    const percentage = projects && ((blocked / projects.length) * 100).toFixed(2);
+    const blocked = tasks && tasks.filter((task) => task.status === 'Blocked').length;
+    const percentage = tasks && ((blocked / tasks.length) * 100).toFixed(2);
     setBlockedQuantity(blocked);
     setBlockedPercentage(percentage);
-  }, [projects]);
+  }, [tasks]);
 
   return (
     <StyledDashboard>
       <h2 className='page-title'>Dashboard</h2>
       <div className='dashboard-container'>
         <div className='block categories'>
-          <CategoriesChart />
+          <CategoriesChart tasks={tasks} />
         </div>
         <div className='block overdue'>
           <InfoBlock title={'Overdue'} value={overdueQuantity} percentage={overduePercentage} icon='OverdueIcon' />
@@ -50,7 +51,7 @@ const Dashboard = () => {
           <InfoBlock title={'Blocked'} value={blockedQuantity} percentage={blockedPercentage} icon='BlockedIcon' />
         </div>
         <div className='block statuses'>
-          <Piechart />
+          <Piechart tasks={tasks} />
         </div>
         <div className='block upcoming'>
           <UpcomingIssues />

@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 import { useCollection } from '../../hooks/useCollection';
 
-const Piechart = () => {
+const Piechart = ({ tasks }) => {
   const { documents: statuses } = useCollection('statuses');
-  const { documents: projects } = useCollection('projects');
 
   const [statusList, setStatusList] = useState();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -22,13 +21,13 @@ const Piechart = () => {
     console.log('helloo');
     const chartList =
       statuses &&
-      projects &&
+      tasks &&
       statuses.map((status) => {
-        const statusQuantity = projects.filter((project) => project.status === status.name).length;
+        const statusQuantity = tasks.filter((task) => task.status === status.name).length;
         return { name: status.name, quantity: statusQuantity };
       });
     setStatusList(chartList);
-  }, [statuses, projects]);
+  }, [statuses, tasks]);
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {

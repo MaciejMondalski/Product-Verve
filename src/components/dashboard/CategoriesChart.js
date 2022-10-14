@@ -3,8 +3,7 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Resp
 import { useCollection } from '../../hooks/useCollection';
 import styled from 'styled-components';
 
-const CategoriesChart = () => {
-  const { documents: projects } = useCollection('projects');
+const CategoriesChart = ({ tasks }) => {
   const { documents: categories } = useCollection('categories');
 
   const [categoryList, setCategoryList] = useState();
@@ -14,13 +13,13 @@ const CategoriesChart = () => {
   useEffect(() => {
     const chartList =
       categories &&
-      projects &&
+      tasks &&
       categories.map((category) => {
-        const categoryQuantity = projects.filter((project) => project.category === category.value).length;
+        const categoryQuantity = tasks.filter((task) => task.category === category.value).length;
         return { name: category.value, quantity: categoryQuantity };
       });
     setCategoryList(chartList);
-  }, [categories, projects]);
+  }, [categories, tasks]);
 
   return (
     <StyledCategories>
