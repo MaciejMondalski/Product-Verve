@@ -4,9 +4,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import Avatar from '../Avatar';
+import { useProjectContext } from '../../hooks/useProjectContext';
 
 const UpcomingIssues = () => {
-  const { documents: projects } = useCollection('projects', ['status', '!=', 'Done']);
+  const { currentProject } = useProjectContext();
+  const { documents: projects } = useCollection(
+    'projects',
+    ['status', '!=', 'Done'] && ['projectGroup.projectName', 'in', [`${currentProject}`]]
+  );
   const [upcomingItems, setUpcomingItems] = useState();
   const [shownName, setShowName] = useState(null);
 
