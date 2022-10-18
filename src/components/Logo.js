@@ -6,11 +6,11 @@ import { useProjectContext } from '../hooks/useProjectContext';
 
 function Logo() {
   const { user, authIsReady } = useAuthContext();
-  const { currentProject } = useProjectContext();
+  const { urlCurrentProject } = useProjectContext();
 
   return (
     <StyledLogo>
-      <Link to={`${currentProject}/tasks/page-1`}>
+      <Link to={`${urlCurrentProject}/tasks/page-1`}>
         <img src={LogoImage} alt='verve logo' />
         <span className={`${!user && 'logo-purple'}`}>Product Verve</span>
       </Link>
