@@ -21,7 +21,7 @@ function App() {
   const { user, authIsReady } = useAuthContext();
   const [createModal, setCreateModal] = useState(false);
   const { currentPage, setCurrentPage } = usePaginationContext();
-  const { currentProject, setCurrentProject } = useProjectContext();
+  const { currentProject, setCurrentProject, urlCurrentProject } = useProjectContext();
 
   const { documents } = useCollection('projects');
 
@@ -37,23 +37,27 @@ function App() {
               <div className='route-wrapper'>
                 <Routes>
                   <Route
-                    path={`${currentProject}/tasks/:pageId`}
+                    path={`${urlCurrentProject}/tasks/:pageId`}
                     element={!user ? <Navigate to='/login' /> : <TasksPage />}
                   />
                   <Route
-                    path={`${currentProject}/dashboard`}
+                    path={`${urlCurrentProject}/dashboard`}
                     element={!user ? <Navigate to='/login' /> : <Dashboard />}
                   />
                   <Route
                     exact
                     path='login'
-                    element={user ? <Navigate to={`/${currentProject}/tasks/${'page-' + currentPage}`} /> : <Login />}
+                    element={
+                      user ? <Navigate to={`/${urlCurrentProject}/tasks/${'page-' + currentPage}`} /> : <Login />
+                    }
                   />
                   <Route
                     path='signup'
-                    element={user ? <Navigate to={`/${currentProject}/tasks/${'page-' + currentPage}`} /> : <Signup />}
+                    element={
+                      user ? <Navigate to={`/${urlCurrentProject}/tasks/${'page-' + currentPage}`} /> : <Signup />
+                    }
                   />
-                  <Route path={`${currentProject}/task/:id`} element={<Project />} />
+                  <Route path={`${urlCurrentProject}/task/:id`} element={<Project />} />
                 </Routes>
               </div>
               {user && <UserList />}
