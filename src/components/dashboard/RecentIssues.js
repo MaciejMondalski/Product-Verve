@@ -7,10 +7,10 @@ import Avatar from '../Avatar';
 import { useProjectContext } from '../../hooks/useProjectContext';
 
 const RecentIssues = () => {
-  const { currentProject } = useProjectContext();
+  const { urlCurrentProject } = useProjectContext();
   const { documents: tasks } = useCollection(
     'projects',
-    ['status', '==', 'To Do'] && ['projectGroup.projectName', 'in', [`${currentProject}`]],
+    ['status', '==', 'To Do'] && ['projectGroup.projectName', 'in', [`${urlCurrentProject}`]],
     ['creationTimestamp', 'desc']
   );
   const [recentItems, setRecentItems] = useState();
