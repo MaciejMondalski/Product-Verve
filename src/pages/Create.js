@@ -12,6 +12,7 @@ import CalendarIcon from '../assets/calendar_icon.svg';
 import DatePicker from 'react-datepicker';
 //import 'react-datepicker/dist/react-datepicker.css';
 import './DatePicker.scss';
+import { useProjectContext } from '../hooks/useProjectContext';
 
 const priorities = [
   { value: 'Low', label: 'Low' },
@@ -20,13 +21,14 @@ const priorities = [
 ];
 
 function Create({ setCreateModal, projectsCollection }) {
+  const { currentProject, urlCurrentProject } = useProjectContext();
+
   const navigate = useNavigate();
   const { addDocument, response } = useFirestore('projects');
   const { user } = useAuthContext();
   const { documents } = useCollection('users');
   const { documents: categories } = useCollection('categories');
-
-  const [users, setUsers] = useState([]);
+  const { documents: projectGroups } = useCollection('projectGroups');
 
   // Index EXPERIMENT
 
@@ -41,6 +43,9 @@ function Create({ setCreateModal, projectsCollection }) {
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
+  const [projectList, setProjectList] = useState([]);
+  const [selectedProject, setSelectedProject] = useState();
+  const [users, setUsers] = useState([]);
   const [category, setCategory] = useState('');
   const [priority, setPriority] = useState('');
   const [assignedUsers, setAssignedUsers] = useState([]);
@@ -56,18 +61,27 @@ function Create({ setCreateModal, projectsCollection }) {
         })
       );
     }
-  }, [documents]);
+    if (projectGroups)
+      setProjectList(
+        projectGroups.map((projectGroup) => {
+          return {
+            value: { ...projectGroup, id: projectGroup.id, projectName: projectGroup.projectName },
+            label: projectGroup.projectName,
+          };
+        })
+      );
+  }, [documents, projectGroups]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError(null);
 
     if (!category) {
-      setFormError('Please select a project category.');
+      setFormError('Please select a task category.');
       return;
     }
     if (assignedUsers.length < 1) {
-      setFormError('Please assign the project to at least 1 user');
+      setFormError('Please assign the task to at least 1 user');
       return;
     }
 
@@ -78,6 +92,16 @@ function Create({ setCreateModal, projectsCollection }) {
         id: u.value.id,
       };
     });
+
+    //  const parentProject = [
+    //    {
+    //      projectName: selectedProject.value.projectName,
+    //      projectMembes: selectedProject.value.projectMembes,
+    //      id: selectedProject.value.id,
+    //    },
+    //  ];
+    // console.log(parentProject);
+
     const createdBy = {
       displayName: user.displayName,
       photoURL: user.photoURL,
@@ -86,7 +110,8 @@ function Create({ setCreateModal, projectsCollection }) {
 
     setStatus('To Do');
 
-    const project = {
+    const task = {
+      projectGroup: selectedProject.value,
       index: newIndex,
       name,
       details,
@@ -101,11 +126,11 @@ function Create({ setCreateModal, projectsCollection }) {
       priority: priority.value,
     };
 
-    await addDocument(project);
-    navigate('/tasks/page-1');
+    await addDocument(task);
+    navigate(`/${urlCurrentProject}/tasks/page-1`);
     if (!response.error) {
       setCreateModal(false);
-      navigate('/tasks/page-1');
+      navigate(`/${urlCurrentProject}/tasks/page-1`);
     }
   };
 
@@ -113,14 +138,18 @@ function Create({ setCreateModal, projectsCollection }) {
     <StyledCreate>
       <div className='modal-container'>
         <div className='modal'>
-          <h2 className='page-title'>Create a new project</h2>
+          <h2 className='page-title'>Create a new task</h2>
           <form onSubmit={handleSubmit}>
             <label>
-              <span>Project name:</span>
+              <span>Project:</span>
+              <Select styles={selectStyles} onChange={(option) => setSelectedProject(option)} options={projectList} />
+            </label>
+            <label>
+              <span>Task name:</span>
               <input required type='text' onChange={(e) => setName(e.target.value)} value={name} />
             </label>
             <label>
-              <span>Project Details:</span>
+              <span>Details:</span>
               <textarea
                 className='details-section'
                 required
@@ -140,7 +169,7 @@ function Create({ setCreateModal, projectsCollection }) {
               <img src={CalendarIcon} alt='calendar icon' />
             </div>
             <label>
-              <span>Project category:</span>
+              <span>Category:</span>
               <Select styles={selectStyles} onChange={(option) => setCategory(option)} options={categories} />
             </label>
             <label>
