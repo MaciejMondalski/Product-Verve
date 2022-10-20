@@ -13,7 +13,7 @@ import ProjectBoard from '../components/ProjectBoard';
 import { useProjectContext } from '../hooks/useProjectContext';
 
 function TasksPage() {
-  const { currentProject } = useProjectContext();
+  const { currentProject, urlCurrentProject } = useProjectContext();
   const { documents, error } = useCollection('projects', ['projectGroup.projectName', 'in', [`${currentProject}`]]);
   const [currentCategoryFilter, setCurrentCategoryFilter] = useState('All');
   const [currentStatusFilter, setCurrentStatusFilter] = useState('All');
@@ -136,10 +136,10 @@ function TasksPage() {
         <ProjectBoard filteredProjects={currentItems} allProjects={sortedProjects} />
       )}
       {currentItems && view === 'list' && (
-        <ProjectList currentProject={currentProject} filteredProjects={currentItems} />
+        <ProjectList urlCurrentProject={urlCurrentProject} filteredProjects={currentItems} />
       )}
       {currentItems && view === 'grid' && (
-        <ProjectGrid currentProject={currentProject} filteredProjects={currentItems} />
+        <ProjectGrid urlCurrentProject={urlCurrentProject} filteredProjects={currentItems} />
       )}
       {view !== 'board' && filteredProjects && (
         <Pagination itemsPerPage={itemsPerPage} totalItems={filteredProjects.length} paginate={paginate} />
