@@ -12,14 +12,20 @@ import ProjectsIcon from '../assets/projects_icon.svg';
 import { useProjectContext } from '../hooks/useProjectContext';
 import { useEffect, useState } from 'react';
 import { useCollection } from '../hooks/useCollection';
+import useSelectProject from '../hooks/useSelectProject';
 
 function Sidebar({ setCreateModal }) {
   const { currentPage, setCurrentPage } = usePaginationContext();
   const { currentProject, setCurrentProject, urlCurrentProject, setUrlCurrentProject, projectObject } =
     useProjectContext();
+  const { project } = useProjectContext();
+
   const { documents } = useCollection('projectGroups');
   const [filteredProjects, setFilteredProjects] = useState();
   const [selectorStatus, setSelectorStatus] = useState(false);
+
+  // new
+  const { selectProject } = useSelectProject();
 
   useEffect(() => {
     const filteredDocuments = documents && documents.filter((project) => project.projectName !== currentProject);
@@ -27,7 +33,11 @@ function Sidebar({ setCreateModal }) {
   }, [documents]);
   console.log(filteredProjects);
 
-  const selectProject = (project) => {};
+  const projectHandler = (selectedProject) => {
+    selectProject(selectedProject, project);
+    console.log(selectedProject);
+    project && console.log(project);
+  };
 
   return (
     <StyledSidebar>
@@ -55,7 +65,7 @@ function Sidebar({ setCreateModal }) {
                 <ul>
                   {filteredProjects &&
                     filteredProjects.map((project) => (
-                      <li key={project} onClick={() => selectProject(project)}>
+                      <li key={project.id} onClick={() => projectHandler(project)}>
                         {project.projectName}
                       </li>
                     ))}
@@ -126,7 +136,7 @@ const StyledSidebar = styled.div`
       cursor: pointer;
       display: flex;
       justify-content: space-between;
-      padding: 10px 0 10px 10px;
+      padding: 10px 0 10px 6px;
       text-decoration: none;
       width: 100%;
       color: #fff;
@@ -134,7 +144,7 @@ const StyledSidebar = styled.div`
       box-sizing: border-box;
       align-items: center;
       font-weight: 500;
-      font-size: 1.4em;
+      font-size: 1.3em;
       transition-duration: 0.2s;
       box-sizing: border-box;
       border: 1px solid #12323f00;
@@ -142,6 +152,7 @@ const StyledSidebar = styled.div`
       .arrow-right {
         transition-duration: 0.2s;
         transform: rotate(-90deg);
+        margin-right: 3px;
       }
 
       .arrow-active {
@@ -164,7 +175,7 @@ const StyledSidebar = styled.div`
         height: 2.2em;
         border-radius: 50%;
         overflow: hidden;
-        margin-right: 0.8em;
+        margin-right: 0.5em;
         border: 1px solid var(--nice-gray);
       }
 
