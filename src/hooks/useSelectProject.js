@@ -3,21 +3,19 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 const useSelectProject = () => {
-  const { dispatch } = useProjectContext();
+  const { projectObject, setProjectObject } = useProjectContext();
 
-  const selectProject = async (selectedProject, project) => {
+  const selectProject = async (selectedProject) => {
+    console.log(projectObject);
     // update old selected status
-    if (project) {
-      const documentRefOld = doc(db, 'projectGroups', project.id);
-      await updateDoc(documentRefOld, { selected: false });
-    }
+    const documentRefOld = doc(db, 'projectGroups', projectObject.id);
+    await updateDoc(documentRefOld, { selected: false });
 
     // update new selected status
     const documentRefNew = doc(db, 'projectGroups', selectedProject.id);
     await updateDoc(documentRefNew, { selected: true });
 
-    // dispatch login action
-    dispatch({ type: 'SELECT', payload: selectedProject });
+    // set new project state
   };
   return { selectProject };
 };
