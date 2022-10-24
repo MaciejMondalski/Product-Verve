@@ -10,8 +10,8 @@ import { useProjectContext } from '../hooks/useProjectContext';
 
 const Dashboard = () => {
   const { documents: statuses } = useCollection('statuses');
-  const { currentProject } = useProjectContext();
-  const { documents: tasks } = useCollection('projects', ['projectGroup.projectName', 'in', [`${currentProject}`]]);
+  const { projectObject } = useProjectContext();
+  const { documents: tasks } = useCollection('projects', ['projectGroup.id', 'in', [`${projectObject.id}`]]);
   const [blockedQuantity, setBlockedQuantity] = useState();
   const [blockedPercentage, setBlockedPercentage] = useState();
 

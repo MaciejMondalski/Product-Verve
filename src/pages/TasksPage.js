@@ -13,8 +13,8 @@ import ProjectBoard from '../components/ProjectBoard';
 import { useProjectContext } from '../hooks/useProjectContext';
 
 function TasksPage() {
-  const { currentProject, urlCurrentProject } = useProjectContext();
-  const { documents, error } = useCollection('projects', ['projectGroup.projectName', 'in', [`${currentProject}`]]);
+  const { projectObject, urlCurrentProject } = useProjectContext();
+  const { documents, error } = useCollection('projects', ['projectGroup.id', 'in', [`${projectObject.id}`]]);
   const [currentCategoryFilter, setCurrentCategoryFilter] = useState('All');
   const [currentStatusFilter, setCurrentStatusFilter] = useState('All');
   const [sortedProjects, setSortedProjects] = useState();
