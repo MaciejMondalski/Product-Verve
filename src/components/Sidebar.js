@@ -10,33 +10,49 @@ import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
 import ProjectsIcon from '../assets/projects_icon.svg';
 import { useProjectContext } from '../hooks/useProjectContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useCollection } from '../hooks/useCollection';
 import useSelectProject from '../hooks/useSelectProject';
 
 function Sidebar({ setCreateModal }) {
   const { currentPage, setCurrentPage } = usePaginationContext();
-  const { currentProject, setCurrentProject, urlCurrentProject, setUrlCurrentProject, projectObject } =
-    useProjectContext();
-  const { project } = useProjectContext();
+  const { currentProject, urlCurrentProject, projectObject } = useProjectContext();
 
   const { documents } = useCollection('projectGroups');
   const [filteredProjects, setFilteredProjects] = useState();
   const [selectorStatus, setSelectorStatus] = useState(false);
+  const ref = useRef(null);
 
   // new
   const { selectProject } = useSelectProject();
 
   useEffect(() => {
-    const filteredDocuments = documents && documents.filter((project) => project.projectName !== currentProject);
+    const handleClickOutside = (e) => {
+      if (selectorStatus && ref.current && !ref.current.contains(e.target)) {
+        closeFilterPicker();
+        console.log(ref);
+      }
+    };
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [selectorStatus]);
+
+  const closeFilterPicker = () => {
+    setSelectorStatus(false);
+    console.log(selectorStatus);
+  };
+
+  useEffect(() => {
+    const filteredDocuments =
+      documents && projectObject && documents.filter((project) => project.id !== projectObject.id);
     setFilteredProjects(filteredDocuments);
-  }, [documents]);
-  console.log(filteredProjects);
+  }, [documents, projectObject]);
 
   const projectHandler = (selectedProject) => {
-    selectProject(selectedProject, project);
-    console.log(selectedProject);
-    project && console.log(project);
+    selectProject(selectedProject);
+    setSelectorStatus(false);
   };
 
   return (
@@ -49,37 +65,42 @@ function Sidebar({ setCreateModal }) {
         </div>
         <nav className='links'>
           <ul>
-            <li>
-              <div className='project-selector' onClick={() => setSelectorStatus(!selectorStatus)}>
+            <li ref={ref}>
+              <div
+                className={`project-selector ${selectorStatus && 'btn-active'}`}
+                onClick={() => setSelectorStatus(!selectorStatus)}
+              >
                 <div className='left-wrapper'>
                   {projectObject && <img className='project-icon' src={projectObject.photoURL} alt='user avatar' />}
 
                   <div className='project-title'>
                     <p>PROJECT</p>
-                    <span>{currentProject}</span>
+                    <span>{projectObject && projectObject.projectName}</span>
                   </div>
                 </div>
                 <img className={` arrow-right ${selectorStatus && 'arrow-active'}`} src={ArrowIcon} alt='arrow icon' />
               </div>
               {selectorStatus && (
-                <ul>
+                <ul className='list-buttons'>
                   {filteredProjects &&
-                    filteredProjects.map((project) => (
-                      <li key={project.id} onClick={() => projectHandler(project)}>
-                        {project.projectName}
+                    filteredProjects.map((selectedProject) => (
+                      <li key={selectedProject.id} onClick={() => projectHandler(selectedProject)}>
+                        <NavLink to={`${selectedProject.projectName.replace(/\s/g, '')}/dashboard/`}>
+                          {selectedProject.projectName}
+                        </NavLink>
                       </li>
                     ))}
                 </ul>
               )}
             </li>
             <span className='line'></span>
-            <li>
+            <li className='nav-item'>
               <NavLink end to={`${urlCurrentProject}/dashboard/`}>
                 <img src={DashboardIcon} alt='dashboard icon' onClick={() => setCurrentPage(1)} />
                 <span>Dashboard</span>
               </NavLink>
             </li>
-            <li>
+            <li className='nav-item'>
               <NavLink end to={`${urlCurrentProject}/tasks/${'page-' + currentPage}`}>
                 <img
                   className='projects-img'
@@ -109,14 +130,47 @@ const StyledSidebar = styled.div`
   }
 
   .links {
-    margin: 40px 10px;
+    margin: 20px 10px;
     .active {
       color: #fff;
       background: var(--lighter-primary);
       border-radius: 0.6em;
     }
-    li {
+    li.nav-item {
       margin-top: 10px;
+    }
+
+    .list-buttons {
+      background: white;
+      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--nice-gray);
+      border-radius: 0.5em;
+      margin-top: 10px;
+      animation: fadeInAnimation ease-out 0.2s;
+
+      li {
+        padding: 3px 3px;
+        margin: 0 1px;
+        a {
+          padding: 5px 10px;
+          transition-duration: 0.2s;
+          border-radius: 0.5em;
+          color: var(--primary-color);
+
+          &:hover {
+            background-color: var(--nice-gray);
+          }
+        }
+      }
+
+      @keyframes fadeInAnimation {
+        0% {
+          opacity: 0%;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     }
 
     a {
@@ -131,7 +185,10 @@ const StyledSidebar = styled.div`
       font-weight: 400;
       font-size: 1.1em;
     }
-
+    .btn-active {
+      border: 1px solid var(--nice-gray);
+      background: var(--lighter-primary);
+    }
     .project-selector {
       cursor: pointer;
       display: flex;
@@ -139,7 +196,6 @@ const StyledSidebar = styled.div`
       padding: 10px 0 10px 6px;
       text-decoration: none;
       width: 100%;
-      color: #fff;
       border-radius: 0.6em;
       box-sizing: border-box;
       align-items: center;
@@ -157,6 +213,11 @@ const StyledSidebar = styled.div`
 
       .arrow-active {
         transform: rotate(90deg);
+      }
+
+      .btn-active {
+        border: 1px solid var(--nice-gray);
+        background: var(--lighter-primary);
       }
 
       &:hover {
