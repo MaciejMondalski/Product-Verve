@@ -2,18 +2,20 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import ArrowIcon from '../../assets/arrow_icon.svg';
 import { useState, useRef, useEffect } from 'react';
+import { useProjectContext } from '../../hooks/useProjectContext';
 
 const statusFilterList = ['All', 'To Do', 'In Progress', 'Done', 'Blocked'];
 
 const CategoryFilter = ({ currentStatusFilter, setCurrentStatusFilter }) => {
   const [statusFilterButton, setStatusFilterButton] = useState(false);
+  const { urlCurrentProject } = useProjectContext();
   const navigate = useNavigate();
   const ref = useRef(null);
 
   const handleClick = (newFilter) => {
     setCurrentStatusFilter(newFilter);
     setStatusFilterButton(!statusFilterButton);
-    navigate('/tasks/page-1');
+    navigate('/' + urlCurrentProject + '/tasks/page-1');
   };
 
   const handleFilterPicker = () => {
