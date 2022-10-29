@@ -14,9 +14,9 @@ import { useEffect, useState, useRef } from 'react';
 import { useCollection } from '../hooks/useCollection';
 import useSelectProject from '../hooks/useSelectProject';
 
-function Sidebar({ setCreateModal }) {
+function Sidebar({}) {
   const { currentPage, setCurrentPage } = usePaginationContext();
-  const { currentProject, urlCurrentProject, projectObject } = useProjectContext();
+  const { urlCurrentProject, projectObject } = useProjectContext();
 
   const { documents } = useCollection('projectGroups');
   const [filteredProjects, setFilteredProjects] = useState();
@@ -141,7 +141,7 @@ const StyledSidebar = styled.div`
     }
 
     .list-buttons {
-      background: white;
+      background: var(--bg-color);
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--nice-gray);
       border-radius: 0.5em;
@@ -150,7 +150,6 @@ const StyledSidebar = styled.div`
 
       li {
         padding: 3px 3px;
-        margin: 0 1px;
         a {
           padding: 5px 10px;
           transition-duration: 0.2s;
