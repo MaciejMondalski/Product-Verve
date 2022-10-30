@@ -7,7 +7,8 @@ import TasksPage from './pages/TasksPage';
 import Dashboard from './pages/Dashboard';
 import Create from './pages/Create';
 import Login from './pages/Login';
-import Project from './pages/project/Project';
+import Task from './pages/task/Task';
+import ProjectsPage from './pages/ProjectsPage';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -20,8 +21,8 @@ import { useProjectContext } from './hooks/useProjectContext';
 function App() {
   const { user, authIsReady } = useAuthContext();
   const [createModal, setCreateModal] = useState(false);
-  const { currentPage, setCurrentPage } = usePaginationContext();
-  const { currentProject, setCurrentProject, urlCurrentProject } = useProjectContext();
+  const { currentPage } = usePaginationContext();
+  const { urlCurrentProject } = useProjectContext();
 
   const { documents } = useCollection('projects');
 
@@ -44,6 +45,7 @@ function App() {
                     path={`${urlCurrentProject}/dashboard`}
                     element={!user ? <Navigate to='/login' /> : <Dashboard />}
                   />
+                  <Route path={'/projects'} element={!user ? <Navigate to='/login' /> : <ProjectsPage />} />
                   <Route
                     exact
                     path='login'
@@ -57,7 +59,7 @@ function App() {
                       user ? <Navigate to={`/${urlCurrentProject}/tasks/${'page-' + currentPage}`} /> : <Signup />
                     }
                   />
-                  <Route path={`${urlCurrentProject}/task/:id`} element={<Project />} />
+                  <Route path={`${urlCurrentProject}/task/:id`} element={<Task />} />
                 </Routes>
               </div>
               {user && <UserList />}
