@@ -48,7 +48,7 @@ function Navbar({ setCreateModal }) {
             <div className='nav-container'>
               <button className='btn item-wrapper' onClick={() => setCreateModal((prevState) => !prevState)}>
                 <img src={AddIcon} alt='add project icon' />
-                <span>New Project</span>
+                <span>New Task</span>
               </button>
               <div className='user'>
                 <p>Hello {user.displayName}</p>
