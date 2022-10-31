@@ -9,9 +9,12 @@ import InfoBlock from '../components/dashboard/InfoBlock';
 import { useProjectContext } from '../hooks/useProjectContext';
 
 const Dashboard = () => {
-  const { documents: statuses } = useCollection('statuses');
   const { projectObject } = useProjectContext();
-  const { documents: tasks } = useCollection('projects', ['projectGroup.id', 'in', [`${projectObject.id}`]]);
+  const { documents: tasks } = useCollection('projects', [
+    'projectGroup.id',
+    'in',
+    [`${projectObject && projectObject.id}`],
+  ]);
   const [blockedQuantity, setBlockedQuantity] = useState();
   const [blockedPercentage, setBlockedPercentage] = useState();
 
