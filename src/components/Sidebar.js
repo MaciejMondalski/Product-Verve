@@ -7,7 +7,7 @@ import Logo from './Logo';
 
 // images
 import DashboardIcon from '../assets/dashboard_icon.svg';
-import AddIcon from '../assets/add_icon.svg';
+import TasksIcon from '../assets/tasks_icon.svg';
 import ProjectsIcon from '../assets/projects_icon.svg';
 import { useProjectContext } from '../hooks/useProjectContext';
 import { useEffect, useState, useRef } from 'react';
@@ -71,7 +71,7 @@ function Sidebar({}) {
                 onClick={() => setSelectorStatus(!selectorStatus)}
               >
                 <div className='left-wrapper'>
-                  {projectObject && <img className='project-icon' src={projectObject.photoURL} alt='user avatar' />}
+                  {projectObject && <img className='project-icon' src={projectObject.photoURL} alt='project icon' />}
 
                   <div className='project-title'>
                     <p>PROJECT</p>
@@ -102,6 +102,12 @@ function Sidebar({}) {
             </li>
             <li className='nav-item'>
               <NavLink end to={`${urlCurrentProject}/tasks/${'page-' + currentPage}`}>
+                <img className='projects-img' src={TasksIcon} alt='projects icon' onClick={() => setCurrentPage(1)} />
+                <span>Tasks</span>
+              </NavLink>
+            </li>
+            <li className='nav-item'>
+              <NavLink end to={'/projects'}>
                 <img
                   className='projects-img'
                   src={ProjectsIcon}
