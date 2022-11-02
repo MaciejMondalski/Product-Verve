@@ -73,23 +73,34 @@ function Sidebar({}) {
                 <div className='left-wrapper'>
                   {projectObject && <img className='project-icon' src={projectObject.photoURL} alt='project icon' />}
 
-                  <div className='project-title'>
-                    <p>PROJECT</p>
-                    <span>{projectObject && projectObject.projectName}</span>
-                  </div>
+                  {projectObject ? (
+                    <div className='project-title'>
+                      <p>PROJECT</p>
+                      <span>{projectObject && projectObject.projectName}</span>
+                    </div>
+                  ) : (
+                    <p>Select Project</p>
+                  )}
                 </div>
                 <img className={` arrow-right ${selectorStatus && 'arrow-active'}`} src={ArrowIcon} alt='arrow icon' />
               </div>
               {selectorStatus && (
                 <ul className='list-buttons'>
-                  {filteredProjects &&
-                    filteredProjects.map((selectedProject) => (
-                      <li key={selectedProject.id} onClick={() => projectHandler(selectedProject)}>
-                        <NavLink to={`${selectedProject.projectName.replace(/\s/g, '')}/dashboard/`}>
-                          {selectedProject.projectName}
-                        </NavLink>
-                      </li>
-                    ))}
+                  {filteredProjects
+                    ? filteredProjects.map((selectedProject) => (
+                        <li key={selectedProject.id} onClick={() => projectHandler(selectedProject)}>
+                          <NavLink to={`${selectedProject.projectName.replace(/\s/g, '')}/dashboard/`}>
+                            {selectedProject.projectName}
+                          </NavLink>
+                        </li>
+                      ))
+                    : documents.map((selectedProject) => (
+                        <li key={selectedProject.id} onClick={() => projectHandler(selectedProject)}>
+                          <NavLink to={`${selectedProject.projectName.replace(/\s/g, '')}/dashboard/`}>
+                            {selectedProject.projectName}
+                          </NavLink>
+                        </li>
+                      ))}
                 </ul>
               )}
             </li>
@@ -137,13 +148,14 @@ const StyledSidebar = styled.div`
 
   .links {
     margin: 20px 10px;
-    .active {
-      color: #fff;
-      background: var(--lighter-primary);
-      border-radius: 0.6em;
-    }
+
     li.nav-item {
       margin-top: 10px;
+      .active {
+        color: #fff;
+        background: var(--lighter-primary);
+        border-radius: 0.6em;
+      }
     }
 
     .list-buttons {
