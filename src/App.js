@@ -17,10 +17,12 @@ import { useState } from 'react';
 import { usePaginationContext } from './hooks/usePaginationContext';
 import { useCollection } from './hooks/useCollection';
 import { useProjectContext } from './hooks/useProjectContext';
+import CreateProject from './components/CreateProject';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
   const [createModal, setCreateModal] = useState(false);
+  const [newProjectModal, setNewProjectModal] = useState(false);
   const { currentPage } = usePaginationContext();
   const { urlCurrentProject } = useProjectContext();
 
@@ -32,6 +34,7 @@ function App() {
         <BrowserRouter>
           {user && <Sidebar />}
           {createModal && <Create setCreateModal={setCreateModal} projectsCollection={documents} />}
+          {newProjectModal && <CreateProject setNewProjectModal={setNewProjectModal} />}
           <div className='container'>
             <Navbar setCreateModal={setCreateModal} />
             <div className={user ? 'below-nav' : 'below-nav center-content'}>
@@ -45,7 +48,12 @@ function App() {
                     path={`${urlCurrentProject}/dashboard`}
                     element={!user ? <Navigate to='/login' /> : <Dashboard />}
                   />
-                  <Route path={'/projects'} element={!user ? <Navigate to='/login' /> : <ProjectsPage />} />
+                  <Route
+                    path={'/projects'}
+                    element={
+                      !user ? <Navigate to='/login' /> : <ProjectsPage setNewProjectModal={setNewProjectModal} />
+                    }
+                  />
                   <Route
                     exact
                     path='login'
