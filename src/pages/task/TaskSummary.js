@@ -6,6 +6,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import DotsIcon from '../../assets/dots_icon.svg';
 import StatusButton from './StatusButton';
+import { useProjectContext } from '../../hooks/useProjectContext';
 
 const TaskSummary = ({ project }) => {
   const { deleteDocument } = useFirestore('projects');
@@ -14,11 +15,12 @@ const TaskSummary = ({ project }) => {
   const ref = useRef(null);
   const refbutton = useRef(null);
   const [optionsStatus, setOptionsStatus] = useState(false);
+  const { urlCurrentProject, projectObject } = useProjectContext();
 
   const handleDeleteTask = () => {
     console.log('delete was activated');
     deleteDocument(project.id);
-    navigate('/tasks/page-1');
+    navigate(`/${urlCurrentProject}/tasks/page-1`);
   };
 
   const handleOptionsDropdown = () => {
@@ -41,7 +43,7 @@ const TaskSummary = ({ project }) => {
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-  }, [handleOptionsDropdown, closeOptions, optionsStatus]);
+  }, [handleOptionsDropdown, optionsStatus]);
 
   return (
     <StyledTaskSummary>
@@ -132,7 +134,7 @@ const StyledTaskSummary = styled.div`
     position: absolute;
     background: white;
     box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
-    padding: 4px;
+    padding: 1px;
     animation-direction: alternate;
     animation: fadeInAnimation ease-out 0.2s;
     border-radius: 0.3em;
@@ -151,7 +153,7 @@ const StyledTaskSummary = styled.div`
 
     li {
       padding: 3px 6px;
-      margin: 3px;
+      margin: 2px;
       transition: 0.1s;
       border-radius: 0.3em;
       cursor: pointer;
