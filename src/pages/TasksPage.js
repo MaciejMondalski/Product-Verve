@@ -14,7 +14,11 @@ import { useProjectContext } from '../hooks/useProjectContext';
 
 function TasksPage() {
   const { projectObject, urlCurrentProject } = useProjectContext();
-  const { documents, error } = useCollection('projects', ['projectGroup.id', 'in', [`${projectObject.id}`]]);
+  const { documents, error } = useCollection('projects', [
+    'projectGroup.id',
+    'in',
+    [`${projectObject && projectObject.id}`],
+  ]);
   const [currentCategoryFilter, setCurrentCategoryFilter] = useState('All');
   const [currentStatusFilter, setCurrentStatusFilter] = useState('All');
   const [sortedProjects, setSortedProjects] = useState();
@@ -119,8 +123,8 @@ function TasksPage() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <StyledProjects>
-      <h2 className='page-title'>Projects</h2>
+    <StyledTasks>
+      <h2 className='page-title'>Tasks</h2>
 
       {error && <p className='error'>{error}</p>}
       {documents && (
@@ -144,11 +148,11 @@ function TasksPage() {
       {view !== 'board' && filteredProjects && (
         <Pagination itemsPerPage={itemsPerPage} totalItems={filteredProjects.length} paginate={paginate} />
       )}
-    </StyledProjects>
+    </StyledTasks>
   );
 }
 
-const StyledProjects = styled.div`
+const StyledTasks = styled.div`
   .page-title {
     font-size: 2.5em;
     font-weight: 500;
