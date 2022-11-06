@@ -93,15 +93,6 @@ function Create({ setCreateModal, projectsCollection }) {
       };
     });
 
-    //  const parentProject = [
-    //    {
-    //      projectName: selectedProject.value.projectName,
-    //      projectMembes: selectedProject.value.projectMembes,
-    //      id: selectedProject.value.id,
-    //    },
-    //  ];
-    // console.log(parentProject);
-
     const createdBy = {
       displayName: user.displayName,
       photoURL: user.photoURL,
@@ -184,7 +175,7 @@ function Create({ setCreateModal, projectsCollection }) {
               <button className='cancel-button' type='button' onClick={() => setCreateModal((prevState) => !prevState)}>
                 Cancel
               </button>
-              <button className='btn'>Add Project</button>
+              <button className='btn'>Create Task</button>
 
               {formError && <p className='error'>{formError}</p>}
             </div>
