@@ -32,11 +32,12 @@ export const useSignup = () => {
       // add display AND PHOTO_URL name to user
       await updateProfile(res.user, { displayName, photoURL: downloadUrl });
 
-      // Add a new document in collection "cities"
+      // Add a new document in collection "users"
       await setDoc(doc(db, 'users', res.user.uid), {
         online: true,
         displayName,
         photoURL: downloadUrl,
+        selectedProjectId: '',
       });
 
       // dispatch login action
