@@ -34,7 +34,9 @@ function App() {
         <BrowserRouter>
           {user && <Sidebar />}
           {createModal && <Create setCreateModal={setCreateModal} projectsCollection={documents} />}
-          {newProjectModal && <CreateProject setNewProjectModal={setNewProjectModal} />}
+          {newProjectModal && (
+            <CreateProject newProjectModal={newProjectModal} setNewProjectModal={setNewProjectModal} />
+          )}
           <div className='container'>
             <Navbar setCreateModal={setCreateModal} />
             <div className={user ? 'below-nav' : 'below-nav center-content'}>
