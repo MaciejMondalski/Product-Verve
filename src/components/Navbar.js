@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import '../index.css';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useState, useRef, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import AddIcon from '../assets/add_icon.svg';
 import styled from 'styled-components';
 import Logo from './Logo';
@@ -47,7 +46,7 @@ function Navbar({ setCreateModal }) {
           ) : (
             <div className='nav-container'>
               <button className='btn item-wrapper' onClick={() => setCreateModal((prevState) => !prevState)}>
-                <img src={AddIcon} alt='add project icon' />
+                <img src={AddIcon} alt='add task icon' />
                 <span>New Task</span>
               </button>
               <div className='user'>
