@@ -2,19 +2,19 @@ import { useCollection } from '../hooks/useCollection';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import useSelectProject from '../hooks/useSelectProject';
-import { useProjectContext } from '../hooks/useProjectContext';
 import DotsIcon from '../assets/dots_icon.svg';
 import { useState, useRef, useEffect } from 'react';
 import AddIcon from '../assets/add_icon.svg';
 
 const ProjectsPage = ({ setNewProjectModal }) => {
   const { documents: projects } = useCollection('projectGroups');
+  const { documents: tasks } = useCollection('projects');
   const { selectProject } = useSelectProject();
-  const { urlCurrentProject, projectObject } = useProjectContext();
   const navigate = useNavigate();
   const refdropdown = useRef(null);
   const refbutton = useRef(null);
   const [activeId, setActiveId] = useState('');
+  const [projectTasks, setProjectTasks] = useState([]);
 
   const projectHandler = (selectedProject) => {
     if (activeId == '') {
@@ -54,6 +54,22 @@ const ProjectsPage = ({ setNewProjectModal }) => {
     };
   }, [handleOptionsDropdown, closeOptions, activeId]);
 
+  useEffect(() => {
+    const taskList =
+      tasks &&
+      projects &&
+      projects.map((project) => {
+        const tasksQuantity = tasks.filter((task) => task.projectGroup.id === project.id).length;
+        return { projectId: project.id, quantity: tasksQuantity };
+      });
+    setProjectTasks(taskList);
+  }, [tasks, projects]);
+
+  const getTaskQuantity = (project) => {
+    const specificTask = projectTasks && projectTasks.filter((list) => list.projectId === project.id)[0];
+    return specificTask && specificTask.quantity;
+  };
+
   return (
     <StyledProjects>
       <h2 className='page-title'>Projects</h2>
@@ -80,9 +96,14 @@ const ProjectsPage = ({ setNewProjectModal }) => {
                   </ul>
                 )}
               </div>
-              <div className='left-side'>
-                <img className='project-icon' src={project.photoURL} alt='project icon' />
-                <h4>{project.projectName} </h4>
+              <div className='box-content'>
+                <div className='left-side'>
+                  <img className='project-icon' src={project.photoURL} alt='project icon' />
+                </div>
+                <div className='right-side'>
+                  <h2>{project.projectName} </h2>
+                  <p>{getTaskQuantity(project)} tasks</p>
+                </div>
               </div>
             </li>
           ))}
@@ -112,7 +133,7 @@ const StyledProjects = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 14px;
+    padding: 1.4em;
     border-radius: 0.5em;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
 
@@ -130,24 +151,34 @@ const StyledProjects = styled.div`
       color: inherit;
     }
 
-    .left-side {
-      img {
-        height: 5em;
+    .box-content {
+      display: flex;
+
+      .left-side {
+        img {
+          height: 5em;
+        }
+        margin-right: 1em;
+      }
+
+      .right-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        p {
+          color: var(--text-color);
+        }
       }
     }
 
     .options-wrapper {
-      display: flex;
-      justify-content: flex-end;
-      padding-bottom: 10px;
-
-      .active-btn {
-        background: var(--nice-gray);
-      }
+      position: absolute;
+      right: 0.6em;
+      top: 0.6em;
     }
 
     .options-btn {
-      margin: -0.4em -0.4em 0 0;
       position: relative;
 
       height: 2.5em;
@@ -175,7 +206,8 @@ const StyledProjects = styled.div`
       display: flex;
       flex-direction: column;
       position: absolute;
-      top: 27%;
+      top: 85%;
+      right: 0%;
 
       background: white;
       box-shadow: 3px 3px 9px 9px rgba(0, 0, 0, 0.05);
