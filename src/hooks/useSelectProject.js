@@ -1,21 +1,15 @@
 import { useProjectContext } from './useProjectContext';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { useAuthContext } from './useAuthContext';
 
 const useSelectProject = () => {
   const { projectObject, setProjectObject } = useProjectContext();
+  const { user } = useAuthContext();
 
   const selectProject = async (selectedProject) => {
-    console.log(projectObject);
-    // update old selected status
-    const documentRefOld = doc(db, 'projectGroups', projectObject.id);
-    await updateDoc(documentRefOld, { selected: false });
-
-    // update new selected status
-    const documentRefNew = doc(db, 'projectGroups', selectedProject.id);
-    await updateDoc(documentRefNew, { selected: true });
-
-    // set new project state
+    const documentRefNew = doc(db, 'users', user.uid);
+    await updateDoc(documentRefNew, { selectedProjectId: selectedProject.id });
   };
   return { selectProject };
 };
