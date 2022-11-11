@@ -150,7 +150,7 @@ const StyledSidebar = styled.div`
     margin: 20px 10px;
 
     li.nav-item {
-      margin-top: 10px;
+      margin-top: 6px;
       .active {
         color: #fff;
         background: var(--lighter-primary);
@@ -201,6 +201,12 @@ const StyledSidebar = styled.div`
       align-items: center;
       font-weight: 400;
       font-size: 1.1em;
+      border-radius: 0.6em;
+      transition-duration: 0.2s;
+
+      &:hover {
+        background: var(--lighter-primary);
+      }
     }
     .btn-active {
       border: 1px solid var(--nice-gray);
