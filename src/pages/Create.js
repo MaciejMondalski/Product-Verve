@@ -10,7 +10,6 @@ import CalendarIcon from '../assets/calendar_icon.svg';
 
 // Datepicker
 import DatePicker from 'react-datepicker';
-//import 'react-datepicker/dist/react-datepicker.css';
 import './DatePicker.scss';
 import { useProjectContext } from '../hooks/useProjectContext';
 
@@ -31,7 +30,6 @@ function Create({ setCreateModal, projectsCollection }) {
   const { documents: projectGroups } = useCollection('projectGroups');
 
   // Index EXPERIMENT
-
   const indexedProjects = projectsCollection.map((project) => {
     return project.index;
   });
