@@ -14,7 +14,7 @@ const ProjectBoard = ({ filteredProjects, allProjects }) => {
   const [columns, setColumns] = useState();
   const statuses = documents;
 
-  // //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //
+  // //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// ////
   const onDragEnd = (result) => {
     const { source, destination, draggableId } = result;
 
