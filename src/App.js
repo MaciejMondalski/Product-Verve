@@ -69,6 +69,7 @@ function App() {
                       user ? <Navigate to={`/${urlCurrentProject}/tasks/${'page-' + currentPage}`} /> : <Signup />
                     }
                   />
+                  <Route path='/' element={user ? <Dashboard /> : <Login />} />
                   <Route path={`${urlCurrentProject}/task/:id`} element={<Task />} />
                 </Routes>
               </div>
