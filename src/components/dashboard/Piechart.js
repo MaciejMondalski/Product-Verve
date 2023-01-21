@@ -18,7 +18,7 @@ const Piechart = ({ tasks }) => {
   const COLORS = ['#C9BBFA', '#8677ED', '#4F42C7', '#322F7D'];
 
   useEffect(() => {
-    console.log('helloo');
+    // console.log('helloo');
     const chartList =
       statuses &&
       tasks &&

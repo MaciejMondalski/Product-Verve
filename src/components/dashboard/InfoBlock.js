@@ -3,7 +3,7 @@ import BlockedIcon from '../../assets/blocked_icon.svg';
 import OverdueIcon from '../../assets/overdue_icon.svg';
 
 const InfoBlock = ({ title, value, percentage, icon }) => {
-  console.log(icon.toString());
+  //console.log(icon.toString());
   return (
     <StyledBlock>
       <div className='title-wrapper'>
