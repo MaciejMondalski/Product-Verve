@@ -3,12 +3,14 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { auth, db } from '../firebase/config';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const useLogout = () => {
   const [isCancelled, setSetIsCancelled] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const { dispatch, user } = useAuthContext();
+  const navigate = useNavigate();
 
   const logout = async () => {
     setError(null);
@@ -41,6 +43,8 @@ export const useLogout = () => {
         setIsPending(false);
       }
     }
+
+    navigate(`/login`);
   };
 
   useEffect(() => {
