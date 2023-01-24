@@ -56,13 +56,7 @@ function App() {
                       !user ? <Navigate to='/login' /> : <ProjectsPage setNewProjectModal={setNewProjectModal} />
                     }
                   />
-                  <Route
-                    exact
-                    path='login'
-                    element={
-                      user ? <Navigate to={`/${urlCurrentProject}/tasks/${'page-' + currentPage}`} /> : <Login />
-                    }
-                  />
+                  <Route exact path='login' element={user ? <Navigate to={`/projects`} /> : <Login />} />
                   <Route
                     path='signup'
                     element={
