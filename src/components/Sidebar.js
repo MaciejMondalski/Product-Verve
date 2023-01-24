@@ -13,12 +13,14 @@ import { useProjectContext } from '../hooks/useProjectContext';
 import { useEffect, useState, useRef } from 'react';
 import { useCollection } from '../hooks/useCollection';
 import useSelectProject from '../hooks/useSelectProject';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 function Sidebar({}) {
   const { currentPage, setCurrentPage } = usePaginationContext();
   const { urlCurrentProject, projectObject } = useProjectContext();
-
+  const { user } = useAuthContext();
   const { documents } = useCollection('projectGroups');
+  const { documents: usersList } = useCollection('users');
   const [filteredProjects, setFilteredProjects] = useState();
   const [selectorStatus, setSelectorStatus] = useState(false);
   const ref = useRef(null);
@@ -49,6 +51,20 @@ function Sidebar({}) {
       documents && projectObject && documents.filter((project) => project.id !== projectObject.id);
     setFilteredProjects(filteredDocuments);
   }, [documents, projectObject]);
+
+  /*
+  useEffect(() => {
+    console.log('ITS HEREEEEEE');
+
+    const loggedInUser = usersList && usersList.filter((projectUser) => projectUser.id.includes(user.uid));
+    loggedInUser && console.log(loggedInUser[0].selectedProjectId);
+    const startProjectId = loggedInUser && loggedInUser[0].selectedProjectId;
+    const startProject = documents && documents.filter((project) => project.id.includes(startProjectId));
+    //console.log(startProject[0]);
+    startProject && selectProject(startProject[0]);
+  }, [user, usersList]);
+
+  */
 
   const projectHandler = (selectedProject) => {
     selectProject(selectedProject);
