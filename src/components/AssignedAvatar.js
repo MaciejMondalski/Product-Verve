@@ -10,7 +10,7 @@ const AssignedAvatar = (assignedUserId) => {
     const selectUser = documents && documents.filter((document) => document.id.includes(assignedUserId.src));
     const photoURL = selectUser && selectUser[0].photoURL;
     setSrc(photoURL);
-  });
+  }, [documents, assignedUserId.src]);
 
   //  const loggedInUser = documents && documents.filter((document) => document.id.includes(user.uid));
   //  //console.log(loggedInUser[0].selectedProjectId);
