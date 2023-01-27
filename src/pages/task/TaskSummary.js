@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import DotsIcon from '../../assets/dots_icon.svg';
 import StatusButton from './StatusButton';
 import { useProjectContext } from '../../hooks/useProjectContext';
+import AssignedAvatar from '../../components/AssignedAvatar';
 
 const TaskSummary = ({ project }) => {
   const { deleteDocument } = useFirestore('projects');
@@ -75,7 +76,7 @@ const TaskSummary = ({ project }) => {
             <div className='assigned-users'>
               {project.assignedUsersList.map((user) => (
                 <div key={user.id} className='avatar-wrapper'>
-                  <Avatar src={user.photoURL} />
+                  <AssignedAvatar className='avatar' src={user.id} />
                 </div>
               ))}
             </div>

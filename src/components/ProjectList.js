@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import AssignedAvatar from './AssignedAvatar';
 import Avatar from './Avatar';
 
 function ProjectList({ filteredProjects, currentProject, urlCurrentProject }) {
@@ -66,7 +67,7 @@ function ProjectList({ filteredProjects, currentProject, urlCurrentProject }) {
                     onMouseLeave={() => setShowName(null)}
                     key={user.photoURL}
                   >
-                    <Avatar className='avatar' src={user.photoURL} />
+                    <AssignedAvatar className='avatar' src={user.id} />
                     {shownName === user && <p className='hover-name'>{user.displayName}</p>}
                   </li>
                 ))}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
+import AssignedAvatar from './AssignedAvatar';
 import Avatar from './Avatar';
 
 function ProjectGrid({ filteredProjects, currentProject, urlCurrentProject }) {
@@ -42,7 +43,7 @@ function ProjectGrid({ filteredProjects, currentProject, urlCurrentProject }) {
                     onMouseLeave={() => setShowName(null)}
                     key={user.photoURL}
                   >
-                    <Avatar src={user.photoURL} />
+                    <AssignedAvatar className='avatar' src={user.id} />
                     {shownName === user && <p className='hover-name'>{user.displayName}</p>}
                   </li>
                 ))}

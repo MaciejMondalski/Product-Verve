@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import Avatar from '../Avatar';
 import { useProjectContext } from '../../hooks/useProjectContext';
+import AssignedAvatar from '../AssignedAvatar';
 
 const UpcomingIssues = () => {
   const { currentProject } = useProjectContext();
+  const { urlCurrentProject } = useProjectContext();
+
   const { documents: projects } = useCollection(
     'projects',
-    ['status', '!=', 'Done'] && ['projectGroup.projectName', 'in', [`${currentProject}`]]
+    ['status', '!=', 'Done'] && ['projectGroup.projectName', 'in', [`${urlCurrentProject}`]]
   );
   const [upcomingItems, setUpcomingItems] = useState();
   const [shownName, setShowName] = useState(null);
@@ -47,15 +50,15 @@ const UpcomingIssues = () => {
       </ul>
 
       {upcomingItems &&
-        upcomingItems.map((project) => (
-          <Link className='item' to={`/task/${project.id}`} key={project.id}>
+        upcomingItems.map((task) => (
+          <Link className='item' to={`/${task.projectGroup.projectName}/task/${task.id}`} key={task.id}>
             <ul>
               <li className='sub-item project-name'>
-                <p>{project.name}</p>
+                <p>{task.name}</p>
               </li>
               <li className='sub-item'>
-                {Math.round((project.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24)) > 1 ? (
-                  <p> {Math.round((project.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24)) + ' days'}</p>
+                {Math.round((task.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24)) > 1 ? (
+                  <p> {Math.round((task.dueDate.toDate() - new Date()) / (1000 * 60 * 60 * 24)) + ' days'}</p>
                 ) : (
                   <div className='due-warning'>
                     <p>{'<' + 1 + ' day'}</p>
@@ -64,31 +67,31 @@ const UpcomingIssues = () => {
                 )}
               </li>
               <li className='sub-item'>
-                <p>{project.dueDate.toDate().toDateString()}</p>
+                <p>{task.dueDate.toDate().toDateString()}</p>
               </li>
               <li className='sub-item project-priority'>
                 <p
                   className={`priority ${
-                    project.priority === 'High'
+                    task.priority === 'High'
                       ? 'high'
-                      : project.priority === 'Medium'
+                      : task.priority === 'Medium'
                       ? 'medium'
-                      : project.priority === 'Low' && 'low'
+                      : task.priority === 'Low' && 'low'
                   }`}
                 >
-                  {project.priority}
+                  {task.priority}
                 </p>
               </li>
               <li className='sub-item assigned-to'>
                 <ul>
-                  {project.assignedUsersList.map((user) => (
+                  {task.assignedUsersList.map((user) => (
                     <li
                       className={`assigne ${shownName === user && 'is-hovered'}`}
                       onMouseEnter={() => setShowName(user)}
                       onMouseLeave={() => setShowName(null)}
                       key={user.photoURL}
                     >
-                      <Avatar className='avatar' src={user.photoURL} />
+                      <AssignedAvatar className='avatar' src={user.id} />
                       {shownName === user && <p className='hover-name'>{user.displayName}</p>}
                     </li>
                   ))}

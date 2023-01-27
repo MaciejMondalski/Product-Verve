@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import Avatar from '../Avatar';
 import { useProjectContext } from '../../hooks/useProjectContext';
+import AssignedAvatar from '../AssignedAvatar';
 
 const RecentIssues = () => {
   const { urlCurrentProject } = useProjectContext();
   const { documents: tasks } = useCollection(
     'projects',
-    ['status', '==', 'To Do'] && ['projectGroup.projectName', 'in', [`${urlCurrentProject}`]],
+    ['status', '==', 'To Do'] && [`${'projectGroup.projectName'}`, 'in', [`${urlCurrentProject}`]],
     ['creationTimestamp', 'desc']
   );
   const [recentItems, setRecentItems] = useState();
@@ -37,7 +38,7 @@ const RecentIssues = () => {
 
       {recentItems &&
         recentItems.map((task) => (
-          <Link className='item' to={`/task/${task.id}`} key={task.id}>
+          <Link className='item' to={`/${task.projectGroup.projectName}/task/${task.id}`} key={task.id}>
             <ul>
               <li className='sub-item task-name'>
                 <p>{task.name}</p>
@@ -70,7 +71,7 @@ const RecentIssues = () => {
                       onMouseLeave={() => setShowName(null)}
                       key={user.photoURL}
                     >
-                      <Avatar className='avatar' src={user.photoURL} />
+                      <AssignedAvatar className='avatar' src={user.id} />
                       {shownName === user && <p className='hover-name'>{user.displayName}</p>}
                     </li>
                   ))}
