@@ -97,10 +97,15 @@ function Create({ setCreateModal, projectsCollection }) {
       id: user.uid,
     };
 
+    const projectGroup = {
+      id: selectedProject.value.id,
+      projectName: selectedProject.value.projectName.replace(/\s/g, ''),
+    };
+
     setStatus('To Do');
 
     const task = {
-      projectGroup: selectedProject.value,
+      projectGroup,
       index: newIndex,
       name,
       details,
