@@ -28,8 +28,8 @@ function Signup() {
       setThumbnailError('Selected file must be an image');
       return;
     }
-    if (!selected > 100000) {
-      setThumbnailError('Image file size must be less than 100kb');
+    if (!selected > 150000) {
+      setThumbnailError('Image file size must be less than 150kb');
       return;
     }
 
