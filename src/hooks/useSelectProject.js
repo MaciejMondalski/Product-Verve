@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 //});
 
 const useSelectProject = () => {
-  const { projectObject, setProjectObject } = useProjectContext('dwewefrwe');
+  const { projectObject, setProjectObject } = useProjectContext();
   const { user } = useAuthContext();
   const { documents, error } = useCollection('users');
 
