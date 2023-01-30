@@ -46,8 +46,6 @@ function UserList() {
   );
 }
 
-// {`library ${userListStatus ? 'active-userlist' : ''}`}
-
 const StyledUserList = styled.div`
   z-index: 10;
   .userlist-wrapper {
